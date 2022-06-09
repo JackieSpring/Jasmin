@@ -1,0 +1,105 @@
+* Struttura directory:
+jasmin/
+  +-- out/				<-- cartella eseguibile finale
+  +-- src/				<-- cartella codice sorgente 
+       +-- shared/			<-- risorse condivise dai file
+            +-- external_source/		<-- codeice sorgente librerie esterne
+                 +-- keystone-master/
+                 +-- capstone-next/
+                 +-- build/		<-- cartella di utility per buildare le librerie
+            +-- external_include/		<-- cartella finale per librerie compilate
+                 +-- keystone/
+                 +-- capstone/
+       +-- arch/				<-- cartella implementazioni architetture
+            +-- x86/			<-- cartella specifica per x86
+
+* Come compilare:
+  SU SISTEMA *NIX
+	1)	navigare fino a external_source/ ed eseguire compilekeystone.sh e compilecapstone.sh
+	2)	tornare nella root directory
+	3)	da terminale eseguire il comando 'make`
+	3a)	per eseguire direttamente il codice 'make run`
+
+  SU SITEMA WINDOWS
+	non lo so, non ci ho provato
+
+* Esecuzione del programma e opzioni di compilazione:
+	Il file Makefile nella rootdirectory governa le opzioni di compilazione, al momento l'unica
+	opzione attivabile e la modalità debug, accessibile impostando la 1 la variabile DEBUG_MODE nel
+	Makefile.
+	Il file test.c è attualmente l'unico a contenere main().
+	L'esecuzione del programma può terminare in tre modi:
+	1) digitando l'istruzioe 'hlt` del linguaggio assembly
+	2) provocando l'interruzione forzata tramite condizione fallita assert() (per esempio
+	   premendo inzio senza digitare istruzioni o digitando istruzioni errate)
+	3) interruzione forzata tramite segnale
+
+* Struttura del programma:
+  Il programma è così strutturato:
+    register.c
+    isa.c
+    memory.c
+	Questi file simulano le risorse del computer e forniscono un api di basso livello per la loro
+	manipolazione, vengono utilizzate indirettamente dalle architetture e direttamente
+	dall'interprete.
+    
+    interpreter.c
+	Serve per creare e gestire la struttura interprete che coordinerà l'interpretazione delle
+	istruzioni e l'utilizzo delle risorse, è il mediatore tra queste ultime e le architetture.
+	L'accesso diretto ai suoi campi è sconsigliato mentre si consiglia di utilizzare l'api
+	fornito da interpreter.h.
+	I suoi campi vengono acceduti direttamente solo in test.c dalle tre funzioni principali
+	che regolano il flusso del programma: fetch, decode e execute.
+	Seppur questa pratica sia poco corretta, si è preferito tenere più bassa possibile la 
+	coesione tra architetture e il resto del programma, e tra l'interprete e le risorse poiché
+	tutto cio che si frappone tra architetture e risorse (come interpretazione dell'input, 
+	opzioni di avvio, controlflow...) deve essere ancora strutturato in modo definitivo.
+
+    arch/x86/x86.c
+	Contiene l'inizializzazione dell'architettura x86, al momento l'unica supportata. La funzione
+	x86_init() non accetta parametri, perciò difficilemente è in grado di distinguere tra avviamento
+	in modalità 64 bit o inferiore, così come non è in grado di distinguere tra avviamento con
+	sintassi intel o atnt, se e come queste informazioni debbano essere gestite dall'inizializzatore
+	è ancora materia di dibattito; attualmente la linea generale è di lasciare queste questioni
+	all'interprete e creare un set di istruzioni e impostazioni unico e indipendente dalla modalità
+	di avvio (anche se si noteranno delle eccezioni nel codice) poiché le librerie keystone e capstone
+	sono già in grado di effettuare il filtraggio necessario delle istruzioni e di fornire informazioni
+	sulla natura, l'identità e la dimensione degli operandi (dunque la differenza tra modalità 64 e 32 bit
+	si ridurrebbe alla dimensione degli operandi e a un paio di 'if` nel codice dell'interprete o di
+	x86_init).
+	Un'altro ruolo importante di x86.c è di indicare all'interprete il come recuperare lfe informazioni 
+	sugli operandi dalla struttura fornita da capstone 'cs_insn` alla forma generale 'jin_operand`.
+
+    keystone e capstone
+	Queste due librerie sono complementari e formano il cuore del programma, keystone serve a ricevere in
+	una stringa rappresentante codice assembly e tradurlo in bytecode che poi viene salvato nel segmento
+	'text` della memoria, mentre capstone legge dei byte e li disassembla in codice assembly, fornendo:
+	1 - il codice identificativo dell'istruzione (che dipende dall'architettura con cui si lo si è 
+	    avviato)
+	2 - dimensione del bytecode disassemblato e numero di istruzioni disassemblate
+	3 - numero di operandi e dettagli sugli operandi (questi dettagli dipendono dall'architettura di
+	    avvio).
+	Attraverso queste due librerie è possibile riconoscere in modo rapido l'istruzione ed effettuare un
+	controllo sintattico. Le due funzioni principali utilizzate nell'interprete sono: ks_asm, impiegata
+	nella fase di fetch() dell'istruzione dalla riga di comando e/o dalla memoria; cs_disasm_iter, 
+	utilizzata in decode() per recuperare le sopraelencate informazioni.
+
+* Funzionalità da implementare:
+	1) Completamento del set di istruzioni x86
+	2) Capacità di riconoscere e memorizzare simboli che indichino indirizzi di memoria così che ks_asm sia
+	   in grado di interpretarli ed effettuare le dovute sostituzioni nella fase di fetch.
+	3) Capacità di leggere il codice in modo interattivo da riga di comando o da un file ed eseguirlo.
+	4) Supporto per sintassi AT&T x86, questo riguarda solo ks_asm cosicchè il bytecode venga sempre tradotto
+	   in sintassi intel da capstone poiché cambiando sintassi cambia anche l'ordine degli operandi (e questo
+	   significherebbe dover creare copie di funzioni per le due sintassi che leggano gli operandi in ordine
+	   diverso, codice duplicato)
+	5) Creazione di comandi speciali di utility per la modalità interattiva, come stampare i registri o un'area
+	   di memoria, modificare / aggiungere / rimuovere segmenti di memoria, aggiungere / rimuovere istruzioni
+	   dal segmento 'text`, istruzioni di debugging
+	6) opzioni di avviamento dell'interprete da riga di comando
+	7) supporto per le altre architetture
+	8) Gestione degli errori
+
+
+
+
