@@ -200,8 +200,9 @@ int x86_ins_dec (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
             goto cleanup;
     }
     
-    ret = ret - 1;
+    ret = ret - 1; 
     
+// flag handle
     read_register( jint, X86_REG_EFLAGS, &eflag );
     
     // update PF, SF, ZF
@@ -252,7 +253,7 @@ static bool inner_xor (uint64_t op1, uint64_t op2, size_t size, uint64_t * total
     *total = op1 ^ op2;
     return false;
 }
-  
+
 int x86_ins_and (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     return x86_generic_operation( jint, operands, nops, inner_and, NULL, turn_off_flag );
 }
