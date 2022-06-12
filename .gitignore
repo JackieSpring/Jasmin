@@ -1,0 +1,5 @@
+src/shared/external_include/capstone
+src/shared/external_include/keystone
+**/.DS_Store
+src/*.old.*
+dist/out
