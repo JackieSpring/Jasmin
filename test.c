@@ -23,7 +23,7 @@ jin_interpreter * jint;
 
 
 static unsigned char * str_trim ( const unsigned char * str ) {
-    return str + (strspn(str, " \t") );
+    return (str + (strspn(str, " \t") ));
 }
 
 static bool str_isalphanum(const unsigned char * str, size_t len) {
@@ -39,34 +39,57 @@ static bool str_isalphanum(const unsigned char * str, size_t len) {
  * a pointer to the first character after the label, or the string pointer if none
  
 */
-/*
 static unsigned char * contains_label( const unsigned char * str, unsigned char ** label ,size_t * length ) {
     size_t lab_len;
+    unsigned char * ret = str;
     lab_len = strcspn(str, ":");
+    if ( str_isalphanum(str, lab_len) == true ) {
+        ret = str_trim(str + lab_len + 1);
+        *label = str;
+        *length = lab_len;
+    }
+    else {
+        *label = NULL;
+        *length = 0;
+    }
     
-    
-    return NULL;
+    return ret;
 }
-*/
+
 
 static unsigned char * fetch_command_line( jin_interpreter * jint, memory_addr ip ){
     const unsigned char * bytecode;
     unsigned char asmcode[256];
     unsigned char * code_ptr;
+    unsigned char * label_ptr;
+    size_t label_size;
     size_t size;
     size_t nins;
     ks_err kerr;
     memory_addr codeptr;
+    bool wait_input = true;
     
     do{
         printf(" > ");
         fgets(asmcode, 256, stdin);
-    } while (strlen(asmcode) < 2);
-    asmcode[ sizeof(asmcode) - 1 ] = '\0';
+        asmcode[ sizeof(asmcode) - 1 ] = '\0';
     
-    code_ptr = str_trim( code_ptr );
+        wait_input = false;
+        
+        code_ptr = str_trim( asmcode );
+        code_ptr = contains_label(code_ptr, &label_ptr, &label_size);
+        if ( label_size != 0 ) {
+            label_ptr[label_size] = '\0';
+            add_symbol_to_table(jint->symt, label_ptr, ip);
+        }
+        
+        if ( strlen(code_ptr) < 2 )
+            wait_input = true;
+        
+    } while (wait_input == true);
     
-    kerr = ks_asm(jint->ks, asmcode, ip, &bytecode, &size, &nins);
+    
+    kerr = ks_asm(jint->ks, code_ptr, ip, &bytecode, &size, &nins);
     if (kerr != KS_ERR_OK)
         goto cleanup;
     
@@ -242,17 +265,14 @@ void print_registers( jin_interpreter * jint ){
 }
 
 
-// NON FUNZIONA !!!!!!!!!!!!!
-static symbol_table * symt;
 
 static ks_sym_resolver symres(const char * sym, uint64_t * value){
-    printf("sym resolver invocated %s\n", sym);
     if( get_symbol_value( jint->symt, sym, value ) < 0)
         return false;
     
     return true;
 }
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 int main(){
 
     jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_64 );
@@ -263,7 +283,7 @@ int main(){
     init_x86(jint);
     jin_start_interpreter(jint);
     
-    printf(" BSS address %p \n", push_bss(jint->mem, &jint, 0) );
+    //printf(" BSS address %p \n", push_bss(jint->mem, &jint, 0) );
 	
     print_registers(jint);
 	while ( jin_is_running(jint) ) {
@@ -279,7 +299,7 @@ int main(){
     	execute(jint, jins);
     	
     	jin_free_instruction(jins);
-        print_registers(jint);
+        //print_registers(jint);
     
     }
     print_registers(jint);
