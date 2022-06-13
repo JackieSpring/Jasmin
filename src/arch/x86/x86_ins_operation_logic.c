@@ -118,15 +118,15 @@ cleanup:
  * INSTRUCTION HANDLERS
 */
 // ADDITION AND SUBTRACTION
-int x86_ins_add (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
+instruction_handler x86_ins_add (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     return x86_generic_operation( jint, operands, nops, unsigned_add_overflow, unsigned_add_overflow, signed_add_overflow );
 }
 
-int x86_ins_sub (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
+instruction_handler x86_ins_sub (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     return x86_generic_operation( jint, operands, nops, unsigned_sub_overflow, unsigned_sub_overflow, signed_sub_overflow );
 }
 
-int x86_ins_inc (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
+instruction_handler x86_ins_inc (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
         return -1;
 
@@ -182,7 +182,7 @@ cleanup:
     return -1;
 }
 
-int x86_ins_dec (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
+instruction_handler x86_ins_dec (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
         return -1;
 
@@ -254,17 +254,17 @@ static bool inner_xor (uint64_t op1, uint64_t op2, size_t size, uint64_t * total
     return false;
 }
 
-int x86_ins_and (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
+instruction_handler x86_ins_and (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     return x86_generic_operation( jint, operands, nops, inner_and, NULL, turn_off_flag );
 }
-int x86_ins_or (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
+instruction_handler x86_ins_or (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     return x86_generic_operation( jint, operands, nops, inner_or, NULL, turn_off_flag );
 }
-int x86_ins_xor (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
+instruction_handler x86_ins_xor (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     return x86_generic_operation( jint, operands, nops, inner_xor, NULL, turn_off_flag );
 }
 
-int x86_ins_not (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
+instruction_handler x86_ins_not (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
         return -1;
 
@@ -297,7 +297,7 @@ cleanup:
 
 
 
-int x86_ins_lea(jin_interpreter * jint, jin_operand * operands, size_t nops ){
+instruction_handler x86_ins_lea(jin_interpreter * jint, jin_operand * operands, size_t nops ){
     if ( nops != 2 || jint == NULL )
         goto cleanup;
     

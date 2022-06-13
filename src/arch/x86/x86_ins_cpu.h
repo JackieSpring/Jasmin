@@ -4,7 +4,7 @@
 
 #include "x86_generic.h"
 
-int x86_ins_hlt(jin_interpreter * jint, jin_operand * operands, size_t nops );
-int x86_ins_nop(jin_interpreter * jint, jin_operand * operands, size_t nops );
+instruction_handler x86_ins_hlt(jin_interpreter * jint, jin_operand * operands, size_t nops );
+instruction_handler x86_ins_nop(jin_interpreter * jint, jin_operand * operands, size_t nops );
 
 #endif

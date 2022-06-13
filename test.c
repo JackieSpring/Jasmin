@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <assert.h>
+#include <ctype.h>
+#include <string.h>
 
 #include <capstone/capstone.h>
 #include <capstone/x86.h>
@@ -16,11 +18,41 @@
 
 #define BASE 0
 
+// Current running interpreter
+jin_interpreter * jint;
 
 
-static char * fetch_command_line( jin_interpreter * jint, memory_addr ip ){
-    const char * bytecode;
-    const char asmcode[256];
+static unsigned char * str_trim ( const unsigned char * str ) {
+    return str + (strspn(str, " \t") );
+}
+
+static bool str_isalphanum(const unsigned char * str, size_t len) {
+    for ( unsigned int i = 0; i < len; i++ ){
+        if ( !isalnum(str[i]) )
+            return false;
+    }
+    return true;
+}
+
+/*
+ * Given a string, if it contains a label declaration '[a-zA-Z0-9]:` then returns
+ * a pointer to the first character after the label, or the string pointer if none
+ 
+*/
+/*
+static unsigned char * contains_label( const unsigned char * str, unsigned char ** label ,size_t * length ) {
+    size_t lab_len;
+    lab_len = strcspn(str, ":");
+    
+    
+    return NULL;
+}
+*/
+
+static unsigned char * fetch_command_line( jin_interpreter * jint, memory_addr ip ){
+    const unsigned char * bytecode;
+    unsigned char asmcode[256];
+    unsigned char * code_ptr;
     size_t size;
     size_t nins;
     ks_err kerr;
@@ -30,6 +62,9 @@ static char * fetch_command_line( jin_interpreter * jint, memory_addr ip ){
         printf(" > ");
         fgets(asmcode, 256, stdin);
     } while (strlen(asmcode) < 2);
+    asmcode[ sizeof(asmcode) - 1 ] = '\0';
+    
+    code_ptr = str_trim( code_ptr );
     
     kerr = ks_asm(jint->ks, asmcode, ip, &bytecode, &size, &nins);
     if (kerr != KS_ERR_OK)
@@ -64,7 +99,7 @@ cleanup:
  *  l'istruzione puntata da IP senza inizializzarne di nuove.
  *
 */
-const char * fetch( jin_interpreter * jint ){
+const unsigned char * fetch( jin_interpreter * jint ){
     memory_addr ip = 0;
     memory_addr toptext = push_text(jint->mem, NULL, 0);
     const char * ret;
@@ -206,12 +241,24 @@ void print_registers( jin_interpreter * jint ){
 
 }
 
+
+// NON FUNZIONA !!!!!!!!!!!!!
+static symbol_table * symt;
+
+static ks_sym_resolver symres(const char * sym, uint64_t * value){
+    printf("sym resolver invocated %s\n", sym);
+    if( get_symbol_value( jint->symt, sym, value ) < 0)
+        return false;
+    
+    return true;
+}
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 int main(){
 
-
-    jin_interpreter * jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_64 );
+    jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_64 );
     assert(jint != NULL);
     //ks_option(jint->ks, KS_OPT_SYNTAX, KS_OPT_SYNTAX_GAS );
+    ks_option(jint->ks, KS_OPT_SYM_RESOLVER, symres);
     
     init_x86(jint);
     jin_start_interpreter(jint);
