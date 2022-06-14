@@ -482,7 +482,7 @@
 /* #undef LLVM_ON_WIN32 */
 
 /* Installation prefix directory */
-#define LLVM_PREFIX "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_include/keystone"
+#define LLVM_PREFIX "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_include/keystone"
 
 /* Define if we have the Intel JIT API runtime support library */
 /* #undef LLVM_USE_INTEL_JITEVENTS */

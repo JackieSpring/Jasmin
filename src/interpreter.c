@@ -137,6 +137,9 @@ jin_interpreter * jin_init_interpreter( jin_arch arch, jin_mode mode ) {
         .data_size = MEM_DEFAULT,
         .bss_size = MEM_DEFAULT,
     };
+    
+    if ( mode == JIN_MODE_32 )
+        opt.mode = MEM_32;
 
     ret->mem = create_memory_map( &opt );
     if( ret->mem == NULL )

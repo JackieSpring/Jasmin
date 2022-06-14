@@ -1,8 +1,8 @@
-# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool
+# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_include/keystone")
+  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_include/keystone")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,7 +38,7 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/kstool/kstool")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/kstool/kstool")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/kstool" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/kstool")
     if(CMAKE_INSTALL_DO_STRIP)

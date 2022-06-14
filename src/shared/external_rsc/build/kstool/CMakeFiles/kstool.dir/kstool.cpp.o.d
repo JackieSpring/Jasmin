@@ -1,5 +1,5 @@
 kstool/CMakeFiles/kstool.dir/kstool.cpp.o: \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/kstool.cpp \
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/kstool.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk/usr/include/c++/v1/stdio.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk/usr/include/c++/v1/__config \
   /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk/usr/include/pthread.h \
@@ -121,15 +121,15 @@ kstool/CMakeFiles/kstool.dir/kstool.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk/usr/include/sys/_types/_o_dsync.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk/usr/include/sys/_types/_s_ifmt.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk/usr/include/sys/_types/_filesec_t.h \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include/keystone/keystone.h \
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include/keystone/keystone.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk/usr/include/c++/v1/stdbool.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/12.0.5/include/stdbool.h \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include/keystone/arm64.h \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include/keystone/arm.h \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include/keystone/evm.h \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include/keystone/hexagon.h \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include/keystone/mips.h \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include/keystone/ppc.h \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include/keystone/sparc.h \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include/keystone/systemz.h \
-  /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include/keystone/x86.h
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include/keystone/arm64.h \
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include/keystone/arm.h \
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include/keystone/evm.h \
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include/keystone/hexagon.h \
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include/keystone/mips.h \
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include/keystone/ppc.h \
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include/keystone/sparc.h \
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include/keystone/systemz.h \
+  /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include/keystone/x86.h

@@ -10,7 +10,6 @@ instruction_handler x86_ins_mov(jin_interpreter * jint, jin_operand * operands, 
     jin_operand src = operands[1];
     uint64_t buffer;
     
-    
     if ( src.type == X86_OP_REG ){
         if( read_register( jint, src.reg, &buffer ) != src.size )
             goto cleanup;
@@ -56,7 +55,7 @@ instruction_handler x86_ins_pop (jin_interpreter * jint, jin_operand * operands,
     uint64_t buffer = 0;
     
     err = read_register( jint, X86_REG_RSP, &buffer );
-    if( err != src.size)
+    if( err != QWORD )
         goto cleanup;
 
     err = read_memory(jint, buffer, &data, src.size);
@@ -69,7 +68,7 @@ instruction_handler x86_ins_pop (jin_interpreter * jint, jin_operand * operands,
         buffer += 8;
     
     err = write_register( jint, X86_REG_RSP, &buffer );
-    if( err != src.size)
+    if( err != QWORD )
         goto cleanup;
     
     err = write_register( jint, src.reg, &data );
@@ -95,7 +94,7 @@ instruction_handler x86_ins_push (jin_interpreter * jint, jin_operand * operands
     else if ( src.type == X86_OP_IMM )
         data = src.imm;
     
-    if( read_register( jint, X86_REG_RSP, &buffer ) != src.size)
+    if( read_register( jint, X86_REG_RSP, &buffer ) != QWORD )
         goto cleanup;
     
     if ( jin_get_mode(jint) == JIN_MODE_32 )
@@ -103,7 +102,7 @@ instruction_handler x86_ins_push (jin_interpreter * jint, jin_operand * operands
     else if ( jin_get_mode(jint) == JIN_MODE_64 )
         buffer -= 8;
     
-    if( write_register( jint, X86_REG_RSP, &buffer ) != src.size)
+    if( write_register( jint, X86_REG_RSP, &buffer ) != QWORD )
         goto cleanup;
 
     if( write_memory(jint, buffer, &data, src.size) != src.size )

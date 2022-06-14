@@ -1,8 +1,8 @@
-# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/llvm/lib
+# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/llvm/lib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_include/keystone")
+  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_include/keystone")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,8 +39,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/MC/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/Target/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/MC/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/Target/cmake_install.cmake")
 
 endif()
 

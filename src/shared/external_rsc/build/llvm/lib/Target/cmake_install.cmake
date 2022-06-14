@@ -1,8 +1,8 @@
-# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/llvm/lib/Target
+# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/llvm/lib/Target
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_include/keystone")
+  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_include/keystone")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,14 +39,14 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/Target/AArch64/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/Target/ARM/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/Target/Hexagon/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/Target/Mips/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/Target/PowerPC/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/Target/Sparc/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/Target/SystemZ/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/Target/X86/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/Target/AArch64/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/Target/ARM/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/Target/Hexagon/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/Target/Mips/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/Target/PowerPC/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/Target/Sparc/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/Target/SystemZ/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/Target/X86/cmake_install.cmake")
 
 endif()
 

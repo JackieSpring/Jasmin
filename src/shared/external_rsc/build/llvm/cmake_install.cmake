@@ -1,8 +1,8 @@
-# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/llvm
+# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/llvm
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_include/keystone")
+  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_include/keystone")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,16 +38,16 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/llvm/../include/keystone")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/llvm/../include/keystone")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/Support/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/include/llvm/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/lib/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/keystone/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/cmake/modules/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/Support/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/include/llvm/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/lib/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/keystone/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/cmake/modules/cmake_install.cmake")
 
 endif()
 

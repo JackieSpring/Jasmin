@@ -180,6 +180,8 @@ typedef enum ks_opt_value {
 	KS_OPT_SYNTAX_MASM  =   1 << 3, // X86 Masm syntax (KS_OPT_SYNTAX) - unsupported yet.
 	KS_OPT_SYNTAX_GAS   =   1 << 4, // X86 GNU GAS syntax (KS_OPT_SYNTAX).
 	KS_OPT_SYNTAX_RADIX16 = 1 << 5, // All immediates are in hex format (i.e 12 is 0x12)
+            	// added by jasmin
+	KS_OPT_SYNTAX_RADIX10 = 1 << 6, // All immediates are in dec format (does not work for GAS and ATT syntax)
 } ks_opt_value;
 
 

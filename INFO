@@ -1,3 +1,9 @@
+########## ATTENZIONE ##########
+Keystone è stato leggermente modificato aggiungendo l'opzione KS_OPT_SYNTAX_RADIX10
+per poter scrivere gli immediati in forma decimale, perciò se avete gia installato
+keystone potreste avere delle differenze di funzinanmento!!!
+################################
+
 * Struttura directory:
 jasmin/
   +-- out/				<-- cartella eseguibile finale

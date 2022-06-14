@@ -522,7 +522,7 @@ ks_err ks_close(ks_engine *ks)
 KEYSTONE_EXPORT
 ks_err ks_option(ks_engine *ks, ks_opt_type type, size_t value)
 {
-    ks->MAI->setRadix(16);
+    ks->MAI->setRadix(10);      // MODIFIED 
     switch(type) {
         case KS_OPT_SYNTAX:
             if (ks->arch != KS_ARCH_X86)
@@ -544,6 +544,19 @@ ks_err ks_option(ks_engine *ks, ks_opt_type type, size_t value)
                     ks->MAI->setRadix(16);
                 case KS_OPT_SYNTAX_GAS:
                 case KS_OPT_SYNTAX_ATT:
+                    ks->syntax = (ks_opt_value)value;
+                    ks->MAI->setAssemblerDialect(0);
+                    break;
+                case KS_OPT_SYNTAX_RADIX10: // default syntax is Intel
+                case KS_OPT_SYNTAX_NASM | KS_OPT_SYNTAX_RADIX10:
+                case KS_OPT_SYNTAX_INTEL | KS_OPT_SYNTAX_RADIX10:
+                    ks->MAI->setRadix(10);
+                    ks->syntax = (ks_opt_value)value;
+                    ks->MAI->setAssemblerDialect(1);
+                    break;
+                case KS_OPT_SYNTAX_GAS | KS_OPT_SYNTAX_RADIX10:
+                case KS_OPT_SYNTAX_ATT | KS_OPT_SYNTAX_RADIX10:
+                    ks->MAI->setRadix(10);
                     ks->syntax = (ks_opt_value)value;
                     ks->MAI->setAssemblerDialect(0);
                     break;

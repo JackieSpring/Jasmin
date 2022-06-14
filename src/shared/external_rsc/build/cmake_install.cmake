@@ -1,8 +1,8 @@
-# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master
+# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_include/keystone")
+  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_include/keystone")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,14 +38,14 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/keystone.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/keystone.pc")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/kstool/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/suite/fuzz/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/kstool/cmake_install.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/suite/fuzz/cmake_install.cmake")
 
 endif()
 
@@ -57,5 +57,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

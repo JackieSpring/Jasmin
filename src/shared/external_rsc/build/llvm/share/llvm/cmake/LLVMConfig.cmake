@@ -2,10 +2,10 @@
 
 
 # LLVM_BUILD_* values available only from LLVM build tree.
-set(LLVM_BUILD_BINARY_DIR "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm")
-set(LLVM_BUILD_LIBRARY_DIR "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/./lib")
-set(LLVM_BUILD_MAIN_INCLUDE_DIR "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/llvm/include")
-set(LLVM_BUILD_MAIN_SRC_DIR "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/llvm")
+set(LLVM_BUILD_BINARY_DIR "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm")
+set(LLVM_BUILD_LIBRARY_DIR "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/./lib")
+set(LLVM_BUILD_MAIN_INCLUDE_DIR "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/llvm/include")
+set(LLVM_BUILD_MAIN_SRC_DIR "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/llvm")
 
 
 set(LLVM_VERSION_MAJOR 3)
@@ -53,14 +53,14 @@ set(LLVM_ON_WIN32 0)
 
 set(LLVM_LIBDIR_SUFFIX )
 
-set(LLVM_INCLUDE_DIRS "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/llvm/include;/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/include")
-set(LLVM_LIBRARY_DIRS "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/./lib")
+set(LLVM_INCLUDE_DIRS "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/llvm/include;/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/include")
+set(LLVM_LIBRARY_DIRS "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/./lib")
 set(LLVM_DEFINITIONS "-D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS")
-set(LLVM_CMAKE_DIR "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/llvm/cmake/modules")
-set(LLVM_TOOLS_BINARY_DIR "/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/./bin")
+set(LLVM_CMAKE_DIR "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/llvm/cmake/modules")
+set(LLVM_TOOLS_BINARY_DIR "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/./bin")
 
 if(NOT TARGET LLVMSupport)
-  include("/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/build/llvm/share/llvm/cmake/LLVMExports.cmake")
+  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/share/llvm/cmake/LLVMExports.cmake")
 endif()
 
 include(${LLVM_CMAKE_DIR}/LLVM-Config.cmake)

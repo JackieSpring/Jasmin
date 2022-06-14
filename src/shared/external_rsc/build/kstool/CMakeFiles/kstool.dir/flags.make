@@ -4,7 +4,7 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 CXX_DEFINES = -DKEYSTONE_STATIC
 
-CXX_INCLUDES = -I/Users/camola/Desktop/università/asm_interpreter/src/shared/external_rsc/keystone-master/kstool/../include
+CXX_INCLUDES = -I/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master/kstool/../include
 
 CXX_FLAGSarm64 = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk -mmacosx-version-min=11.2 -fvisibility=hidden
 

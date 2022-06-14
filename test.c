@@ -205,7 +205,6 @@ int execute(jin_interpreter * jint, jin_instruction * ins ) {
     return 0;
 
 cleanup:
-    puts(" !!!! FAILED EXECUTION !!!!");
     return -1;
 }
 
@@ -273,30 +272,36 @@ static ks_sym_resolver symres(const char * sym, uint64_t * value){
     return true;
 }
 
+
+
 int main(){
 
-    jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_64 );
+    //jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_64 );
+    jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_32 );
     assert(jint != NULL);
-    //ks_option(jint->ks, KS_OPT_SYNTAX, KS_OPT_SYNTAX_GAS );
+    //ks_option(jint->ks, KS_OPT_SYNTAX, KS_OPT_SYNTAX_GAS | KS_OPT_SYNTAX_RADIX10 );
     ks_option(jint->ks, KS_OPT_SYM_RESOLVER, symres);
+    
     
     init_x86(jint);
     jin_start_interpreter(jint);
-    
-    //printf(" BSS address %p \n", push_bss(jint->mem, &jint, 0) );
+
 	
     print_registers(jint);
 	while ( jin_is_running(jint) ) {
 	
     	unsigned char * code = fetch(jint);
-    	assert(code != NULL);
+    	if ( code == NULL ) {
+        	puts("### FETCH ERROR: ignoring last input");
+            continue;
+    	}
     	
     	jin_instruction * jins = decode(jint, code);
     	assert(jins != NULL);
     	
-    	//print_instruction(jins);
+    	if ( execute(jint, jins) < 0)
+            puts(" !!!! FAILED EXECUTION !!!!");
     	
-    	execute(jint, jins);
     	
     	jin_free_instruction(jins);
         //print_registers(jint);
