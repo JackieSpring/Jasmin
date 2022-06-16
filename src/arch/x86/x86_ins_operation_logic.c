@@ -38,30 +38,15 @@ static int x86_generic_operation
     uint64_t ret = 0;
     uint64_t eflag = 0;
     bool carry;
-   
-    if ( dst.type == X86_OP_REG ){
-        if( read_register( jint, dst.reg, &op1buff ) != dst.size )
-            goto cleanup;
-    }
-    else if (dst.type == X86_OP_IMM )
-        op1buff = dst.imm;
+    jin_err jerr;
     
-    else if ( dst.type == X86_OP_MEM ) {
-        if( read_memory( jint, dst.mem, &op1buff, dst.size ) != dst.size )
-            goto cleanup;
-    }
+    jerr = x86_read_operand(jint, dst, &op1buff);
+    if ( jerr != JIN_ERR_OK )
+        return jerr;
     
-    if ( src.type == X86_OP_REG ){
-        if( read_register( jint, src.reg, &op2buff ) != src.size )
-            goto cleanup;
-    }
-    else if (src.type == X86_OP_IMM )
-        op2buff = src.imm;
-    
-    else if ( src.type == X86_OP_MEM ) {
-        if( read_memory( jint, src.mem, &op2buff, src.size ) != src.size )
-            goto cleanup;
-    }
+    jerr = x86_read_operand(jint, src, &op2buff);
+    if ( jerr != JIN_ERR_OK )
+        return jerr;
     
     carry = (carry_fun)(op1buff, op2buff, dst.size, &ret) ; // Calculate final result
     
@@ -100,17 +85,7 @@ static int x86_generic_operation
     write_register(jint, X86_REG_EFLAGS, &eflag);
 // eflag update end
 
-    if ( dst.type == X86_OP_REG )
-        write_register(jint, dst.reg ,&ret);
-    else if ( dst.type == X86_OP_MEM )
-        write_memory( jint, dst.mem, &ret, dst.size );
-    else 
-        goto cleanup;
-    
-    return 0;
-
-cleanup:
-    return -1;
+    return x86_write_operand(jint, dst, &ret);
 }
 
 
@@ -134,15 +109,11 @@ instruction_handler x86_ins_inc (jin_interpreter * jint, jin_operand * operands,
     uint64_t ret = 0;
     uint64_t eflag = 0;
     bool carry;
+    jin_err jerr;
     
-    if ( dst.type == X86_OP_REG ){
-        if( read_register( jint, dst.reg, &ret ) != dst.size )
-            goto cleanup;
-    }
-    else if ( dst.type == X86_OP_MEM ) {
-        if( read_memory( jint, dst.mem, &ret, dst.size ) != dst.size )
-            goto cleanup;
-    }
+    jerr = x86_read_operand(jint, dst, &ret);
+    if ( jerr != JIN_ERR_OK )
+        return jerr;
     
     ret = ret + 1;
     
@@ -169,36 +140,22 @@ instruction_handler x86_ins_inc (jin_interpreter * jint, jin_operand * operands,
 
     write_register(jint, X86_REG_EFLAGS, &eflag);
     
-    if ( dst.type == X86_OP_REG )
-        write_register(jint, dst.reg ,&ret);
-    else if ( dst.type == X86_OP_MEM )
-        write_memory( jint, dst.mem, &ret, dst.size );
-    else 
-        goto cleanup;
-    
-    return 0;
-    
-cleanup:
-    return -1;
+    return x86_write_operand(jint, dst, &ret);
 }
 
 instruction_handler x86_ins_dec (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
-        return -1;
+        return JIN_ERR_GENERIC;
 
     jin_operand dst = operands[0];
     uint64_t ret = 0;
     uint64_t eflag = 0;
     bool carry;
+    jin_err jerr;
     
-    if ( dst.type == X86_OP_REG ){
-        if( read_register( jint, dst.reg, &ret ) != dst.size )
-            goto cleanup;
-    }
-    else if ( dst.type == X86_OP_MEM ) {
-        if( read_memory( jint, dst.mem, &ret, dst.size ) != dst.size )
-            goto cleanup;
-    }
+    jerr = x86_read_operand(jint, dst, &ret);
+    if ( jerr != JIN_ERR_OK )
+        return jerr;
     
     ret = ret - 1; 
     
@@ -225,18 +182,10 @@ instruction_handler x86_ins_dec (jin_interpreter * jint, jin_operand * operands,
         eflag &= ~X86_EFLAG_OF;
 
     write_register(jint, X86_REG_EFLAGS, &eflag);
+// end flag write
     
-    if ( dst.type == X86_OP_REG )
-        write_register(jint, dst.reg ,&ret);
-    else if ( dst.type == X86_OP_MEM )
-        write_memory( jint, dst.mem, &ret, dst.size );
-    else 
-        goto cleanup;
-    
-    return 0;
-    
-cleanup:
-    return -1;
+    return x86_write_operand(jint, dst, &ret);
+
 }
 
 // LOGIC
@@ -266,49 +215,33 @@ instruction_handler x86_ins_xor (jin_interpreter * jint, jin_operand * operands,
 
 instruction_handler x86_ins_not (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
-        return -1;
+        return JIN_ERR_GENERIC;
 
     jin_operand dst = operands[0];
     uint64_t ret = 0;
+    jin_err jerr;
     
-    if ( dst.type == X86_OP_REG ){
-        if( read_register( jint, dst.reg, &ret ) != dst.size )
-            goto cleanup;
-    }
-    else if ( dst.type == X86_OP_MEM ) {
-        if( read_memory( jint, dst.mem, &ret, dst.size ) != dst.size )
-            goto cleanup;
-    }
-    
+    jerr = x86_read_operand(jint, dst, &ret);
+    if ( jerr != JIN_ERR_OK )
+        return jerr;
+
     ret = ~ret;
     
-    if ( dst.type == X86_OP_REG )
-        write_register(jint, dst.reg ,&ret);
-    else if ( dst.type == X86_OP_MEM )
-        write_memory( jint, dst.mem, &ret, dst.size );
-    else 
-        goto cleanup;
-    
-    return 0;
-    
-cleanup:
-    return -1;
+    return x86_write_operand(jint, dst, &ret);
 }
 
-
+// LEA
 
 instruction_handler x86_ins_lea(jin_interpreter * jint, jin_operand * operands, size_t nops ){
     if ( nops != 2 || jint == NULL )
-        goto cleanup;
+        return JIN_ERR_GENERIC;
     
     jin_operand dst = operands[0];
     jin_operand src = operands[1];
     
     if( write_register( jint, dst.reg, &src.mem ) != src.size)
-        goto cleanup;
+        return JIN_ERR_MEM_CANNOT_WRITE;;
     
-    return 0;
-cleanup:
-    return -1;
+    return JIN_ERR_OK;
 }
 

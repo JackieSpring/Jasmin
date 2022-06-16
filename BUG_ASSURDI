@@ -1,0 +1,36 @@
+Qusta è una lista di bug difficilmente risolvibili al momento, perlopiù causati da keystone
+
+1) Accesi a memoria complessi
+	GAS SYNTAX
+	Se cerco calcolare un indirizzo di memoria con la formula (base, index, size), keystone mi restituisce
+	un 'error 512 Invalid operand (KS_ERR_ASM_INVALIDOPERAND)`, quindi istruzioni come:
+		movl (%eax, %edx, 4), %esi
+		leaq (%rax, %rdx, 2), %rsi
+	non possono essere utilizzate in sintassi gas. Se cambio a sintassi intel, il sistemi di indirizzamento
+	[base + index*size] funziona senza problemi.
+
+2) Niente errori con sintassi sbagliata
+	GAS SYNTAX
+	Quando assemblo instruzioni gas che hanno un prefisso di ordine più piccolo rispetto alla dimensione
+	degli operandi, ks_asm non ritorna errori e alloca un buffer, ma size e nins sono azzerati; questo 
+	si traduce in:
+		// kerr = ks_asm( ks, code_ptr, ip, &bytecode, &size, &nins);
+		leal (%rax), %rsi 	// bytecode: 0x13060ad10, size: 0, nins: 0, kerr: 0
+		movb $1, %rax 		// bytecode: 0x12cf071f0, size: 0, nins: 0, kerr: 0
+	Fortunantamente posso individuare questo caso tramite size e nins e indicare al programma come agire
+
+3) No 32
+	INTEL SYNTAX
+	Quando assemblo istruzioni aritmetiche o logiche  a 64 bit che contengono immediati di dimensione
+	compresa dai 4 ai 7 byte inclusi, ottengo KS_ERR_ASM_INVALIDOPERAND, quindi su tutti i registri a 
+	64 bit non posso effettuare operazioni come:
+		add rax, 0xffffffff
+		sub rbx, 0xfffffffe
+		and rcx, 0xffffffffff
+		xor rdx, 0xdeadbeef
+		add rdi, 0xffffffffffffff
+	ma invece per operandi superiori a 7 byte, o con sintassi gas si ottiene il risultato desiderarto:
+		add rax, 0xffffffffffffffff
+		subq rbx, 0xffffffffe
+
+

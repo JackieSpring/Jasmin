@@ -14,6 +14,7 @@
 #include "isa.h"
 #include "memory.h"
 #include "shared_macros.h"
+#include "jin_error.h"
 #include "x86.h"
 
 #define BASE 0
@@ -66,10 +67,11 @@ static unsigned char * fetch_command_line( jin_interpreter * jint, memory_addr i
     size_t size;
     size_t nins;
     ks_err kerr;
+    jin_err jerr;
     memory_addr codeptr;
     bool wait_input = true;
     
-    do{
+    do {
         printf(" > ");
         fgets(asmcode, 256, stdin);
         asmcode[ sizeof(asmcode) - 1 ] = '\0';
@@ -90,19 +92,28 @@ static unsigned char * fetch_command_line( jin_interpreter * jint, memory_addr i
     
     
     kerr = ks_asm(jint->ks, code_ptr, ip, &bytecode, &size, &nins);
-    if (kerr != KS_ERR_OK)
+    if (kerr != KS_ERR_OK ) {
+        jerr = key_to_jin_err(ks_errno(jint->ks));
         goto cleanup;
+    }
+    
+    if ( size == 0 || nins == 0 ) {
+        jerr = JIN_ERR_ASM_MNEMONICFAIL ;
+        return NULL;
+    }
     
     codeptr = push_text( jint->mem, bytecode, size );
-    if ( codeptr == MEM_FAILURE )
+    if ( codeptr == MEM_FAILURE ) {
+        jerr = JIN_ERR_MEM_CANNOT_WRITE;
         goto cleanup;
+    }
     
     ks_free(bytecode);
     
     return (const char *)get_real_memory_pointer( jint->mem, codeptr);
-cleanup:
-    puts(ks_strerror( ks_errno(jint->ks) ) );
     
+cleanup:
+    jin_perror(jerr);
     return NULL;
 }
 
@@ -132,11 +143,13 @@ const unsigned char * fetch( jin_interpreter * jint ){
     if ( ip == toptext ){
         ret = fetch_command_line(jint, ip);
     }
-    else if ( ip < toptext && ip >= offset_read_text(jint->mem, 0, NULL, 0) ) {
+    else if ( ip >= offset_read_text(jint->mem, 0, NULL, 0) && ip < toptext ) {
         ret = get_real_memory_pointer(jint->mem, ip);
     }
-    else
-        goto cleanup;
+    else {
+        printf("UNKNOWN CASE toptext: %p, ip: %p\n", toptext, ip);
+        exit(0);    
+    }
     
     return ret;
 
@@ -156,24 +169,33 @@ jin_instruction * decode( jin_interpreter * jint, const char * raw_code ) {
     uint64_t ip = 0x0;                // QUesto valore viene aggiornato da cs_disasm_iter per puntare all'istruzione succesiva, potrebbe essere sfruttato per aggioranre RIP
     size_t fake_size = sizeof(uint64_t)*2;    // 
     jin_instruction * ret = NULL;
+    jin_err jerr;
     
     read_instruction_pointer(jint, &ip);
     
-    if ( insn_meta == NULL )
+    if ( insn_meta == NULL ) {
+        jerr = JIN_ERR_MEMORY;
         goto cleanup;
+    }
     
-    if ( cs_disasm_iter( jint->cs, &raw_code, &fake_size, &ip, insn_meta ) == false )
+    if ( cs_disasm_iter( jint->cs, &raw_code, &fake_size, &ip, insn_meta ) == false ) {
+        jerr = cap_to_jin_err( cs_errno(jint->cs) );
         goto cleanup;
+    }
     
     ret = calloc( 1 , sizeof(jin_instruction));
-    if ( ret == NULL )
+    if ( ret == NULL ) {
+        jerr = JIN_ERR_MEMORY;
         goto cleanup;
+    }
     
     ret->id = insn_meta->id;
     ret->byte_size = insn_meta->size;
     
-    if( resolve_operands (jint, insn_meta, &ret->op, &ret->op_count ) < 0 )
+    if( resolve_operands (jint, insn_meta, &ret->op, &ret->op_count ) != JIN_ERR_OK ) {
+        jerr = JIN_ERR_OPERAND_FAIL;
         goto cleanup;
+    }
     
     cs_free(insn_meta, 1);
     
@@ -182,7 +204,8 @@ jin_instruction * decode( jin_interpreter * jint, const char * raw_code ) {
     return ret;
     
 cleanup:
-    puts(cs_strerror( cs_errno(jint->cs) ) );
+    jin_perror(jerr);
+    
     if ( insn_meta != NULL )
         cs_free(insn_meta, 1);
     if ( ret != NULL )
@@ -193,19 +216,22 @@ cleanup:
 
 int execute(jin_interpreter * jint, jin_instruction * ins ) {
     if ( jint == NULL || ins == NULL )
-        goto cleanup;
+        return -1;
+    
+    jin_err jerr;
     
     instruction_handler handler = (instruction_handler *)get_instruction_function( jint->isa, ins->id ) ;
     if ( handler == NULL )
-        goto cleanup;
+        return -1;
     
-    if ( (handler)( jint, ins->op, ins->op_count ) < 0)
-        goto cleanup;
+    jerr = (handler)( jint, ins->op, ins->op_count );
+    if ( jerr != JIN_ERR_OK ) {
+        jin_perror(jerr);
+        return -1;
+    }
     
     return 0;
 
-cleanup:
-    return -1;
 }
 
 
@@ -276,35 +302,39 @@ static ks_sym_resolver symres(const char * sym, uint64_t * value){
 
 int main(){
 
-    //jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_64 );
-    jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_32 );
+    jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_64 );
+    //jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_32 );
     assert(jint != NULL);
-    //ks_option(jint->ks, KS_OPT_SYNTAX, KS_OPT_SYNTAX_GAS | KS_OPT_SYNTAX_RADIX10 );
+    ks_option(jint->ks, KS_OPT_SYNTAX, KS_OPT_SYNTAX_INTEL | KS_OPT_SYNTAX_RADIX16 );
     ks_option(jint->ks, KS_OPT_SYM_RESOLVER, symres);
-    
-    
+
     init_x86(jint);
     jin_start_interpreter(jint);
-
-	
+    
     print_registers(jint);
+
 	while ( jin_is_running(jint) ) {
 	
     	unsigned char * code = fetch(jint);
     	if ( code == NULL ) {
-        	puts("### FETCH ERROR: ignoring last input");
+            jin_perror(JIN_ERR_INSN_FETCH_FAIL);
+            puts("<<< Ignoring last input >>>");
             continue;
     	}
     	
     	jin_instruction * jins = decode(jint, code);
-    	assert(jins != NULL);
+    	if ( jins == NULL ) {
+        	jin_throw_error( JIN_ERR_INSN_DECODE_FAIL );
+        	exit(EXIT_FAILURE);
+    	}
     	
+    	print_instruction(jins);
     	if ( execute(jint, jins) < 0)
-            puts(" !!!! FAILED EXECUTION !!!!");
+            jin_perror(JIN_ERR_INSN_EXEC_FAIL);
     	
     	
     	jin_free_instruction(jins);
-        //print_registers(jint);
+        print_registers(jint);
     
     }
     print_registers(jint);

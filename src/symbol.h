@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "shared_macros.h"
+#include "hashtable.h"
 
 typedef uint64_t symbol_value;
 typedef unsigned char * symbol_key;

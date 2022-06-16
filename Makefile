@@ -18,10 +18,11 @@ OUTPUT = $(OUTPUT_PATH)$(OUTPUT_NAME)
 DEBUG_MODE = 0
 
 ifeq ($(DEBUG_MODE),1)
-	DEBUG_FLAG = -D DEBUG_ON=1
+	DEBUG_FLAG = -pg -D DEBUG_ON=1
 else
 	DEBUG_FLAG = -w
 endif
+
 
 EXT_LIB_PATH = src/shared/external_include/
 
@@ -40,6 +41,7 @@ CC = gcc
 CFLAGS = -lstdc++ -lm $(DEBUG_FLAG) $(foreach path, $(SRC_PATH), -I $(path)) $(INC_KEYSTONE) $(INC_CAPSTONE) -o $(OUTPUT)
 
 FOO = ok
+
 
 compile: SRC
 	@$(CC) $(SRC) $(CFLAGS)

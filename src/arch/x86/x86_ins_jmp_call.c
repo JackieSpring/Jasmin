@@ -5,7 +5,7 @@
 
 static int x86_generic_jmpcc (jin_interpreter * jint, jin_operand * operands, size_t nops, uint64_t target_flag, uint64_t condition ) {
     if ( nops != 1 || jint == NULL )
-        return -1;
+        return JIN_ERR_GENERIC;
 
     jin_operand src = operands[0];
     uint64_t flags;
@@ -15,7 +15,7 @@ static int x86_generic_jmpcc (jin_interpreter * jint, jin_operand * operands, si
     if ( (flags & target_flag) == condition )
         write_register(jint, X86_REG_RIP, &src.imm);
     
-    return 0;
+    return JIN_ERR_OK;
 }
 
 
@@ -64,7 +64,7 @@ instruction_handler x86_ins_jns (jin_interpreter * jint, jin_operand * operands,
 
 instruction_handler x86_ins_jg (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
-        return -1;
+        return JIN_ERR_GENERIC;
 
     jin_operand src = operands[0];
     uint64_t flags;
@@ -76,12 +76,12 @@ instruction_handler x86_ins_jg (jin_interpreter * jint, jin_operand * operands, 
         && ( (flags & X86_EFLAG_ZF) == 0 ) )
         write_register(jint, X86_REG_RIP, &src.imm);
     
-    return 0;
+    return JIN_ERR_OK;
 }
 
 instruction_handler x86_ins_jge (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
-        return -1;
+        return JIN_ERR_GENERIC;
 
     jin_operand src = operands[0];
     uint64_t flags;
@@ -92,12 +92,12 @@ instruction_handler x86_ins_jge (jin_interpreter * jint, jin_operand * operands,
     if ( ((flags & (X86_EFLAG_SF | X86_EFLAG_OF)) == 0 ) || ((flags & (X86_EFLAG_SF | X86_EFLAG_OF)) == (X86_EFLAG_SF | X86_EFLAG_OF) ) )
         write_register(jint, X86_REG_RIP, &src.imm);
     
-    return 0;
+    return JIN_ERR_OK;
 }
 
 instruction_handler x86_ins_jle (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
-        return -1;
+        return JIN_ERR_GENERIC;
 
     jin_operand src = operands[0];
     uint64_t flags;
@@ -109,12 +109,12 @@ instruction_handler x86_ins_jle (jin_interpreter * jint, jin_operand * operands,
         || ( (flags & X86_EFLAG_ZF) == X86_EFLAG_ZF ) )
         write_register(jint, X86_REG_RIP, &src.imm);
     
-    return 0;
+    return JIN_ERR_OK;
 }
 
 instruction_handler x86_ins_jl (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
-        return -1;
+        return JIN_ERR_GENERIC;
 
     jin_operand src = operands[0];
     uint64_t flags;
@@ -125,13 +125,13 @@ instruction_handler x86_ins_jl (jin_interpreter * jint, jin_operand * operands, 
     if ( ((flags & (X86_EFLAG_SF | X86_EFLAG_OF)) != 0 ) && ((flags & (X86_EFLAG_SF | X86_EFLAG_OF)) != (X86_EFLAG_SF | X86_EFLAG_OF) ) )
         write_register(jint, X86_REG_RIP, &src.imm);
     
-    return 0;
+    return JIN_ERR_OK;
 }
 
 
 instruction_handler x86_ins_jcxz (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
-        return -1;
+        return JIN_ERR_GENERIC;
 
     jin_operand src = operands[0];
     uint64_t flags = 0;
@@ -141,12 +141,12 @@ instruction_handler x86_ins_jcxz (jin_interpreter * jint, jin_operand * operands
     if ( flags == 0 )
         write_register(jint, X86_REG_RIP, &src.imm);
     
-    return 0;
+    return JIN_ERR_OK;
 }
 
 instruction_handler x86_ins_jecxz (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
-        return -1;
+        return JIN_ERR_GENERIC;
 
     jin_operand src = operands[0];
     uint64_t flags = 0;
@@ -156,12 +156,12 @@ instruction_handler x86_ins_jecxz (jin_interpreter * jint, jin_operand * operand
     if ( flags == 0 )
         write_register(jint, X86_REG_RIP, &src.imm);
     
-    return 0;
+    return JIN_ERR_OK;
 }
 
 instruction_handler x86_ins_jrcxz (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( nops != 1 || jint == NULL )
-        return -1;
+        return JIN_ERR_GENERIC;
 
     jin_operand src = operands[0];
     uint64_t flags = 0;
@@ -171,6 +171,6 @@ instruction_handler x86_ins_jrcxz (jin_interpreter * jint, jin_operand * operand
     if ( flags == 0 )
         write_register(jint, X86_REG_RIP, &src.imm);
     
-    return 0;
+    return JIN_ERR_OK;
 }
 
