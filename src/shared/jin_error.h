@@ -1,8 +1,10 @@
 #ifndef _JASMIN_ERROR_H
 #define _JASMIN_ERROR_H
 
+#include <errno.h>
 #include <keystone/keystone.h>
 #include <capstone/capstone.h>
+
 
 #include "shared_macros.h"
 
@@ -32,6 +34,11 @@ typedef enum jin_err {
     JIN_ERR_INSN_DECODE_FAIL,       // could decode instruction
     
     JIN_ERR_SYM_UNDEFINED,          // undefined symbol
+    
+    JIN_ERR_CMD_INVALID,
+    JIN_ERR_CMD_FEW_ARGUMENTS,
+    JIN_ERR_CMD_TOOMANYARGUMENTS,
+    JIN_ERR_CMD_INVALIDARGUMENT,
     
     
 } jin_err;

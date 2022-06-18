@@ -1,6 +1,8 @@
 
 
 SRC_PATH := src/
+SRC_PATH += src/core/
+SRC_PATH += src/commands/
 SRC_PATH += src/shared/
 SRC_PATH += src/arch/
 SRC_PATH += src/arch/x86/
@@ -18,7 +20,7 @@ OUTPUT = $(OUTPUT_PATH)$(OUTPUT_NAME)
 DEBUG_MODE = 0
 
 ifeq ($(DEBUG_MODE),1)
-	DEBUG_FLAG = -pg -D DEBUG_ON=1
+	DEBUG_FLAG = -pg -v -D DEBUG_ON=1
 else
 	DEBUG_FLAG = -w
 endif
@@ -41,7 +43,6 @@ CC = gcc
 CFLAGS = -lstdc++ -lm $(DEBUG_FLAG) $(foreach path, $(SRC_PATH), -I $(path)) $(INC_KEYSTONE) $(INC_CAPSTONE) -o $(OUTPUT)
 
 FOO = ok
-
 
 compile: SRC
 	@$(CC) $(SRC) $(CFLAGS)

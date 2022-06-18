@@ -122,90 +122,56 @@ int init_x86( jin_interpreter * jint) {
     if ( jin_create_instruction_table(jint, X86_INS_ENDING) < 0 )
         goto cleanup ;
 
-    // registers: A, B, C, D, DI, SI, BP, SP, IP, FLAGS
-    // size 8*9
-    void * regs_memory;
     uint64_t buffer;
     
-    regs_memory = jin_malloc( jint, 11 * QWORD );
+// INIT registers                                  
+    jin_add_register(jint, X86_REG_RAX, QWORD);
+    jin_add_register(jint, X86_REG_RBX, QWORD);
+    jin_add_register(jint, X86_REG_RCX, QWORD);
+    jin_add_register(jint, X86_REG_RDX, QWORD);
+    jin_add_register(jint, X86_REG_RDI, QWORD);
+    jin_add_register(jint, X86_REG_RSI, QWORD);
+    jin_add_register(jint, X86_REG_RBP, QWORD);
+    jin_add_register(jint, X86_REG_RSP, QWORD);
+    jin_add_register(jint, X86_REG_RIP, QWORD);
+    jin_add_register(jint, X86_REG_EFLAGS, QWORD);
     
-    assert( regs_memory != NULL );
+    jin_add_register_partition( jint, X86_REG_AL, X86_REG_RAX, 0, BYTE );
+    jin_add_register_partition( jint, X86_REG_BL, X86_REG_RBX, 0, BYTE );
+    jin_add_register_partition( jint, X86_REG_CL, X86_REG_RCX, 0, BYTE );
+    jin_add_register_partition( jint, X86_REG_DL, X86_REG_RDX, 0, BYTE );
+    jin_add_register_partition( jint, X86_REG_DIL, X86_REG_RDI, 0, BYTE );
+    jin_add_register_partition( jint, X86_REG_SIL, X86_REG_RSI, 0, BYTE );
+    jin_add_register_partition( jint, X86_REG_BPL, X86_REG_RBP, 0, BYTE );
+    jin_add_register_partition( jint, X86_REG_SPL, X86_REG_RSP, 0, BYTE );
     
-    #define REG_A regs_memory
-    #define REG_B regs_memory + QWORD
-    #define REG_C regs_memory + (QWORD * 2 )
-    #define REG_D regs_memory + (QWORD * 3 )
-    #define REG_DI regs_memory + (QWORD * 4 )
-    #define REG_SI regs_memory + (QWORD * 5 )
-    #define REG_BP regs_memory + (QWORD * 6 )
-    #define REG_SP regs_memory + (QWORD * 7 )
-    #define REG_IP regs_memory + (QWORD * 8 )
-    #define REG_FLAGS regs_memory + (QWORD * 9 )
+    jin_add_register_partition( jint, X86_REG_AH, X86_REG_RAX, BYTE, BYTE );
+    jin_add_register_partition( jint, X86_REG_BH, X86_REG_RBX, BYTE, BYTE );
+    jin_add_register_partition( jint, X86_REG_CH, X86_REG_RCX, BYTE, BYTE );
+    jin_add_register_partition( jint, X86_REG_DH, X86_REG_RDX, BYTE, BYTE );
     
-    jin_add_register(jint, X86_REG_AL, BYTE , REG_A );
-    jin_add_register(jint, X86_REG_AH, BYTE, REG_A + BYTE );
-    jin_add_register(jint, X86_REG_AX, WORD, REG_A );
-    jin_add_register(jint, X86_REG_EAX, DWORD, REG_A );
-    jin_add_register(jint, X86_REG_RAX, QWORD, REG_A );
+    jin_add_register_partition( jint, X86_REG_AX, X86_REG_RAX, 0, WORD );
+    jin_add_register_partition( jint, X86_REG_BX, X86_REG_RBX, 0, WORD );
+    jin_add_register_partition( jint, X86_REG_CX, X86_REG_RCX, 0, WORD );
+    jin_add_register_partition( jint, X86_REG_DX, X86_REG_RDX, 0, WORD );
+    jin_add_register_partition( jint, X86_REG_DI, X86_REG_RDI, 0, WORD );
+    jin_add_register_partition( jint, X86_REG_SI, X86_REG_RSI, 0, WORD );
+    jin_add_register_partition( jint, X86_REG_BP, X86_REG_RBP, 0, WORD );
+    jin_add_register_partition( jint, X86_REG_SP, X86_REG_RSP, 0, WORD );
     
-    jin_add_register(jint, X86_REG_BL, BYTE, REG_B );
-    jin_add_register(jint, X86_REG_BH, BYTE, REG_B + BYTE );
-    jin_add_register(jint, X86_REG_BX, WORD, REG_B );
-    jin_add_register(jint, X86_REG_EBX, DWORD, REG_B );
-    jin_add_register(jint, X86_REG_RBX, QWORD, REG_B );
-    
-    jin_add_register(jint, X86_REG_CL, BYTE, REG_C );
-    jin_add_register(jint, X86_REG_CH, BYTE, REG_C + BYTE );
-    jin_add_register(jint, X86_REG_CX, WORD, REG_C );
-    jin_add_register(jint, X86_REG_ECX, DWORD, REG_C );
-    jin_add_register(jint, X86_REG_RCX, QWORD, REG_C );
-    
-    jin_add_register(jint, X86_REG_DL, BYTE, REG_D );
-    jin_add_register(jint, X86_REG_DH, BYTE, REG_D + BYTE );
-    jin_add_register(jint, X86_REG_DX, WORD, REG_D );
-    jin_add_register(jint, X86_REG_EDX, DWORD, REG_D );
-    jin_add_register(jint, X86_REG_RDX, QWORD, REG_D );
-    
-    jin_add_register(jint, X86_REG_DIL, BYTE, REG_DI );
-    jin_add_register(jint, X86_REG_DI, WORD, REG_DI );
-    jin_add_register(jint, X86_REG_EDI, DWORD, REG_DI );
-    jin_add_register(jint, X86_REG_RDI, QWORD, REG_DI );
-    
-    jin_add_register(jint, X86_REG_SIL, BYTE, REG_SI );
-    jin_add_register(jint, X86_REG_SI, WORD, REG_SI );
-    jin_add_register(jint, X86_REG_ESI, DWORD, REG_SI );
-    jin_add_register(jint, X86_REG_RSI, QWORD, REG_SI );
-    
-    jin_add_register(jint, X86_REG_BPL, BYTE, REG_BP );
-    jin_add_register(jint, X86_REG_BP, WORD, REG_BP );
-    jin_add_register(jint, X86_REG_EBP, DWORD, REG_BP );
-    jin_add_register(jint, X86_REG_RBP, QWORD, REG_BP );
-    
-    jin_add_register(jint, X86_REG_SPL, BYTE, REG_SP );
-    jin_add_register(jint, X86_REG_SP, WORD, REG_SP );
-    jin_add_register(jint, X86_REG_ESP, DWORD, REG_SP );
-    jin_add_register(jint, X86_REG_RSP, QWORD, REG_SP );
-    
-    jin_add_register(jint, X86_REG_IP, WORD, REG_IP );
-    jin_add_register(jint, X86_REG_EIP, DWORD, REG_IP );
-    jin_add_register(jint, X86_REG_RIP, QWORD, REG_IP );
-
-    jin_add_register(jint, X86_REG_EFLAGS, QWORD, REG_FLAGS );
+    jin_add_register_partition( jint, X86_REG_EAX, X86_REG_RAX, 0, DWORD );
+    jin_add_register_partition( jint, X86_REG_EBX, X86_REG_RBX, 0, DWORD );
+    jin_add_register_partition( jint, X86_REG_ECX, X86_REG_RCX, 0, DWORD );
+    jin_add_register_partition( jint, X86_REG_EDX, X86_REG_RDX, 0, DWORD );
+    jin_add_register_partition( jint, X86_REG_EDI, X86_REG_RDI, 0, DWORD );
+    jin_add_register_partition( jint, X86_REG_ESI, X86_REG_RSI, 0, DWORD );
+    jin_add_register_partition( jint, X86_REG_EBP, X86_REG_RBP, 0, DWORD );
+    jin_add_register_partition( jint, X86_REG_ESP, X86_REG_RSP, 0, DWORD );
     
     buffer = 0x202;
     write_register(jint, X86_REG_EFLAGS, &buffer);
 
-    #undef REG_A 
-    #undef REG_B 
-    #undef REG_C 
-    #undef REG_D 
-    #undef REG_DI 
-    #undef REG_SI 
-    #undef REG_BP 
-    #undef REG_SP 
-    #undef REG_IP
-    #undef REG_FLAGS
-    
+// init instructions  
     jin_add_instruction(jint, X86_INS_ADD, x86_ins_add);
     jin_add_instruction(jint, X86_INS_AND, x86_ins_and);
     jin_add_instruction(jint, X86_INS_DEC, x86_ins_dec);
@@ -244,7 +210,7 @@ int init_x86( jin_interpreter * jint) {
     
     jin_add_instruction(jint, X86_INS_JMP, x86_ins_fake_jump);
     
-    
+
     if ( jin_set_operand_resolver( jint, x86_operand_resolver ) < 0)
         goto cleanup;
 

@@ -1,4 +1,9 @@
 ########## ATTENZIONE ##########
+La descrizione del  programma fornita da questo file è deprecata e dovrà essere
+aggiornata, può ancora essere usato come guida per compilare il programma.
+################################
+
+########## ATTENZIONE ##########
 Keystone è stato leggermente modificato aggiungendo l'opzione KS_OPT_SYNTAX_RADIX10
 per poter scrivere gli immediati in forma decimale, perciò se avete gia installato
 keystone potreste avere delle differenze di funzinanmento!!!

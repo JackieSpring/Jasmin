@@ -1,8 +1,8 @@
-# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master
+# Install script for directory: /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_include/keystone")
+  set(CMAKE_INSTALL_PREFIX "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_include/capstone")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "Release")
+    set(CMAKE_INSTALL_CONFIG_NAME "")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -38,15 +38,74 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/keystone.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/capstone" TYPE FILE FILES
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/arm64.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/arm.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/capstone.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/evm.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/wasm.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/mips.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/ppc.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/x86.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/sparc.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/systemz.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/xcore.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/m68k.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/tms320c64x.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/m680x.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/mos65xx.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/bpf.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/riscv.h"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next/include/capstone/platform.h"
+    )
 endif()
 
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for each subdirectory.
-  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/llvm/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/kstool/cmake_install.cmake")
-  include("/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/suite/fuzz/cmake_install.cmake")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/capstone.pc")
+endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/capstone" TYPE FILE FILES
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/capstone-config.cmake"
+    "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/capstone-config-version.cmake"
+    )
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/libcapstone.a")
+  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libcapstone.a" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libcapstone.a")
+    execute_process(COMMAND "/Library/Developer/CommandLineTools/usr/bin/ranlib" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libcapstone.a")
+  endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/capstone/capstone-targets.cmake")
+    file(DIFFERENT EXPORT_FILE_CHANGED FILES
+         "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/capstone/capstone-targets.cmake"
+         "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles/Export/lib/cmake/capstone/capstone-targets.cmake")
+    if(EXPORT_FILE_CHANGED)
+      file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/capstone/capstone-targets-*.cmake")
+      if(OLD_CONFIG_FILES)
+        message(STATUS "Old export file \"$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/capstone/capstone-targets.cmake\" will be replaced.  Removing files [${OLD_CONFIG_FILES}].")
+        file(REMOVE ${OLD_CONFIG_FILES})
+      endif()
+    endif()
+  endif()
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/capstone" TYPE FILE FILES "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles/Export/lib/cmake/capstone/capstone-targets.cmake")
+  if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/capstone" TYPE FILE FILES "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles/Export/lib/cmake/capstone/capstone-targets-noconfig.cmake")
+  endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/cstool")
+  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/cstool" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/cstool")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/Library/Developer/CommandLineTools/usr/bin/strip" -u -r "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/cstool")
+    endif()
+  endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -57,5 +116,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -41,6 +41,15 @@ static const char * get_error_string( jin_err err ) {
             return "Failed instruction execution (JIN_ERR_INSN_EXEC_FAIL)";
         case JIN_ERR_INSN_DECODE_FAIL :
             return "Failed decoding instruction (JIN_ERR_INSN_DECODE_FAIL)";
+        
+        case JIN_ERR_CMD_INVALID:
+            return "Command not reconized (JIN_ERR_CMD_INVALID)";
+        case JIN_ERR_CMD_FEW_ARGUMENTS:
+           return "Few arguments passed to the command (JIN_ERR_CMD_FEW_ARGUMENTS)";
+        case JIN_ERR_CMD_TOOMANYARGUMENTS:
+            return "Too many arguments passed to the command (JIN_ERR_CMD_TOOMANYARGUMENTS)";
+        case JIN_ERR_CMD_INVALIDARGUMENT:
+            return "Invalid argument passed to the command (JIN_ERR_CMD_INVALIDARGUMENT)";
 
         case JIN_ERR_SYM_UNDEFINED :
             return "Undefined symbol (JIN_ERR_SYM_UNDEFINED)";

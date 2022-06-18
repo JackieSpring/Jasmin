@@ -1,0 +1,59 @@
+
+### ALTA PRIORITA ###
+> Completare set di istruzioni x86
+
+> Implementare la funzionalità di scrivere blocchi codice asm senza che venga interpretato
+  contenente riferimenti a simboli precedenti (I problemi realizzativi stanno nel fatto che
+  ks_asm è in grado di assemblare correttamente tutti i simboli all'interno di un blocco di
+  codice, ma una volta fatto non da informazioni sui label risolti, i quali andrebbero perduti,
+  inoltre questi simboli potrebbero fare riferimento a dati non ancora inizializzati "problema
+  dei simboli futuri").
+
+> Modificare la gestione della memoria virtuale in modo che:
+   * supporti le operazioni di resize dei segmenti;
+   * si possano aggiunge nuovi segmenti
+   * l'accesso diretto ai segmenti sia eseguito attraverso degli id invece che
+     funzioni dedicate (no push_text ma push_segment(SEG_TEXT)), e sia quindi possibile
+     registrare id-segmento aggiuntivi entro un certo numero. Alcuni di questi id dovranno
+     essere statici e riservati ai segmenti tex, rodata, data, bss e stack.
+
+> Capacità di leggere un file asm e costruire interprete e mappa di memoria, avviare la console
+  e restare in attesa
+
+> Aggiungere comandi di debugging, come breakpoint
+> Aggiungere comandi di creazione dati (ex. create matrix 2 2 ) con il fine di permettere
+  all'utente di simulare scenari realistici di esecuzione del codice. Questi comandi dovranno 
+  essere progettati in modo che siano semplici e rapidi da usare.
+
+> Creare un file contenga la main routine e l'avviamento del programma
+
+> Implementare argomenti da command line, come la modalità e l'architettura dell'interprete
+
+> Riscrivere l'inizializzazione di jin_interpreter in modod che l'unico argomento accettato
+  sia una struttura 'opzioni' contenente (la lista potrebbe non essere esaustiva):
+    * id modalità
+    * id architettura
+    * mappa segmenti
+    * opzioni memoria
+    * lista registri preinizializzata (opzionale)
+    * tabella simboli preinizializzata (opzionale)
+    * mappa memoria preinizializzata (opzionale)
+
+> Isolare capstone e keystone far si che l'unico componente a potersi interfacciare con essi
+  sia jin_interpreter
+
+> Risolvere (non ho idea del come) i problemi assurdi di quel cazzo di keystone riportati
+  in "BUG ASSURDI"
+
+> ampliare jin_interpreter in modod tale che possa cambiare segmento in cui pushare il codice
+  tenendo traccia del 'segmento corrente', il bytecode così generato sarà o meno eseguito a 
+  seconda dei permessi del segmento attivo.
+
+___ BASSA PRIORITA ___
+> Riordinare il print dei registri in modo arch-indipendent
+> Risolvere una stringa rappresentante un registro in un id registro
+> aggiungere comandi di utilità
+> aggiungere architettura ARM
+> aggiungere comando che permetta di disassemblare porzioni di codice memoria inidicate da
+  label o indirizzo
+

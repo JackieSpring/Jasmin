@@ -54,1114 +54,750 @@ RM = /opt/homebrew/Cellar/cmake/3.23.2/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/keystone-master
+CMAKE_SOURCE_DIR = /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/capstone-next
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build
+CMAKE_BINARY_DIR = /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: llvm/all
-all: kstool/all
-all: suite/fuzz/all
+all: CMakeFiles/capstone.dir/all
+all: CMakeFiles/test_basic.dir/all
+all: CMakeFiles/test_detail.dir/all
+all: CMakeFiles/test_skipdata.dir/all
+all: CMakeFiles/test_iter.dir/all
+all: CMakeFiles/test_arm.dir/all
+all: CMakeFiles/test_arm64.dir/all
+all: CMakeFiles/test_mips.dir/all
+all: CMakeFiles/test_ppc.dir/all
+all: CMakeFiles/test_x86.dir/all
+all: CMakeFiles/test_customized_mnem.dir/all
+all: CMakeFiles/test_sparc.dir/all
+all: CMakeFiles/test_systemz.dir/all
+all: CMakeFiles/test_xcore.dir/all
+all: CMakeFiles/test_m68k.dir/all
+all: CMakeFiles/test_tms320c64x.dir/all
+all: CMakeFiles/test_m680x.dir/all
+all: CMakeFiles/test_evm.dir/all
+all: CMakeFiles/test_wasm.dir/all
+all: CMakeFiles/test_mos65xx.dir/all
+all: CMakeFiles/test_bpf.dir/all
+all: CMakeFiles/test_riscv.dir/all
+all: CMakeFiles/test_arm_regression.dir/all
+all: CMakeFiles/fuzz_disasm.dir/all
+all: CMakeFiles/cstool.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: llvm/preinstall
-preinstall: kstool/preinstall
-preinstall: suite/fuzz/preinstall
+preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/uninstall.dir/clean
-clean: llvm/clean
-clean: kstool/clean
-clean: suite/fuzz/clean
+clean: CMakeFiles/capstone.dir/clean
+clean: CMakeFiles/test_basic.dir/clean
+clean: CMakeFiles/test_detail.dir/clean
+clean: CMakeFiles/test_skipdata.dir/clean
+clean: CMakeFiles/test_iter.dir/clean
+clean: CMakeFiles/test_arm.dir/clean
+clean: CMakeFiles/test_arm64.dir/clean
+clean: CMakeFiles/test_mips.dir/clean
+clean: CMakeFiles/test_ppc.dir/clean
+clean: CMakeFiles/test_x86.dir/clean
+clean: CMakeFiles/test_customized_mnem.dir/clean
+clean: CMakeFiles/test_sparc.dir/clean
+clean: CMakeFiles/test_systemz.dir/clean
+clean: CMakeFiles/test_xcore.dir/clean
+clean: CMakeFiles/test_m68k.dir/clean
+clean: CMakeFiles/test_tms320c64x.dir/clean
+clean: CMakeFiles/test_m680x.dir/clean
+clean: CMakeFiles/test_evm.dir/clean
+clean: CMakeFiles/test_wasm.dir/clean
+clean: CMakeFiles/test_mos65xx.dir/clean
+clean: CMakeFiles/test_bpf.dir/clean
+clean: CMakeFiles/test_riscv.dir/clean
+clean: CMakeFiles/test_arm_regression.dir/clean
+clean: CMakeFiles/fuzz_disasm.dir/clean
+clean: CMakeFiles/UNINSTALL.dir/clean
+clean: CMakeFiles/cstool.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory kstool
-
-# Recursive "all" directory target.
-kstool/all: kstool/CMakeFiles/kstool.dir/all
-.PHONY : kstool/all
-
-# Recursive "preinstall" directory target.
-kstool/preinstall:
-.PHONY : kstool/preinstall
-
-# Recursive "clean" directory target.
-kstool/clean: kstool/CMakeFiles/kstool.dir/clean
-.PHONY : kstool/clean
-
-#=============================================================================
-# Directory level rules for directory llvm
-
-# Recursive "all" directory target.
-llvm/all: llvm/lib/Support/all
-llvm/all: llvm/include/llvm/all
-llvm/all: llvm/lib/all
-llvm/all: llvm/keystone/all
-llvm/all: llvm/cmake/modules/all
-.PHONY : llvm/all
-
-# Recursive "preinstall" directory target.
-llvm/preinstall: llvm/lib/Support/preinstall
-llvm/preinstall: llvm/include/llvm/preinstall
-llvm/preinstall: llvm/lib/preinstall
-llvm/preinstall: llvm/keystone/preinstall
-llvm/preinstall: llvm/cmake/modules/preinstall
-.PHONY : llvm/preinstall
-
-# Recursive "clean" directory target.
-llvm/clean: llvm/lib/Support/clean
-llvm/clean: llvm/include/llvm/clean
-llvm/clean: llvm/lib/clean
-llvm/clean: llvm/keystone/clean
-llvm/clean: llvm/cmake/modules/clean
-.PHONY : llvm/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/cmake/modules
-
-# Recursive "all" directory target.
-llvm/cmake/modules/all:
-.PHONY : llvm/cmake/modules/all
-
-# Recursive "preinstall" directory target.
-llvm/cmake/modules/preinstall:
-.PHONY : llvm/cmake/modules/preinstall
-
-# Recursive "clean" directory target.
-llvm/cmake/modules/clean:
-.PHONY : llvm/cmake/modules/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/include/llvm
-
-# Recursive "all" directory target.
-llvm/include/llvm/all:
-.PHONY : llvm/include/llvm/all
-
-# Recursive "preinstall" directory target.
-llvm/include/llvm/preinstall:
-.PHONY : llvm/include/llvm/preinstall
-
-# Recursive "clean" directory target.
-llvm/include/llvm/clean:
-.PHONY : llvm/include/llvm/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/keystone
-
-# Recursive "all" directory target.
-llvm/keystone/all: llvm/keystone/CMakeFiles/keystone.dir/all
-.PHONY : llvm/keystone/all
-
-# Recursive "preinstall" directory target.
-llvm/keystone/preinstall:
-.PHONY : llvm/keystone/preinstall
-
-# Recursive "clean" directory target.
-llvm/keystone/clean: llvm/keystone/CMakeFiles/keystone.dir/clean
-.PHONY : llvm/keystone/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib
-
-# Recursive "all" directory target.
-llvm/lib/all: llvm/lib/MC/all
-llvm/lib/all: llvm/lib/Target/all
-.PHONY : llvm/lib/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/preinstall: llvm/lib/MC/preinstall
-llvm/lib/preinstall: llvm/lib/Target/preinstall
-.PHONY : llvm/lib/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/clean: llvm/lib/MC/clean
-llvm/lib/clean: llvm/lib/Target/clean
-.PHONY : llvm/lib/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/MC
-
-# Recursive "all" directory target.
-llvm/lib/MC/all:
-.PHONY : llvm/lib/MC/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/MC/preinstall:
-.PHONY : llvm/lib/MC/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/MC/clean:
-.PHONY : llvm/lib/MC/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/Support
-
-# Recursive "all" directory target.
-llvm/lib/Support/all:
-.PHONY : llvm/lib/Support/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/Support/preinstall:
-.PHONY : llvm/lib/Support/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/Support/clean:
-.PHONY : llvm/lib/Support/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/Target
-
-# Recursive "all" directory target.
-llvm/lib/Target/all: llvm/lib/Target/AArch64/all
-llvm/lib/Target/all: llvm/lib/Target/ARM/all
-llvm/lib/Target/all: llvm/lib/Target/Hexagon/all
-llvm/lib/Target/all: llvm/lib/Target/Mips/all
-llvm/lib/Target/all: llvm/lib/Target/PowerPC/all
-llvm/lib/Target/all: llvm/lib/Target/Sparc/all
-llvm/lib/Target/all: llvm/lib/Target/SystemZ/all
-llvm/lib/Target/all: llvm/lib/Target/X86/all
-.PHONY : llvm/lib/Target/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/Target/preinstall: llvm/lib/Target/AArch64/preinstall
-llvm/lib/Target/preinstall: llvm/lib/Target/ARM/preinstall
-llvm/lib/Target/preinstall: llvm/lib/Target/Hexagon/preinstall
-llvm/lib/Target/preinstall: llvm/lib/Target/Mips/preinstall
-llvm/lib/Target/preinstall: llvm/lib/Target/PowerPC/preinstall
-llvm/lib/Target/preinstall: llvm/lib/Target/Sparc/preinstall
-llvm/lib/Target/preinstall: llvm/lib/Target/SystemZ/preinstall
-llvm/lib/Target/preinstall: llvm/lib/Target/X86/preinstall
-.PHONY : llvm/lib/Target/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/Target/clean: llvm/lib/Target/AArch64/clean
-llvm/lib/Target/clean: llvm/lib/Target/ARM/clean
-llvm/lib/Target/clean: llvm/lib/Target/Hexagon/clean
-llvm/lib/Target/clean: llvm/lib/Target/Mips/clean
-llvm/lib/Target/clean: llvm/lib/Target/PowerPC/clean
-llvm/lib/Target/clean: llvm/lib/Target/Sparc/clean
-llvm/lib/Target/clean: llvm/lib/Target/SystemZ/clean
-llvm/lib/Target/clean: llvm/lib/Target/X86/clean
-.PHONY : llvm/lib/Target/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/Target/AArch64
-
-# Recursive "all" directory target.
-llvm/lib/Target/AArch64/all:
-.PHONY : llvm/lib/Target/AArch64/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/Target/AArch64/preinstall:
-.PHONY : llvm/lib/Target/AArch64/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/Target/AArch64/clean:
-.PHONY : llvm/lib/Target/AArch64/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/Target/ARM
-
-# Recursive "all" directory target.
-llvm/lib/Target/ARM/all:
-.PHONY : llvm/lib/Target/ARM/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/Target/ARM/preinstall:
-.PHONY : llvm/lib/Target/ARM/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/Target/ARM/clean:
-.PHONY : llvm/lib/Target/ARM/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/Target/Hexagon
-
-# Recursive "all" directory target.
-llvm/lib/Target/Hexagon/all:
-.PHONY : llvm/lib/Target/Hexagon/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/Target/Hexagon/preinstall:
-.PHONY : llvm/lib/Target/Hexagon/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/Target/Hexagon/clean:
-.PHONY : llvm/lib/Target/Hexagon/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/Target/Mips
-
-# Recursive "all" directory target.
-llvm/lib/Target/Mips/all:
-.PHONY : llvm/lib/Target/Mips/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/Target/Mips/preinstall:
-.PHONY : llvm/lib/Target/Mips/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/Target/Mips/clean:
-.PHONY : llvm/lib/Target/Mips/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/Target/PowerPC
-
-# Recursive "all" directory target.
-llvm/lib/Target/PowerPC/all:
-.PHONY : llvm/lib/Target/PowerPC/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/Target/PowerPC/preinstall:
-.PHONY : llvm/lib/Target/PowerPC/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/Target/PowerPC/clean:
-.PHONY : llvm/lib/Target/PowerPC/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/Target/Sparc
-
-# Recursive "all" directory target.
-llvm/lib/Target/Sparc/all:
-.PHONY : llvm/lib/Target/Sparc/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/Target/Sparc/preinstall:
-.PHONY : llvm/lib/Target/Sparc/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/Target/Sparc/clean:
-.PHONY : llvm/lib/Target/Sparc/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/Target/SystemZ
-
-# Recursive "all" directory target.
-llvm/lib/Target/SystemZ/all:
-.PHONY : llvm/lib/Target/SystemZ/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/Target/SystemZ/preinstall:
-.PHONY : llvm/lib/Target/SystemZ/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/Target/SystemZ/clean:
-.PHONY : llvm/lib/Target/SystemZ/clean
-
-#=============================================================================
-# Directory level rules for directory llvm/lib/Target/X86
-
-# Recursive "all" directory target.
-llvm/lib/Target/X86/all:
-.PHONY : llvm/lib/Target/X86/all
-
-# Recursive "preinstall" directory target.
-llvm/lib/Target/X86/preinstall:
-.PHONY : llvm/lib/Target/X86/preinstall
-
-# Recursive "clean" directory target.
-llvm/lib/Target/X86/clean:
-.PHONY : llvm/lib/Target/X86/clean
-
-#=============================================================================
-# Directory level rules for directory suite/fuzz
-
-# Recursive "all" directory target.
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/all
-suite/fuzz/all: suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/all
-.PHONY : suite/fuzz/all
-
-# Recursive "preinstall" directory target.
-suite/fuzz/preinstall:
-.PHONY : suite/fuzz/preinstall
-
-# Recursive "clean" directory target.
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/clean
-suite/fuzz/clean: suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/clean
-.PHONY : suite/fuzz/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/uninstall.dir
+# Target rules for target CMakeFiles/capstone.dir
 
 # All Build rule for target.
-CMakeFiles/uninstall.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num= "Built target uninstall"
-.PHONY : CMakeFiles/uninstall.dir/all
+CMakeFiles/capstone.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/capstone.dir/build.make CMakeFiles/capstone.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/capstone.dir/build.make CMakeFiles/capstone.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51 "Built target capstone"
+.PHONY : CMakeFiles/capstone.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/uninstall.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/uninstall.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : CMakeFiles/uninstall.dir/rule
+CMakeFiles/capstone.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 51
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/capstone.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/capstone.dir/rule
 
 # Convenience name for target.
-uninstall: CMakeFiles/uninstall.dir/rule
-.PHONY : uninstall
+capstone: CMakeFiles/capstone.dir/rule
+.PHONY : capstone
 
 # clean rule for target.
-CMakeFiles/uninstall.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/clean
-.PHONY : CMakeFiles/uninstall.dir/clean
+CMakeFiles/capstone.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/capstone.dir/build.make CMakeFiles/capstone.dir/clean
+.PHONY : CMakeFiles/capstone.dir/clean
 
 #=============================================================================
-# Target rules for target llvm/keystone/CMakeFiles/keystone.dir
+# Target rules for target CMakeFiles/test_basic.dir
 
 # All Build rule for target.
-llvm/keystone/CMakeFiles/keystone.dir/all:
-	$(MAKE) $(MAKESILENT) -f llvm/keystone/CMakeFiles/keystone.dir/build.make llvm/keystone/CMakeFiles/keystone.dir/depend
-	$(MAKE) $(MAKESILENT) -f llvm/keystone/CMakeFiles/keystone.dir/build.make llvm/keystone/CMakeFiles/keystone.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99 "Built target keystone"
-.PHONY : llvm/keystone/CMakeFiles/keystone.dir/all
+CMakeFiles/test_basic.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_basic.dir/build.make CMakeFiles/test_basic.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_basic.dir/build.make CMakeFiles/test_basic.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=73,74 "Built target test_basic"
+.PHONY : CMakeFiles/test_basic.dir/all
 
 # Build rule for subdir invocation for target.
-llvm/keystone/CMakeFiles/keystone.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 66
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 llvm/keystone/CMakeFiles/keystone.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : llvm/keystone/CMakeFiles/keystone.dir/rule
+CMakeFiles/test_basic.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 53
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_basic.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_basic.dir/rule
 
 # Convenience name for target.
-keystone: llvm/keystone/CMakeFiles/keystone.dir/rule
-.PHONY : keystone
+test_basic: CMakeFiles/test_basic.dir/rule
+.PHONY : test_basic
 
 # clean rule for target.
-llvm/keystone/CMakeFiles/keystone.dir/clean:
-	$(MAKE) $(MAKESILENT) -f llvm/keystone/CMakeFiles/keystone.dir/build.make llvm/keystone/CMakeFiles/keystone.dir/clean
-.PHONY : llvm/keystone/CMakeFiles/keystone.dir/clean
+CMakeFiles/test_basic.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_basic.dir/build.make CMakeFiles/test_basic.dir/clean
+.PHONY : CMakeFiles/test_basic.dir/clean
 
 #=============================================================================
-# Target rules for target kstool/CMakeFiles/kstool.dir
+# Target rules for target CMakeFiles/test_detail.dir
 
 # All Build rule for target.
-kstool/CMakeFiles/kstool.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f kstool/CMakeFiles/kstool.dir/build.make kstool/CMakeFiles/kstool.dir/depend
-	$(MAKE) $(MAKESILENT) -f kstool/CMakeFiles/kstool.dir/build.make kstool/CMakeFiles/kstool.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=100 "Built target kstool"
-.PHONY : kstool/CMakeFiles/kstool.dir/all
+CMakeFiles/test_detail.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_detail.dir/build.make CMakeFiles/test_detail.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_detail.dir/build.make CMakeFiles/test_detail.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=77,78 "Built target test_detail"
+.PHONY : CMakeFiles/test_detail.dir/all
 
 # Build rule for subdir invocation for target.
-kstool/CMakeFiles/kstool.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 kstool/CMakeFiles/kstool.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : kstool/CMakeFiles/kstool.dir/rule
+CMakeFiles/test_detail.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 53
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_detail.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_detail.dir/rule
 
 # Convenience name for target.
-kstool: kstool/CMakeFiles/kstool.dir/rule
-.PHONY : kstool
+test_detail: CMakeFiles/test_detail.dir/rule
+.PHONY : test_detail
 
 # clean rule for target.
-kstool/CMakeFiles/kstool.dir/clean:
-	$(MAKE) $(MAKESILENT) -f kstool/CMakeFiles/kstool.dir/build.make kstool/CMakeFiles/kstool.dir/clean
-.PHONY : kstool/CMakeFiles/kstool.dir/clean
+CMakeFiles/test_detail.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_detail.dir/build.make CMakeFiles/test_detail.dir/clean
+.PHONY : CMakeFiles/test_detail.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir
+# Target rules for target CMakeFiles/test_skipdata.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=1 "Built target fuzz_asm_arm64_arm"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/all
+CMakeFiles/test_skipdata.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_skipdata.dir/build.make CMakeFiles/test_skipdata.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_skipdata.dir/build.make CMakeFiles/test_skipdata.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=90,91 "Built target test_skipdata"
+.PHONY : CMakeFiles/test_skipdata.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/rule
+CMakeFiles/test_skipdata.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 53
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_skipdata.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_skipdata.dir/rule
 
 # Convenience name for target.
-fuzz_asm_arm64_arm: suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/rule
-.PHONY : fuzz_asm_arm64_arm
+test_skipdata: CMakeFiles/test_skipdata.dir/rule
+.PHONY : test_skipdata
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm64_arm.dir/clean
+CMakeFiles/test_skipdata.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_skipdata.dir/build.make CMakeFiles/test_skipdata.dir/clean
+.PHONY : CMakeFiles/test_skipdata.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir
+# Target rules for target CMakeFiles/test_iter.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=2 "Built target fuzz_asm_arm_arm"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/all
+CMakeFiles/test_iter.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_iter.dir/build.make CMakeFiles/test_iter.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_iter.dir/build.make CMakeFiles/test_iter.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=80,81 "Built target test_iter"
+.PHONY : CMakeFiles/test_iter.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/rule
+CMakeFiles/test_iter.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 53
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_iter.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_iter.dir/rule
 
 # Convenience name for target.
-fuzz_asm_arm_arm: suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/rule
-.PHONY : fuzz_asm_arm_arm
+test_iter: CMakeFiles/test_iter.dir/rule
+.PHONY : test_iter
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_arm.dir/clean
+CMakeFiles/test_iter.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_iter.dir/build.make CMakeFiles/test_iter.dir/clean
+.PHONY : CMakeFiles/test_iter.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir
+# Target rules for target CMakeFiles/test_arm.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=3 "Built target fuzz_asm_arm_armbe"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/all
+CMakeFiles/test_arm.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arm.dir/build.make CMakeFiles/test_arm.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arm.dir/build.make CMakeFiles/test_arm.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=69 "Built target test_arm"
+.PHONY : CMakeFiles/test_arm.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/rule
+CMakeFiles/test_arm.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_arm.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_arm.dir/rule
 
 # Convenience name for target.
-fuzz_asm_arm_armbe: suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/rule
-.PHONY : fuzz_asm_arm_armbe
+test_arm: CMakeFiles/test_arm.dir/rule
+.PHONY : test_arm
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_armbe.dir/clean
+CMakeFiles/test_arm.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arm.dir/build.make CMakeFiles/test_arm.dir/clean
+.PHONY : CMakeFiles/test_arm.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir
+# Target rules for target CMakeFiles/test_arm64.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=4,5 "Built target fuzz_asm_arm_armv8be"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/all
+CMakeFiles/test_arm64.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arm64.dir/build.make CMakeFiles/test_arm64.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arm64.dir/build.make CMakeFiles/test_arm64.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=70,71 "Built target test_arm64"
+.PHONY : CMakeFiles/test_arm64.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 68
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/rule
+CMakeFiles/test_arm64.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 53
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_arm64.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_arm64.dir/rule
 
 # Convenience name for target.
-fuzz_asm_arm_armv8be: suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/rule
-.PHONY : fuzz_asm_arm_armv8be
+test_arm64: CMakeFiles/test_arm64.dir/rule
+.PHONY : test_arm64
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_armv8be.dir/clean
+CMakeFiles/test_arm64.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arm64.dir/build.make CMakeFiles/test_arm64.dir/clean
+.PHONY : CMakeFiles/test_arm64.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir
+# Target rules for target CMakeFiles/test_mips.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=6 "Built target fuzz_asm_arm_thumb"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/all
+CMakeFiles/test_mips.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mips.dir/build.make CMakeFiles/test_mips.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mips.dir/build.make CMakeFiles/test_mips.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=85 "Built target test_mips"
+.PHONY : CMakeFiles/test_mips.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/rule
+CMakeFiles/test_mips.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_mips.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_mips.dir/rule
 
 # Convenience name for target.
-fuzz_asm_arm_thumb: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/rule
-.PHONY : fuzz_asm_arm_thumb
+test_mips: CMakeFiles/test_mips.dir/rule
+.PHONY : test_mips
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumb.dir/clean
+CMakeFiles/test_mips.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mips.dir/build.make CMakeFiles/test_mips.dir/clean
+.PHONY : CMakeFiles/test_mips.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir
+# Target rules for target CMakeFiles/test_ppc.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=7 "Built target fuzz_asm_arm_thumbbe"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/all
+CMakeFiles/test_ppc.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ppc.dir/build.make CMakeFiles/test_ppc.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ppc.dir/build.make CMakeFiles/test_ppc.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=88 "Built target test_ppc"
+.PHONY : CMakeFiles/test_ppc.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/rule
+CMakeFiles/test_ppc.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_ppc.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_ppc.dir/rule
 
 # Convenience name for target.
-fuzz_asm_arm_thumbbe: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/rule
-.PHONY : fuzz_asm_arm_thumbbe
+test_ppc: CMakeFiles/test_ppc.dir/rule
+.PHONY : test_ppc
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbbe.dir/clean
+CMakeFiles/test_ppc.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ppc.dir/build.make CMakeFiles/test_ppc.dir/clean
+.PHONY : CMakeFiles/test_ppc.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir
+# Target rules for target CMakeFiles/test_x86.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=8,9 "Built target fuzz_asm_arm_thumbv8"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/all
+CMakeFiles/test_x86.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_x86.dir/build.make CMakeFiles/test_x86.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_x86.dir/build.make CMakeFiles/test_x86.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=98 "Built target test_x86"
+.PHONY : CMakeFiles/test_x86.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 68
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/rule
+CMakeFiles/test_x86.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_x86.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_x86.dir/rule
 
 # Convenience name for target.
-fuzz_asm_arm_thumbv8: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/rule
-.PHONY : fuzz_asm_arm_thumbv8
+test_x86: CMakeFiles/test_x86.dir/rule
+.PHONY : test_x86
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8.dir/clean
+CMakeFiles/test_x86.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_x86.dir/build.make CMakeFiles/test_x86.dir/clean
+.PHONY : CMakeFiles/test_x86.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir
+# Target rules for target CMakeFiles/test_customized_mnem.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=10 "Built target fuzz_asm_arm_thumbv8be"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/all
+CMakeFiles/test_customized_mnem.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_customized_mnem.dir/build.make CMakeFiles/test_customized_mnem.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_customized_mnem.dir/build.make CMakeFiles/test_customized_mnem.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=76 "Built target test_customized_mnem"
+.PHONY : CMakeFiles/test_customized_mnem.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/rule
+CMakeFiles/test_customized_mnem.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_customized_mnem.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_customized_mnem.dir/rule
 
 # Convenience name for target.
-fuzz_asm_arm_thumbv8be: suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/rule
-.PHONY : fuzz_asm_arm_thumbv8be
+test_customized_mnem: CMakeFiles/test_customized_mnem.dir/rule
+.PHONY : test_customized_mnem
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_arm_thumbv8be.dir/clean
+CMakeFiles/test_customized_mnem.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_customized_mnem.dir/build.make CMakeFiles/test_customized_mnem.dir/clean
+.PHONY : CMakeFiles/test_customized_mnem.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir
+# Target rules for target CMakeFiles/test_sparc.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=11 "Built target fuzz_asm_armv8_arm"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/all
+CMakeFiles/test_sparc.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sparc.dir/build.make CMakeFiles/test_sparc.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sparc.dir/build.make CMakeFiles/test_sparc.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=92 "Built target test_sparc"
+.PHONY : CMakeFiles/test_sparc.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/rule
+CMakeFiles/test_sparc.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_sparc.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_sparc.dir/rule
 
 # Convenience name for target.
-fuzz_asm_armv8_arm: suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/rule
-.PHONY : fuzz_asm_armv8_arm
+test_sparc: CMakeFiles/test_sparc.dir/rule
+.PHONY : test_sparc
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_armv8_arm.dir/clean
+CMakeFiles/test_sparc.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sparc.dir/build.make CMakeFiles/test_sparc.dir/clean
+.PHONY : CMakeFiles/test_sparc.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_evm.dir
+# Target rules for target CMakeFiles/test_systemz.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=12,13 "Built target fuzz_asm_evm"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/all
+CMakeFiles/test_systemz.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_systemz.dir/build.make CMakeFiles/test_systemz.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_systemz.dir/build.make CMakeFiles/test_systemz.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=93,94 "Built target test_systemz"
+.PHONY : CMakeFiles/test_systemz.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 68
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/rule
+CMakeFiles/test_systemz.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 53
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_systemz.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_systemz.dir/rule
 
 # Convenience name for target.
-fuzz_asm_evm: suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/rule
-.PHONY : fuzz_asm_evm
+test_systemz: CMakeFiles/test_systemz.dir/rule
+.PHONY : test_systemz
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_evm.dir/clean
+CMakeFiles/test_systemz.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_systemz.dir/build.make CMakeFiles/test_systemz.dir/clean
+.PHONY : CMakeFiles/test_systemz.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_hex.dir
+# Target rules for target CMakeFiles/test_xcore.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=14 "Built target fuzz_asm_hex"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/all
+CMakeFiles/test_xcore.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xcore.dir/build.make CMakeFiles/test_xcore.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xcore.dir/build.make CMakeFiles/test_xcore.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=99,100 "Built target test_xcore"
+.PHONY : CMakeFiles/test_xcore.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/rule
+CMakeFiles/test_xcore.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 53
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_xcore.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_xcore.dir/rule
 
 # Convenience name for target.
-fuzz_asm_hex: suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/rule
-.PHONY : fuzz_asm_hex
+test_xcore: CMakeFiles/test_xcore.dir/rule
+.PHONY : test_xcore
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_hex.dir/clean
+CMakeFiles/test_xcore.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xcore.dir/build.make CMakeFiles/test_xcore.dir/clean
+.PHONY : CMakeFiles/test_xcore.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_mips.dir
+# Target rules for target CMakeFiles/test_m68k.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=15 "Built target fuzz_asm_mips"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/all
+CMakeFiles/test_m68k.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_m68k.dir/build.make CMakeFiles/test_m68k.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_m68k.dir/build.make CMakeFiles/test_m68k.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=83,84 "Built target test_m68k"
+.PHONY : CMakeFiles/test_m68k.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/rule
+CMakeFiles/test_m68k.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 53
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_m68k.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_m68k.dir/rule
 
 # Convenience name for target.
-fuzz_asm_mips: suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/rule
-.PHONY : fuzz_asm_mips
+test_m68k: CMakeFiles/test_m68k.dir/rule
+.PHONY : test_m68k
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mips.dir/clean
+CMakeFiles/test_m68k.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_m68k.dir/build.make CMakeFiles/test_m68k.dir/clean
+.PHONY : CMakeFiles/test_m68k.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir
+# Target rules for target CMakeFiles/test_tms320c64x.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=16,17 "Built target fuzz_asm_mips64"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/all
+CMakeFiles/test_tms320c64x.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_tms320c64x.dir/build.make CMakeFiles/test_tms320c64x.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_tms320c64x.dir/build.make CMakeFiles/test_tms320c64x.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=95 "Built target test_tms320c64x"
+.PHONY : CMakeFiles/test_tms320c64x.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 68
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/rule
+CMakeFiles/test_tms320c64x.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_tms320c64x.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_tms320c64x.dir/rule
 
 # Convenience name for target.
-fuzz_asm_mips64: suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/rule
-.PHONY : fuzz_asm_mips64
+test_tms320c64x: CMakeFiles/test_tms320c64x.dir/rule
+.PHONY : test_tms320c64x
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mips64.dir/clean
+CMakeFiles/test_tms320c64x.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_tms320c64x.dir/build.make CMakeFiles/test_tms320c64x.dir/clean
+.PHONY : CMakeFiles/test_tms320c64x.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir
+# Target rules for target CMakeFiles/test_m680x.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=18 "Built target fuzz_asm_mips64be"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/all
+CMakeFiles/test_m680x.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_m680x.dir/build.make CMakeFiles/test_m680x.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_m680x.dir/build.make CMakeFiles/test_m680x.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=82 "Built target test_m680x"
+.PHONY : CMakeFiles/test_m680x.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/rule
+CMakeFiles/test_m680x.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_m680x.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_m680x.dir/rule
 
 # Convenience name for target.
-fuzz_asm_mips64be: suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/rule
-.PHONY : fuzz_asm_mips64be
+test_m680x: CMakeFiles/test_m680x.dir/rule
+.PHONY : test_m680x
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mips64be.dir/clean
+CMakeFiles/test_m680x.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_m680x.dir/build.make CMakeFiles/test_m680x.dir/clean
+.PHONY : CMakeFiles/test_m680x.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir
+# Target rules for target CMakeFiles/test_evm.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=19 "Built target fuzz_asm_mipsbe"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/all
+CMakeFiles/test_evm.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_evm.dir/build.make CMakeFiles/test_evm.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_evm.dir/build.make CMakeFiles/test_evm.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=79 "Built target test_evm"
+.PHONY : CMakeFiles/test_evm.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/rule
+CMakeFiles/test_evm.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_evm.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_evm.dir/rule
 
 # Convenience name for target.
-fuzz_asm_mipsbe: suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/rule
-.PHONY : fuzz_asm_mipsbe
+test_evm: CMakeFiles/test_evm.dir/rule
+.PHONY : test_evm
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_mipsbe.dir/clean
+CMakeFiles/test_evm.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_evm.dir/build.make CMakeFiles/test_evm.dir/clean
+.PHONY : CMakeFiles/test_evm.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir
+# Target rules for target CMakeFiles/test_wasm.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=20,21 "Built target fuzz_asm_ppc32be"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/all
+CMakeFiles/test_wasm.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_wasm.dir/build.make CMakeFiles/test_wasm.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_wasm.dir/build.make CMakeFiles/test_wasm.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=96,97 "Built target test_wasm"
+.PHONY : CMakeFiles/test_wasm.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 68
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/rule
+CMakeFiles/test_wasm.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 53
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_wasm.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_wasm.dir/rule
 
 # Convenience name for target.
-fuzz_asm_ppc32be: suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/rule
-.PHONY : fuzz_asm_ppc32be
+test_wasm: CMakeFiles/test_wasm.dir/rule
+.PHONY : test_wasm
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_ppc32be.dir/clean
+CMakeFiles/test_wasm.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_wasm.dir/build.make CMakeFiles/test_wasm.dir/clean
+.PHONY : CMakeFiles/test_wasm.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir
+# Target rules for target CMakeFiles/test_mos65xx.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=22 "Built target fuzz_asm_ppc64"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/all
+CMakeFiles/test_mos65xx.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mos65xx.dir/build.make CMakeFiles/test_mos65xx.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mos65xx.dir/build.make CMakeFiles/test_mos65xx.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=86,87 "Built target test_mos65xx"
+.PHONY : CMakeFiles/test_mos65xx.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/rule
+CMakeFiles/test_mos65xx.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 53
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_mos65xx.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_mos65xx.dir/rule
 
 # Convenience name for target.
-fuzz_asm_ppc64: suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/rule
-.PHONY : fuzz_asm_ppc64
+test_mos65xx: CMakeFiles/test_mos65xx.dir/rule
+.PHONY : test_mos65xx
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_ppc64.dir/clean
+CMakeFiles/test_mos65xx.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mos65xx.dir/build.make CMakeFiles/test_mos65xx.dir/clean
+.PHONY : CMakeFiles/test_mos65xx.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir
+# Target rules for target CMakeFiles/test_bpf.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=23 "Built target fuzz_asm_ppc64be"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/all
+CMakeFiles/test_bpf.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bpf.dir/build.make CMakeFiles/test_bpf.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bpf.dir/build.make CMakeFiles/test_bpf.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=75 "Built target test_bpf"
+.PHONY : CMakeFiles/test_bpf.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/rule
+CMakeFiles/test_bpf.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_bpf.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_bpf.dir/rule
 
 # Convenience name for target.
-fuzz_asm_ppc64be: suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/rule
-.PHONY : fuzz_asm_ppc64be
+test_bpf: CMakeFiles/test_bpf.dir/rule
+.PHONY : test_bpf
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_ppc64be.dir/clean
+CMakeFiles/test_bpf.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bpf.dir/build.make CMakeFiles/test_bpf.dir/clean
+.PHONY : CMakeFiles/test_bpf.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir
+# Target rules for target CMakeFiles/test_riscv.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=24,25 "Built target fuzz_asm_sparc"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/all
+CMakeFiles/test_riscv.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_riscv.dir/build.make CMakeFiles/test_riscv.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_riscv.dir/build.make CMakeFiles/test_riscv.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=89 "Built target test_riscv"
+.PHONY : CMakeFiles/test_riscv.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 68
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/rule
+CMakeFiles/test_riscv.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_riscv.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_riscv.dir/rule
 
 # Convenience name for target.
-fuzz_asm_sparc: suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/rule
-.PHONY : fuzz_asm_sparc
+test_riscv: CMakeFiles/test_riscv.dir/rule
+.PHONY : test_riscv
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_sparc.dir/clean
+CMakeFiles/test_riscv.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_riscv.dir/build.make CMakeFiles/test_riscv.dir/clean
+.PHONY : CMakeFiles/test_riscv.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir
+# Target rules for target CMakeFiles/test_arm_regression.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=26 "Built target fuzz_asm_sparc64be"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/all
+CMakeFiles/test_arm_regression.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arm_regression.dir/build.make CMakeFiles/test_arm_regression.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arm_regression.dir/build.make CMakeFiles/test_arm_regression.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=72 "Built target test_arm_regression"
+.PHONY : CMakeFiles/test_arm_regression.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/rule
+CMakeFiles/test_arm_regression.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 52
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_arm_regression.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_arm_regression.dir/rule
 
 # Convenience name for target.
-fuzz_asm_sparc64be: suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/rule
-.PHONY : fuzz_asm_sparc64be
+test_arm_regression: CMakeFiles/test_arm_regression.dir/rule
+.PHONY : test_arm_regression
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_sparc64be.dir/clean
+CMakeFiles/test_arm_regression.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arm_regression.dir/build.make CMakeFiles/test_arm_regression.dir/clean
+.PHONY : CMakeFiles/test_arm_regression.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir
+# Target rules for target CMakeFiles/fuzz_disasm.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=27 "Built target fuzz_asm_sparcbe"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/all
+CMakeFiles/fuzz_disasm.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fuzz_disasm.dir/build.make CMakeFiles/fuzz_disasm.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fuzz_disasm.dir/build.make CMakeFiles/fuzz_disasm.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=66,67,68 "Built target fuzz_disasm"
+.PHONY : CMakeFiles/fuzz_disasm.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/rule
+CMakeFiles/fuzz_disasm.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 54
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/fuzz_disasm.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/fuzz_disasm.dir/rule
 
 # Convenience name for target.
-fuzz_asm_sparcbe: suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/rule
-.PHONY : fuzz_asm_sparcbe
+fuzz_disasm: CMakeFiles/fuzz_disasm.dir/rule
+.PHONY : fuzz_disasm
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_sparcbe.dir/clean
+CMakeFiles/fuzz_disasm.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fuzz_disasm.dir/build.make CMakeFiles/fuzz_disasm.dir/clean
+.PHONY : CMakeFiles/fuzz_disasm.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir
+# Target rules for target CMakeFiles/UNINSTALL.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=28,29 "Built target fuzz_asm_systemz"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/all
+CMakeFiles/UNINSTALL.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UNINSTALL.dir/build.make CMakeFiles/UNINSTALL.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UNINSTALL.dir/build.make CMakeFiles/UNINSTALL.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num= "Built target UNINSTALL"
+.PHONY : CMakeFiles/UNINSTALL.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 68
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/rule
+CMakeFiles/UNINSTALL.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/UNINSTALL.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/UNINSTALL.dir/rule
 
 # Convenience name for target.
-fuzz_asm_systemz: suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/rule
-.PHONY : fuzz_asm_systemz
+UNINSTALL: CMakeFiles/UNINSTALL.dir/rule
+.PHONY : UNINSTALL
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_systemz.dir/clean
+CMakeFiles/UNINSTALL.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UNINSTALL.dir/build.make CMakeFiles/UNINSTALL.dir/clean
+.PHONY : CMakeFiles/UNINSTALL.dir/clean
 
 #=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir
+# Target rules for target CMakeFiles/cstool.dir
 
 # All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=30 "Built target fuzz_asm_x86_16"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/all
+CMakeFiles/cstool.dir/all: CMakeFiles/capstone.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cstool.dir/build.make CMakeFiles/cstool.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cstool.dir/build.make CMakeFiles/cstool.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=52,53,54,55,56,57,58,59,60,61,62,63,64,65 "Built target cstool"
+.PHONY : CMakeFiles/cstool.dir/all
 
 # Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/rule
+CMakeFiles/cstool.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 65
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/cstool.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
+.PHONY : CMakeFiles/cstool.dir/rule
 
 # Convenience name for target.
-fuzz_asm_x86_16: suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/rule
-.PHONY : fuzz_asm_x86_16
+cstool: CMakeFiles/cstool.dir/rule
+.PHONY : cstool
 
 # clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_x86_16.dir/clean
-
-#=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir
-
-# All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=31 "Built target fuzz_asm_x86_32"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/all
-
-# Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 67
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/rule
-
-# Convenience name for target.
-fuzz_asm_x86_32: suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/rule
-.PHONY : fuzz_asm_x86_32
-
-# clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_x86_32.dir/clean
-
-#=============================================================================
-# Target rules for target suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir
-
-# All Build rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/all: llvm/keystone/CMakeFiles/keystone.dir/all
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/depend
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles --progress-num=32,33 "Built target fuzz_asm_x86_64"
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/all
-
-# Build rule for subdir invocation for target.
-suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 68
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_rsc/build/CMakeFiles 0
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/rule
-
-# Convenience name for target.
-fuzz_asm_x86_64: suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/rule
-.PHONY : fuzz_asm_x86_64
-
-# clean rule for target.
-suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/clean:
-	$(MAKE) $(MAKESILENT) -f suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/build.make suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/clean
-.PHONY : suite/fuzz/CMakeFiles/fuzz_asm_x86_64.dir/clean
+CMakeFiles/cstool.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cstool.dir/build.make CMakeFiles/cstool.dir/clean
+.PHONY : CMakeFiles/cstool.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

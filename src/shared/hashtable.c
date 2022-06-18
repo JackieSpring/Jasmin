@@ -182,12 +182,15 @@ int del_from_hashtable(hashtable * ht, htkey key) {
 }
 
 int get_value_hashtable( hashtable * ht, htkey key, htvalue * buffer) {
+    if ( ht == NULL )
+        return -1;
+    
     ht_entry_struct * node = find_entry(ht, key);
     
     if (node == NULL)
         return -1;
-    
-    *buffer = node->value;
+    if(buffer != NULL )
+        *buffer = node->value;
     return 0;
 }
 
@@ -195,7 +198,7 @@ int get_value_hashtable( hashtable * ht, htkey key, htvalue * buffer) {
  * The iterator function should return true to continue the iteration
  * or false to stop it
 */
-int iter_hashtable ( hashtable *  ht, htiterator iterator  ) {
+int iter_hashtable ( hashtable *  ht, htiterator iterator, void * extra  ) {
 
     if ( ht == NULL || iterator == NULL )
         return -1;
@@ -206,7 +209,7 @@ int iter_hashtable ( hashtable *  ht, htiterator iterator  ) {
         node = ht->array[i];
         
         for ( ; node != NULL ; node = node->next ) {
-            if ( (iterator)( node->key, node->value ) == false )
+            if ( (iterator)( node->key, node->value, extra ) == false )
                 return 0;
         }
     }

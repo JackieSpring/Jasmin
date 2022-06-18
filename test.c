@@ -17,41 +17,41 @@
 #include "jin_error.h"
 #include "x86.h"
 
-#define BASE 0
+#include "commands.h"
+
+#define CMD_CURSOR " o> "
 
 // Current running interpreter
 jin_interpreter * jint;
 
 
-static unsigned char * str_trim ( const unsigned char * str ) {
-    return (str + (strspn(str, " \t") ));
-}
-
-static bool str_isalphanum(const unsigned char * str, size_t len) {
-    for ( unsigned int i = 0; i < len; i++ ){
-        if ( !isalnum(str[i]) )
-            return false;
-    }
-    return true;
-}
-
 /*
  * Given a string, if it contains a label declaration '[a-zA-Z0-9]:` then returns
- * a pointer to the first character after the label, or the string pointer if none
+ * a pointer to the first character AFTER the label, or the string pointer if none
  
 */
 static unsigned char * contains_label( const unsigned char * str, unsigned char ** label ,size_t * length ) {
+
     size_t lab_len;
-    unsigned char * ret = str;
-    lab_len = strcspn(str, ":");
+    string ret;
+    
+    ret = strchr(str, ':');
+    if ( ret == NULL ) {
+        *label = NULL;
+        *length = 0;
+        return str;
+    }
+    lab_len = ret - str;
+    
     if ( str_isalphanum(str, lab_len) == true ) {
-        ret = str_trim(str + lab_len + 1);
+        ret = str_ltrim(ret + 1);
         *label = str;
         *length = lab_len;
     }
     else {
         *label = NULL;
         *length = 0;
+        ret = str;
     }
     
     return ret;
@@ -69,26 +69,38 @@ static unsigned char * fetch_command_line( jin_interpreter * jint, memory_addr i
     ks_err kerr;
     jin_err jerr;
     memory_addr codeptr;
-    bool wait_input = true;
     
     do {
-        printf(" > ");
+        printf(CMD_CURSOR);
         fgets(asmcode, 256, stdin);
         asmcode[ sizeof(asmcode) - 1 ] = '\0';
-    
-        wait_input = false;
         
         code_ptr = str_trim( asmcode );
+
+        if ( is_command(code_ptr) == true ) {
+            jerr = execute_command(jint, code_ptr);
+            if( jerr != JIN_ERR_OK)
+                jin_perror(jerr);
+            continue;
+        }
+        
         code_ptr = contains_label(code_ptr, &label_ptr, &label_size);
+        
         if ( label_size != 0 ) {
             label_ptr[label_size] = '\0';
             add_symbol_to_table(jint->symt, label_ptr, ip);
         }
-        
+    
         if ( strlen(code_ptr) < 2 )
-            wait_input = true;
+            continue;
         
-    } while (wait_input == true);
+        break;
+        
+    } while ( jin_is_running(jint) );
+    
+    if ( jin_is_running(jint) == false )
+        return NULL;
+    
     
     
     kerr = ks_asm(jint->ks, code_ptr, ip, &bytecode, &size, &nins);
@@ -309,9 +321,15 @@ int main(){
     ks_option(jint->ks, KS_OPT_SYM_RESOLVER, symres);
 
     init_x86(jint);
+    assert( init_commands() == JIN_ERR_OK );
+    
     jin_start_interpreter(jint);
     
-    print_registers(jint);
+    //print_registers(jint);
+    
+    
+    puts("Starting Jasmin v0.1");
+    puts("use <help for help");
 
 	while ( jin_is_running(jint) ) {
 	
@@ -328,17 +346,18 @@ int main(){
         	exit(EXIT_FAILURE);
     	}
     	
-    	print_instruction(jins);
+    	//print_instruction(jins);
     	if ( execute(jint, jins) < 0)
             jin_perror(JIN_ERR_INSN_EXEC_FAIL);
     	
     	
     	jin_free_instruction(jins);
-        print_registers(jint);
+        //print_registers(jint);
     
     }
-    print_registers(jint);
+    //print_registers(jint);
     
+    fini_commands();
     jin_fini_interpreter(jint);
     
     
