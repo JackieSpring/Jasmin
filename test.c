@@ -67,7 +67,6 @@ static unsigned char * fetch_command_line( jin_interpreter * jint, memory_addr i
     size_t label_size;
     size_t size;
     size_t nins;
-    ks_err kerr;
     jin_err jerr;
     memory_addr memptr;
     
@@ -89,7 +88,7 @@ static unsigned char * fetch_command_line( jin_interpreter * jint, memory_addr i
         
         if ( label_size != 0 ) {
             label_ptr[label_size] = '\0';
-            add_symbol_to_table(jint->symt, label_ptr, ip);
+            jin_add_symbol(jint, label_ptr, ip);
         }
     
         if ( strlen(code_ptr) < 2 )
@@ -97,9 +96,9 @@ static unsigned char * fetch_command_line( jin_interpreter * jint, memory_addr i
         
         break;
         
-    } while ( jin_is_running(jint) );
+    } while ( jin_get_state(jint) != JIN_STATE_TERMINATED );
     
-    if ( jin_is_running(jint) == false )
+    if ( jin_get_state(jint) == JIN_STATE_TERMINATED )
         return NULL;
     
     
@@ -201,7 +200,7 @@ int execute(jin_interpreter * jint, jin_instruction * ins ) {
     jin_err jerr = jin_execute(jint, ins);
     
     if ( jerr != JIN_ERR_OK ) {
-        perror( jerr );
+        jin_perror( jerr );
         return -1;
     }
     
@@ -223,6 +222,7 @@ void print_instruction(jin_instruction * ins ){
     printf("id: %u\n", ins->id);
     printf("op_count %p\n", ins->op_count);
     printf("operands_p %p\n", ins->op);
+    printf("mnemonic: %s\n", ins->mnemonic);
 }
 
 void print_operand(jin_operand * op) {
@@ -277,16 +277,13 @@ int main(){
 
     assert( init_commands() == JIN_ERR_OK );
     
-    jin_start_interpreter(jint);
+    jin_set_state(jint, JIN_STATE_RUNNING );
     
     //print_registers(jint);
     
 
-    
-    puts("Starting Jasmin v0.1");
-    puts("use <help for help");
 
-	while ( jin_is_running(jint) ) {
+	while ( jin_get_state(jint) != JIN_STATE_TERMINATED ) {
 	
     	unsigned char * code = fetch(jint);
     	if ( code == NULL ) {

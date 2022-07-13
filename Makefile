@@ -11,6 +11,7 @@ SRC_PATH += src/arch/x86/
 
 MAIN_SRC = $(foreach path, $(SRC_PATH), $(wildcard $(path)*.c) )
 ADDITIONAL_SRC = test.c
+ADDITIONAL_SRC = 
 
 SRC = $(ADDITIONAL_SRC) $(MAIN_SRC)
 

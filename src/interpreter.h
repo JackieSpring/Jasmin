@@ -39,6 +39,12 @@
 
 
 
+struct jin_interpreter;
+typedef struct jin_interpreter jin_interpreter;
+
+
+
+
 typedef enum jin_arch {
     JIN_ARCH_ARM = 1,    // ARM architecture (including Thumb, Thumb-2)
     JIN_ARCH_ARM64,      // ARM-64, also called AArch64
@@ -80,27 +86,12 @@ typedef struct jin_options {
 } jin_options;
 
 
-struct jin_interpreter;
-typedef struct jin_interpreter {
-    register_list * regs;
-    instruction_set * isa;
-    memory_map * mem;
-    symbol_table * symt;
-    
-    jin_arch arch;
-    jin_mode mode;
-    ks_engine * ks;
-    csh cs;
-    
-    void * op_res;  // operand_resolver
-    void * ip_reader; // instruction pointer 
-    void * ip_writer;
-    void * sp_reader;  // stack pointer
-    void * sp_writer;
-    
-    bool running;
-} jin_interpreter;
-
+typedef enum jin_state {
+    JIN_STATE_RUNNING,              // Program is running, execute instructions
+    JIN_STATE_PAUSE,                // Program is in pause, do not execute instructions
+    JIN_STATE_INACTIVE,             // Program is not running, do not execute instructions
+    JIN_STATE_TERMINATED,            // Terminate interpreter
+} jin_state;
 
 
 // NEW OPERAND
@@ -284,8 +275,9 @@ int jin_set_stack_pointer_rw ( jin_interpreter * jint, register_access_function 
 
 
 
-/*
- * RESOURCES ACCESS
+/* ############################################################################
+ *                              RESOURCES ACCESS
+ * ############################################################################
 */
     // registers
 register_size read_register ( jin_interpreter * jint, register_id regid, void * buffer);
@@ -359,9 +351,9 @@ size_t force_write_memory ( jin_interpreter * jint, memory_addr addr, void * buf
 */
 
 
-
-/*
- * ARCHITECTURE-SPECIFIC FUNCTIONS ACCESS
+/* ############################################################################
+ *                      ARCHITECTURE-SPECIFIC FUNCTIONS ACCESS
+ * ############################################################################
 */
 int resolve_operands (jin_interpreter * jint, cs_insn * raw_ins , jin_operand ** ret, size_t ** ret_op_count );
     
@@ -372,15 +364,15 @@ register_size read_stack_pointer ( jin_interpreter *  jint, void * buffer );
 register_size write_stack_pointer ( jin_interpreter *  jint, void * buffer );
 
 
-/*
- * INTERPRETER UTILITY FUNCTIONS
+/* ############################################################################
+ *                      INTERPRETER UTILITY FUNCTIONS
+ * ############################################################################
 */
 jin_arch jin_get_arch(jin_interpreter * jint);
 jin_mode jin_get_mode(jin_interpreter * jint);
 
-void jin_start_interpreter (jin_interpreter * jint);
-void jin_stop_interpreter ( jin_interpreter * jint );
-bool jin_is_running ( jin_interpreter * jint );
+int jin_set_state (jin_interpreter * jint, jin_state state);
+jin_state jin_get_state(jin_interpreter * jint);
 
 void jin_free_instruction( jin_instruction * ins );
 
@@ -455,6 +447,15 @@ bool check_perm_memory( jin_interpreter * jint, memory_addr addr, memory_perm pe
 
 void * get_effective_pointer( jin_interpreter * jint, memory_addr address );
 
+
+int jin_set_working_segment( jin_interpreter * jint , segment_id id );
+segment_id jin_get_working_segment( jin_interpreter * jint );
+
+int jin_set_entrypoint( jin_interpreter * jint, memory_addr addr );
+memory_addr jin_get_entrypoint( jin_interpreter * jint );
+
+int jin_set_stackbase( jin_interpreter * jint, memory_addr addr );
+memory_addr jin_get_stackbase( jin_interpreter * jint ); 
 
 
 

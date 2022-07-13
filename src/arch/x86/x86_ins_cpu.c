@@ -4,7 +4,7 @@
 
 instruction_handler x86_ins_hlt(jin_interpreter * jint, jin_operand * operands, size_t nops ) {
     if ( jint != NULL )
-        jin_stop_interpreter(jint);
+        jin_set_state(jint, JIN_STATE_INACTIVE);
     return 0;
 }
 

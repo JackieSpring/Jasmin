@@ -1,6 +1,32 @@
 
 #include "interpreter.h"
 
+
+struct jin_interpreter {
+    register_list * regs;
+    instruction_set * isa;
+    memory_map * mem;
+    symbol_table * symt;
+    
+    jin_arch arch;
+    jin_mode mode;
+    ks_engine * ks;
+    csh cs;
+    
+    void * op_res;  // operand_resolver
+    void * ip_reader; // instruction pointer 
+    void * ip_writer;
+    void * sp_reader;  // stack pointer
+    void * sp_writer;
+    
+    memory_addr entrypoint;
+    memory_addr stackbase;
+    segment_id working_segment;
+    jin_state state;
+};
+
+
+
 /*
  * keystone let us resolve symbols that it can't resolve using a function so defined:
  *  ks_sym_resolver (* fun) (const char * sym, uint64_t * value)
@@ -254,7 +280,10 @@ void jin_fini_interpreter(jin_interpreter * ret) {
     }
 }
 
-
+/* ############################################################################
+ *                      INTERPRETER UTILITY FUNCTIONS
+ * ############################################################################
+*/
 jin_arch jin_get_arch(jin_interpreter * jint){
     return jint->arch;
 }
@@ -263,21 +292,19 @@ jin_mode jin_get_mode(jin_interpreter * jint){
     return jint->mode;
 }
 
-void jin_start_interpreter(jin_interpreter * jint) {
-    jint->running = true;
+int jin_set_state (jin_interpreter * jint, jin_state state) {
+    jint->state = state;
+    return 0;
 }
-
-void jin_stop_interpreter( jin_interpreter * jint ) {
-    jint->running = false;
-}
-
-bool jin_is_running( jin_interpreter * jint ) {
-    return jint->running;
+jin_state jin_get_state(jin_interpreter * jint) {
+    return jint->state;
 }
 
 
-// ARCH-SPECIFIC FUNCTIONS
-
+/* ############################################################################
+ *                      ARCHITECTURE-SPECIFIC FUNCTIONS ACCESS
+ * ############################################################################
+*/
 int resolve_operands (jin_interpreter * jint, cs_insn * raw_ins , jin_operand ** ret, size_t ** ret_op_count ) {
     return ((operand_resolver)jint->op_res)( jint, raw_ins, ret, ret_op_count );
 }
@@ -334,6 +361,24 @@ int jin_set_stack_pointer_rw ( jin_interpreter * jint, register_access_function 
 }
 
 
+
+/* ############################################################################
+ *                              RESOURCES ACCESS
+ * ############################################################################
+*/
+/*
+ * SYMBOLS HANDLERS
+*/
+int jin_add_symbol( jin_interpreter * jint , symbol_key sk, symbol_value val){
+    return add_symbol_to_table( jint->symt, sk, val);
+}
+int jin_del_symbol( jin_interpreter * jint , symbol_key sk){
+    return del_symbol_from_table( jint->symt, sk);
+}
+
+int jin_get_symbol( jin_interpreter * jint, symbol_key sk, symbol_value * ret ){
+    return get_symbol_value( jint->symt, sk,  ret );
+}
 
 
 /*
@@ -550,4 +595,28 @@ bool check_perm_memory( jin_interpreter * jint, memory_addr addr, memory_perm pe
 
 void * get_effective_pointer( jin_interpreter * jint, memory_addr address ){
     return get_real_memory_pointer( jint->mem, address );
+}
+
+int jin_set_working_segment( jin_interpreter * jint , segment_id id ) {
+    jint->working_segment = id;
+    return 0;
+}
+segment_id jin_get_working_segment( jin_interpreter * jint ){
+    return jint->working_segment;
+}
+
+int jin_set_entrypoint( jin_interpreter * jint, memory_addr addr ) {
+    jint->entrypoint = addr;
+    return 0;
+}
+memory_addr jin_get_entrypoint( jin_interpreter * jint ) {
+    return jint->entrypoint;
+}
+
+int jin_set_stackbase( jin_interpreter * jint, memory_addr addr ) {
+    jint->stackbase = addr;
+    return 0;
+}
+memory_addr jin_get_stackbase( jin_interpreter * jint ) {
+    return jint->stackbase;
 }

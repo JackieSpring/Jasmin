@@ -3,3 +3,4 @@ src/shared/external_include/keystone
 .DS_Store
 src/*.old.*
 dist/out
+test.c
