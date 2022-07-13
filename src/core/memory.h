@@ -6,48 +6,39 @@
 
 #include "shared_macros.h"
 
-
 #define MEM_32   32
 #define MEM_64   64
 
 #define MEM_DEFAULT 0xffffffffffffffff
 #define MEM_FAILURE 0xffffffffffffffff
-#define MEM_DEFAULT_OPTIONS NULL
+#define MEM_PAGE_SIZE _1KiB
+#define MAX_SEGMENT_ID      64
 
 #define MEM_EXEC 0x1
 #define MEM_WRITE 0x2
 #define MEM_READ 0x4
 
+
 typedef unsigned int    memory_mode;
 typedef uint64_t        memory_addr;
 typedef unsigned char   memory_perm;
+typedef unsigned int    segment_id;
+
 
 struct memory_map_struct;
 typedef struct memory_map_struct memory_map;
 
+
+
 // For default size/address set to MEM_DEFAULT
-struct options {
-    memory_mode    mode;
-    
-    memory_addr     stack_start;
-    memory_addr     text_start;
-    memory_addr     rodata_start;
-    memory_addr     data_start;
-    memory_addr     bss_start;
-    
-    size_t     stack_size;
-    size_t     text_size;
-    size_t     rodata_size;
-    size_t     data_size;
-    size_t     bss_size;
-};
 
-
-memory_map * create_memory_map( struct options * opt );
+memory_map * create_memory_map( memory_mode mode );
 void destroy_memory_map(memory_map * mm);
 
+
+
 /*
- * @return {size_t} return the number of bytes written/readden 
+ * @return      return the number of bytes written/readden 
  */
 size_t write_to_memory ( memory_map * mm, memory_addr address, void * buffer, size_t length );
 size_t read_from_memory( memory_map * mm, memory_addr address, void * buffer, size_t length );
@@ -74,17 +65,8 @@ size_t force_read_from_memory ( memory_map * mm, memory_addr address, void * buf
  * @return  if success, return the virtual address where the data are written/readden,
  *          else returns MEM_FAILURE
 */
-memory_addr offset_read_text   ( memory_map * mm,  size_t offset, void * buffer, size_t length );
-memory_addr offset_read_rodata ( memory_map * mm,  size_t offset, void * buffer, size_t length );
-memory_addr offset_read_data   ( memory_map * mm,  size_t offset, void * buffer, size_t length );
-memory_addr offset_read_bss    ( memory_map * mm,  size_t offset, void * buffer, size_t length );
-memory_addr offset_read_stack  ( memory_map * mm,  size_t offset, void * buffer, size_t length );
-
-memory_addr offset_write_text  ( memory_map * mm,  size_t offset, void * buffer, size_t length );
-memory_addr offset_write_rodata( memory_map * mm,  size_t offset, void * buffer, size_t length );
-memory_addr offset_write_data  ( memory_map * mm,  size_t offset, void * buffer, size_t length );
-memory_addr offset_write_bss   ( memory_map * mm,  size_t offset, void * buffer, size_t length );
-memory_addr offset_write_stack ( memory_map * mm,  size_t offset, void * buffer, size_t length );
+memory_addr offset_read_from_segment   ( memory_map * mm, segment_id id, size_t offset, void * buffer, size_t length );
+memory_addr offset_write_to_segment  ( memory_map * mm, segment_id id, size_t offset, void * buffer, size_t length );
 
 /*
  * This functions mimcs a stack-like behaviour and are designed for 
@@ -97,16 +79,16 @@ memory_addr offset_write_stack ( memory_map * mm,  size_t offset, void * buffer,
  * @return  if success, return the virtual address where the data are written/readden,
  *          else returns MEM_FAILURE
 */
-memory_addr push_text  ( memory_map * mm, void * buffer, size_t length );
-memory_addr push_rodata( memory_map * mm, void * buffer, size_t length );
-memory_addr push_data  ( memory_map * mm, void * buffer, size_t length );
-memory_addr push_bss   ( memory_map * mm, void * buffer, size_t length );
-memory_addr push_stack ( memory_map * mm, void * buffer, size_t length );
-
-memory_addr pop_stack  ( memory_map * mm, void * buffer, size_t length );
+memory_addr push_to_segment  ( memory_map * mm, segment_id id, void * buffer, size_t length );
+memory_addr pop_from_segment  ( memory_map * mm, segment_id id, void * buffer, size_t length );
 
 
 // FUNZIONI SPERIMENTALI
 void * get_real_memory_pointer( memory_map * mm, memory_addr addr );
+
+int add_segment_to_map ( memory_map * mm, segment_id newid, memory_addr start, size_t size, memory_perm perm, bool is_stack );
+
+bool check_address_perm(memory_map * mm, memory_addr addr, memory_perm perm );   // perm can be union
+
 
 #endif

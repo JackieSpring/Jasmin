@@ -32,6 +32,7 @@ typedef enum jin_err {
     JIN_ERR_INSN_FETCH_FAIL,        // could not fetch new instruction
     JIN_ERR_INSN_EXEC_FAIL,         // failed instruction execution
     JIN_ERR_INSN_DECODE_FAIL,       // could decode instruction
+    JIN_ERR_INSN_NOTSUPPORTED,      // no instruction handler
     
     JIN_ERR_SYM_UNDEFINED,          // undefined symbol
     
@@ -46,7 +47,7 @@ typedef enum jin_err {
 void jin_perror( jin_err err );
 void jin_throw_error( jin_err err );
 
-jin_err key_to_jin_err(ks_err err);
-jin_err cap_to_jin_err(cs_err err);
+jin_err ks_to_jin_err(ks_err err);
+jin_err cs_to_jin_err(cs_err err);
 
 #endif

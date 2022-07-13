@@ -4,6 +4,7 @@ SRC_PATH := src/
 SRC_PATH += src/core/
 SRC_PATH += src/commands/
 SRC_PATH += src/shared/
+SRC_PATH += src/flowcontrol/
 SRC_PATH += src/arch/
 SRC_PATH += src/arch/x86/
 
@@ -14,7 +15,7 @@ ADDITIONAL_SRC = test.c
 SRC = $(ADDITIONAL_SRC) $(MAIN_SRC)
 
 OUTPUT_PATH = dist/
-OUTPUT_NAME = out
+OUTPUT_NAME = jasmin
 OUTPUT = $(OUTPUT_PATH)$(OUTPUT_NAME)
 
 DEBUG_MODE = 0

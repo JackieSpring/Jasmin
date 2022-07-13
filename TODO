@@ -21,6 +21,7 @@
   e restare in attesa
 
 > Aggiungere comandi di debugging, come breakpoint
+
 > Aggiungere comandi di creazione dati (ex. create matrix 2 2 ) con il fine di permettere
   all'utente di simulare scenari realistici di esecuzione del codice. Questi comandi dovranno 
   essere progettati in modo che siano semplici e rapidi da usare.
@@ -29,7 +30,7 @@
 
 > Implementare argomenti da command line, come la modalità e l'architettura dell'interprete
 
-> Riscrivere l'inizializzazione di jin_interpreter in modod che l'unico argomento accettato
+> Riscrivere l'inizializzazione di jin_interpreter in modo che l'unico argomento accettato
   sia una struttura 'opzioni' contenente (la lista potrebbe non essere esaustiva):
     * id modalità
     * id architettura
@@ -45,7 +46,7 @@
 > Risolvere (non ho idea del come) i problemi assurdi di quel cazzo di keystone riportati
   in "BUG ASSURDI"
 
-> ampliare jin_interpreter in modod tale che possa cambiare segmento in cui pushare il codice
+> ampliare jin_interpreter in modo tale che possa cambiare segmento in cui pushare il codice
   tenendo traccia del 'segmento corrente', il bytecode così generato sarà o meno eseguito a 
   seconda dei permessi del segmento attivo.
 
@@ -56,4 +57,6 @@ ___ BASSA PRIORITA ___
 > aggiungere architettura ARM
 > aggiungere comando che permetta di disassemblare porzioni di codice memoria inidicate da
   label o indirizzo
+> Rendere sicuro il programma (non ci sono controlli sul numero massimo di elementi nelle
+  varie tabelle)
 

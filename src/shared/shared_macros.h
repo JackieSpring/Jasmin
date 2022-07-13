@@ -1,1 +1,36 @@
-#ifndef _SHARED_MACROS_H#define _SHARED_MACROS_H#include <limits.h>#include <sys/types.h>#include <stdlib.h>#if (SIZE_MAX < 0xffffffffffffffff)    #undef size_t    #define size_t uint64_t#endif#define _1KiB   1024#define KiB(x) (_1KiB * x)#define MiB(x) (KiB(1024) * x)#define BYTE  1#define WORD  2#define DWORD 4#define QWORD 8#define TEXT_DEFAULT_ADDRESS_32     0x00400000#define TEXT_DEFAULT_ADDRESS_64     0x08048000#define STACK_DEFAULT_ADDRESS_32    0xbfa82000#define STACK_DEFAULT_ADDRESS_64    0x7ffffffe9000#define STACK_DEFAULT_SIZE  MiB(8)#define TEXT_DEFAULT_SIZE   KiB(8)#define RODATA_DEFAULT_SIZE KiB(4)#define DATA_DEFAULT_SIZE   KiB(4)#define BSS_DEFAULT_SIZE    KiB(4)#ifndef bool    #define bool char    #define true 1    #define false 0#endif#if DEBUG_ON    #include <stdio.h>    #define DEBUG(...) (printf("%s ", __func__), printf( __VA_ARGS__), printf("\n"), fflush(stdout))#else    #define DEBUG(...)#endif#endif
+#ifndef _SHARED_MACROS_H
+#define _SHARED_MACROS_H
+
+#include <limits.h>
+#include <sys/types.h>
+#include <stdlib.h>
+
+#if (SIZE_MAX < 0xffffffffffffffff)
+    #undef size_t
+    #define size_t uint64_t
+#endif
+
+#define _1KiB   1024
+#define KiB(x) (_1KiB * x)
+#define MiB(x) (KiB(1024) * x)
+
+#define BYTE  1
+#define WORD  2
+#define DWORD 4
+#define QWORD 8
+
+
+#ifndef bool
+    #define bool char
+    #define true 1
+    #define false 0
+#endif
+
+#if DEBUG_ON
+    #include <stdio.h>
+    #define DEBUG(...) (printf("%s ", __func__), printf( __VA_ARGS__), printf("\n"), fflush(stdout))
+#else
+    #define DEBUG(...)
+#endif
+
+#endif

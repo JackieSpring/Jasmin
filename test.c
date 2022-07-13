@@ -6,22 +6,23 @@
 #include <ctype.h>
 #include <string.h>
 
-#include <capstone/capstone.h>
-#include <capstone/x86.h>
-#include <keystone/keystone.h>
+#include <getopt.h>
 
-#include "registers.h"
-#include "isa.h"
-#include "memory.h"
+#include "interpreter.h"
 #include "shared_macros.h"
 #include "jin_error.h"
 #include "x86.h"
-
 #include "commands.h"
+
+#include "breakpoint.h"
 
 #define CMD_CURSOR " o> "
 
-// Current running interpreter
+
+
+/*
+    Current running interpreter
+*/ 
 jin_interpreter * jint;
 
 
@@ -68,7 +69,7 @@ static unsigned char * fetch_command_line( jin_interpreter * jint, memory_addr i
     size_t nins;
     ks_err kerr;
     jin_err jerr;
-    memory_addr codeptr;
+    memory_addr memptr;
     
     do {
         printf(CMD_CURSOR);
@@ -103,29 +104,25 @@ static unsigned char * fetch_command_line( jin_interpreter * jint, memory_addr i
     
     
     
-    kerr = ks_asm(jint->ks, code_ptr, ip, &bytecode, &size, &nins);
-    if (kerr != KS_ERR_OK ) {
-        jerr = key_to_jin_err(ks_errno(jint->ks));
+    jerr = jin_assemble(jint, code_ptr, ip, &bytecode, &size, &nins);
+    if ( jerr != JIN_ERR_OK )
         goto cleanup;
-    }
+
     
-    if ( size == 0 || nins == 0 ) {
-        jerr = JIN_ERR_ASM_MNEMONICFAIL ;
-        return NULL;
-    }
-    
-    codeptr = push_text( jint->mem, bytecode, size );
-    if ( codeptr == MEM_FAILURE ) {
+    memptr = push_segment( jint, MEM_SEG_TEXT, bytecode, size );
+    if ( memptr == MEM_FAILURE ) {
         jerr = JIN_ERR_MEM_CANNOT_WRITE;
         goto cleanup;
     }
     
-    ks_free(bytecode);
+    free(bytecode);
     
-    return (const char *)get_real_memory_pointer( jint->mem, codeptr);
+    return (const char *)get_effective_pointer( jint, memptr);
     
 cleanup:
     jin_perror(jerr);
+    if ( bytecode != NULL )
+        free(bytecode);
     return NULL;
 }
 
@@ -147,7 +144,7 @@ cleanup:
 */
 const unsigned char * fetch( jin_interpreter * jint ){
     memory_addr ip = 0;
-    memory_addr toptext = push_text(jint->mem, NULL, 0);
+    memory_addr toptext = push_segment(jint, MEM_SEG_TEXT, NULL, 0);
     const char * ret;
     
     read_instruction_pointer(jint, &ip);
@@ -155,8 +152,8 @@ const unsigned char * fetch( jin_interpreter * jint ){
     if ( ip == toptext ){
         ret = fetch_command_line(jint, ip);
     }
-    else if ( ip >= offset_read_text(jint->mem, 0, NULL, 0) && ip < toptext ) {
-        ret = get_real_memory_pointer(jint->mem, ip);
+    else if ( ip >= offset_read_segment(jint, MEM_SEG_TEXT, 0, NULL, 0) && ip < toptext ) {
+        ret = get_effective_pointer(jint, ip);
     }
     else {
         printf("UNKNOWN CASE toptext: %p, ip: %p\n", toptext, ip);
@@ -174,42 +171,17 @@ cleanup:
  * Il modo in cui gli operandi devono essere interpretati è specifico dell'architettura, così come l'IP
 */
 jin_instruction * decode( jin_interpreter * jint, const char * raw_code ) {
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // LEGGITI LA DOC DI cs_disasm_iter !!!
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    cs_insn * insn_meta = cs_malloc(jint->cs);      // è inutile ricreare l'istruzioe ogni volta, potresti farlo una volta sola e salvarti il puntatore
-    uint64_t ip = 0x0;                // QUesto valore viene aggiornato da cs_disasm_iter per puntare all'istruzione succesiva, potrebbe essere sfruttato per aggioranre RIP
-    size_t fake_size = sizeof(uint64_t)*2;    // 
+    uint64_t ip = 0x0;                
+    size_t fake_size = sizeof(uint64_t) * 2 ;
     jin_instruction * ret = NULL;
     jin_err jerr;
     
     read_instruction_pointer(jint, &ip);
     
-    if ( insn_meta == NULL ) {
-        jerr = JIN_ERR_MEMORY;
+    jerr = jin_disassemble(jint, ip, raw_code, fake_size, &ret);
+    if( jerr != JIN_ERR_OK )
         goto cleanup;
-    }
-    
-    if ( cs_disasm_iter( jint->cs, &raw_code, &fake_size, &ip, insn_meta ) == false ) {
-        jerr = cap_to_jin_err( cs_errno(jint->cs) );
-        goto cleanup;
-    }
-    
-    ret = calloc( 1 , sizeof(jin_instruction));
-    if ( ret == NULL ) {
-        jerr = JIN_ERR_MEMORY;
-        goto cleanup;
-    }
-    
-    ret->id = insn_meta->id;
-    ret->byte_size = insn_meta->size;
-    
-    if( resolve_operands (jint, insn_meta, &ret->op, &ret->op_count ) != JIN_ERR_OK ) {
-        jerr = JIN_ERR_OPERAND_FAIL;
-        goto cleanup;
-    }
-    
-    cs_free(insn_meta, 1);
+    ip += ret->byte_size;
     
     write_instruction_pointer(jint, &ip);
     
@@ -218,32 +190,22 @@ jin_instruction * decode( jin_interpreter * jint, const char * raw_code ) {
 cleanup:
     jin_perror(jerr);
     
-    if ( insn_meta != NULL )
-        cs_free(insn_meta, 1);
     if ( ret != NULL )
-        free(ret);
+        jin_free_instruction(ret);
+    
     return NULL;
 }
 
 
 int execute(jin_interpreter * jint, jin_instruction * ins ) {
-    if ( jint == NULL || ins == NULL )
-        return -1;
+    jin_err jerr = jin_execute(jint, ins);
     
-    jin_err jerr;
-    
-    instruction_handler handler = (instruction_handler *)get_instruction_function( jint->isa, ins->id ) ;
-    if ( handler == NULL )
-        return -1;
-    
-    jerr = (handler)( jint, ins->op, ins->op_count );
     if ( jerr != JIN_ERR_OK ) {
-        jin_perror(jerr);
+        perror( jerr );
         return -1;
     }
     
     return 0;
-
 }
 
 
@@ -302,31 +264,24 @@ void print_registers( jin_interpreter * jint ){
 }
 
 
-
-static ks_sym_resolver symres(const char * sym, uint64_t * value){
-    if( get_symbol_value( jint->symt, sym, value ) < 0)
-        return false;
-    
-    return true;
-}
-
-
-
 int main(){
 
-    jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_64 );
-    //jint = jin_init_interpreter( JIN_ARCH_X86 , JIN_MODE_32 );
-    assert(jint != NULL);
-    ks_option(jint->ks, KS_OPT_SYNTAX, KS_OPT_SYNTAX_INTEL | KS_OPT_SYNTAX_RADIX16 );
-    ks_option(jint->ks, KS_OPT_SYM_RESOLVER, symres);
+    jin_options jops = {
+        .arch = JIN_ARCH_X86,
+        .mode = JIN_MODE_64,
+    };
 
-    init_x86(jint);
+    jint = jin_init_interpreter( &jops );
+    assert(jint != NULL);
+
+
     assert( init_commands() == JIN_ERR_OK );
     
     jin_start_interpreter(jint);
     
     //print_registers(jint);
     
+
     
     puts("Starting Jasmin v0.1");
     puts("use <help for help");

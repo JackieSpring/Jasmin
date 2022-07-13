@@ -41,6 +41,8 @@ static const char * get_error_string( jin_err err ) {
             return "Failed instruction execution (JIN_ERR_INSN_EXEC_FAIL)";
         case JIN_ERR_INSN_DECODE_FAIL :
             return "Failed decoding instruction (JIN_ERR_INSN_DECODE_FAIL)";
+        case JIN_ERR_INSN_NOTSUPPORTED :
+            return "Instruction not supported yet (JIN_ERR_INSN_NOTSUPPORTED)";
         
         case JIN_ERR_CMD_INVALID:
             return "Command not reconized (JIN_ERR_CMD_INVALID)";
@@ -66,7 +68,7 @@ void jin_throw_error( jin_err err ) {
 }
 
 
-jin_err key_to_jin_err(ks_err err) {
+jin_err ks_to_jin_err(ks_err err) {
     switch(err) {
         case KS_ERR_OK:
             return JIN_ERR_OK;
@@ -88,7 +90,7 @@ jin_err key_to_jin_err(ks_err err) {
     }
 }
 
-jin_err cap_to_jin_err(cs_err err) {
+jin_err cs_to_jin_err(cs_err err) {
     switch(err){
         case CS_ERR_OK:
             return JIN_ERR_OK;

@@ -218,7 +218,7 @@ int iter_hashtable ( hashtable *  ht, htiterator iterator, void * extra  ) {
         
 }
 
-size_t get_number_of_entries(hashtable * ht) {
+size_t get_hashtable_size(hashtable * ht) {
     if ( ht == NULL )
         return 0;
     return ht->nelem;
