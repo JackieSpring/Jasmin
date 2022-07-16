@@ -128,6 +128,7 @@ typedef register_size (* register_access_function)(jin_interpreter * jint, void 
     // iterators
 typedef bool (* register_iterator ) ( register_id id, register_size size, bool is_partition, void * extra );
 typedef bool (* symbol_iterator )( const symbol_key symbol, symbol_value val, void * extra );
+typedef bool (* memory_iterator) ( segment_id id, memory_addr start, size_t size, bool is_stack, void * extra );
 
 
 
@@ -279,6 +280,11 @@ int jin_set_stack_pointer_rw ( jin_interpreter * jint, register_access_function 
  *                              RESOURCES ACCESS
  * ############################################################################
 */
+    // symbols
+int jin_add_symbol( jin_interpreter * jint , symbol_key sk, symbol_value val);
+int jin_del_symbol( jin_interpreter * jint , symbol_key sk);
+int jin_get_symbol( jin_interpreter * jint, symbol_key sk, symbol_value * ret );
+
     // registers
 register_size read_register ( jin_interpreter * jint, register_id regid, void * buffer);
 register_size write_register ( jin_interpreter * jint, register_id regid, void * buffer);
@@ -407,6 +413,7 @@ const char * jin_get_reg_name( jin_interpreter * jint, register_id id );
 
 int jin_iterate_register(jin_interpreter * jint, register_iterator riter, void * extra );
 int jin_iterate_symbol(jin_interpreter * jint, symbol_iterator siter, void * extra );
+int jin_iterate_memory ( jin_interpreter * jint, memory_iterator miter, void * extra);
 
 /** int jin_iterate_register(jin_interpreter * jint, register_iterator riter, void * extra )
  ** int jin_iterate_symbol(jin_interpreter * jint, symbol_iterator siter, void * extra )

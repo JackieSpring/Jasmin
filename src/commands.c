@@ -72,7 +72,7 @@ static cmd_handler cmd_pause ( jin_interpreter * jint, string operands) {
 }
 
 static cmd_handler cmd_term ( jin_interpreter * jint, string operands) {
-    if ( jin_get_state(jint) != JIN_STATE_RUNNING || jin_get_state(jint) != JIN_STATE_PAUSE )
+    if ( jin_get_state(jint) != JIN_STATE_RUNNING && jin_get_state(jint) != JIN_STATE_PAUSE )
         puts("The programm is not running or paused, so it cannot be terminated");
     else
         jin_set_state(jint, JIN_STATE_INACTIVE);
@@ -83,8 +83,11 @@ static cmd_handler cmd_term ( jin_interpreter * jint, string operands) {
 
 static cmd_handler cmd_help() {
     puts( "Commands syntax: <`command` `arguments` , ex:   < print memory 0xdead 2" );
-    puts("Available commands:");
+    puts("------------ Available commands ------------");
+    puts("break\t`name` `address`\t\tCreates a breakpoint at the given address, the breakpoint is ");
+                     puts("\t\t\t\t\tidentified by the given name.");
     puts("continue");
+    puts("delbreak\t`name`\t\t\tDeletes a breakpoint");
     puts("exit");
     puts("help");
     puts("pause");
@@ -92,6 +95,7 @@ static cmd_handler cmd_help() {
     cmd_print_help();
     puts("run");
     puts("term");
+    puts("--------------------------------------------");
     
     return JIN_ERR_OK;
 }
@@ -102,7 +106,9 @@ jin_err init_commands() {
     if ( commands_table == NULL )
         return JIN_ERR_GENERIC;
     
+    add_to_hashtable(commands_table, "break", cmd_break);
     add_to_hashtable(commands_table, "continue", cmd_continue);
+    add_to_hashtable(commands_table, "delbreak", cmd_delbreak);
     add_to_hashtable(commands_table, "exit", cmd_exit);
     add_to_hashtable(commands_table, "help", cmd_help);
     add_to_hashtable(commands_table, "pause", cmd_pause);

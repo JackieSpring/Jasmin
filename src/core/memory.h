@@ -91,4 +91,6 @@ int add_segment_to_map ( memory_map * mm, segment_id newid, memory_addr start, s
 bool check_address_perm(memory_map * mm, memory_addr addr, memory_perm perm );   // perm can be union
 
 
+int iter_memory_map ( memory_map * mm, bool (* iter) ( segment_id id, memory_addr start, size_t size, bool is_stack, void * extra ), void * extra );
+
 #endif

@@ -14,7 +14,7 @@
 
 #include "breakpoint.h"
 
-#define CMD_CURSOR " o> "
+#define CMD_CURSOR " >>> "
 #define USER_INPUT_SIZE 256
 
 
@@ -87,10 +87,8 @@ jin_err push_code( jin_interpreter * jint, unsigned char * code_ptr ) {
     size_t nins;
     jin_err jerr;
     memory_addr memptr;
-    memory_addr ip;
 
-    read_instruction_pointer(jint, &ip);
-    jerr = jin_assemble(jint, code_ptr, ip, &bytecode, &size, &nins);   // assemble
+    jerr = jin_assemble(jint, code_ptr, push_segment( jint, jin_get_working_segment(jint), NULL , 0 ) , &bytecode, &size, &nins);   // assemble
     if ( jerr != JIN_ERR_OK ){
         if ( bytecode != NULL )
             free(bytecode);
@@ -139,32 +137,34 @@ void main_loop( jin_interpreter * jint ){
     memory_addr ip;
     memory_addr segment_top;
     segment_id working_segment;
+    bool breakpoint_hitted = false;
 
     while ( jin_get_state(jint) != JIN_STATE_TERMINATED ) {
         code_ptr = get_user_input( jint, user_input );
 
-        if ( is_command(code_ptr) == true ) {                               // if is command, execute, then repeat
+        if ( is_command(code_ptr) == true ) {                               // if is command, execute
             jerr = execute_command(jint, code_ptr);
             if( jerr != JIN_ERR_OK)
                 jin_perror(jerr);
-            continue;
+                
         }
-        
-        code_ptr = contains_label(code_ptr, &label_ptr, &label_size);       // if contains label, add label, then continue
-        if ( label_size != 0 ) {
-            label_ptr[label_size] = '\0';
-            jin_add_symbol(jint, label_ptr, ip);
+        else {
+            code_ptr = contains_label(code_ptr, &label_ptr, &label_size);       // if contains label, add label, then continue
+            if ( label_size != 0 ) {
+                label_ptr[label_size] = '\0';
+                jin_add_symbol(jint, label_ptr, push_segment(jint, jin_get_working_segment(jint), NULL, 0) );
+            }
+            if ( strlen(code_ptr) < 2 )                                         // no instruction left
+                continue;
+            
+            jerr = push_code(jint, code_ptr);
+            if ( jerr != JIN_ERR_OK ){
+                jin_perror(jerr);
+                continue;
+            }
         }
-        if ( strlen(code_ptr) < 2 )                                         // no instruction left
-            continue;
         
         working_segment = jin_get_working_segment(jint);
-        jerr = push_code(jint, code_ptr);
-        if ( jerr != JIN_ERR_OK ){
-            jin_perror(jerr);
-            continue;
-        }
-        
         if ( jin_get_state(jint) != JIN_STATE_RUNNING )                     // if the interpreter is not esecuting code, repeat
             continue;
         
@@ -172,13 +172,20 @@ void main_loop( jin_interpreter * jint ){
         if ( check_perm_memory( jint, ip, MEM_EXEC ) == false )             // if the segment is not erxecutable, repeat
             continue;
 
-        do {
-            if ( is_breakpoint(ip) ){                                           // if a breakpoint is declared on the address, pause execution
+        while( jin_get_state(jint) == JIN_STATE_RUNNING && 
+            (   ip >= offset_read_segment(jint, working_segment , 0, NULL, 0) && 
+                ip < push_segment(jint, working_segment, NULL, 0) 
+            )
+        ){
+            if ( is_breakpoint(ip) && breakpoint_hitted == false ){                                           // if a breakpoint is declared on the address, pause execution
+                breakpoint_hitted = true;
                 jin_set_state(jint, JIN_STATE_PAUSE );
-                puts("<<< Breakpoint hitted >>>");
+                puts("-----! Breakpoint hitted !-----");
+                printf("Address: %p\n", ip );
                 continue;
             }
             
+            breakpoint_hitted = false;
             jerr = execute(jint);
             if( jerr != JIN_ERR_OK ){
                 jin_perror(jerr);
@@ -186,7 +193,7 @@ void main_loop( jin_interpreter * jint ){
             }
             read_instruction_pointer(jint, &ip);
             
-        } while( jin_get_state(jint) == JIN_STATE_RUNNING && (ip >= offset_read_segment(jint, working_segment , 0, NULL, 0) && ip < push_segment(jint, working_segment, NULL, 0) ) );
+        }
     }
 }
 
@@ -209,8 +216,6 @@ int main(int argc, char * argv[]){
 
     puts("Starting Jasmin v0.1");
     puts("use <help for help");
-    
-    add_breakpoint("0", 0x8048007);
     
     main_loop(jint);
     

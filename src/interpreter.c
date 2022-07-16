@@ -131,7 +131,7 @@ static cs_mode jin_to_cs_mode ( jin_mode mode ){
 static ks_sym_resolver symres(const char * sym, uint64_t * value){
     if( get_symbol_value( active_interpreter->symt, sym, value ) < 0)
         return false;
-    
+        
     return true;
 }
 
@@ -483,6 +483,12 @@ int jin_iterate_register(jin_interpreter * jint, register_iterator riter, void *
 int jin_iterate_symbol(jin_interpreter * jint, symbol_iterator siter, void * extra ) {
     return iter_symbol_table( jint->symt, siter, extra );
 }
+
+
+int jin_iterate_memory ( jin_interpreter * jint, memory_iterator miter, void * extra) {
+    return iter_memory_map(jint->mem, miter, extra);
+}
+
 
 
 const char * jin_get_reg_name( jin_interpreter * jint, register_id id ) {

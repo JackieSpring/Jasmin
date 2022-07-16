@@ -2,6 +2,7 @@
 #define _JASMIN_COMMANDS_H
 
 #include "commands_generic.h"
+#include "cmd_break.h"
 #include "cmd_print.h"
 
 jin_err init_commands();

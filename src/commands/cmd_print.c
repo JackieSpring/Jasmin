@@ -4,14 +4,17 @@
 
 /*
  * COMMANDS:
+ * print break
  * print memory <address> <size>
  * print regs
  * print syms
 */
 
+#define CMD_P_BREAK_ARG "break"
 #define CMD_P_MEMORY_ARG "memory"
 #define CMD_P_REGS_ARG "regs"
 #define CMD_P_SYMS_ARG "syms"
+#define CMD_P_CODE_ARG "code"
 
 
 //
@@ -119,6 +122,50 @@ static symbol_iterator iter_print_syms( symbol_key key, symbol_value val, void *
     return true;
 }
 
+static memory_iterator iter_print_code ( segment_id id, memory_addr start, size_t size, bool is_stack, void * extra ){
+    jin_interpreter * jint = (jin_interpreter *)extra;
+    memory_addr top = push_segment(jint, id, NULL, 0);
+    unsigned char * bytecode;
+    unsigned char * symbol;
+    jin_instruction * ins;
+    memory_addr code_ptr;
+    jin_err jerr;
+    
+    if ( check_perm_memory( jint, start, MEM_EXEC ) == false || is_stack == true )
+        return true;
+        
+    code_ptr = start;
+    
+    while ( code_ptr < top ){
+    
+        bytecode = get_effective_pointer(jint, code_ptr );
+    
+        jerr = jin_disassemble(jint, code_ptr, bytecode, sizeof(uint64_t) * 2 , &ins);
+        if ( jerr != JIN_ERR_OK ) {
+            puts("An error occurred while disassembling instructions");
+            jin_perror(jerr);
+            return false;
+        }
+        
+        printf("%-016p", code_ptr);
+        printf("\t");
+        printf("%-16s", ins->ins_str);
+        printf("%s", ins->op_str);
+        puts("");
+        
+        code_ptr += ins->byte_size;
+    }
+    
+    return true;
+}
+
+static bool iter_print_break ( breakpoint_id id, breakpoint_addr val,  void * extra ) {
+    printf("%-16s", id);
+    printf("  ");
+    printf("%p", val);
+    puts("");
+    return true;
+}
 
 //
 // SECOND LEVEL PRINT HANDLERS
@@ -174,6 +221,16 @@ static cmd_handler cmd_print_symbols (jin_interpreter * jint, string operands) {
     return JIN_ERR_OK;
 }
 
+static cmd_handler cmd_print_code (jin_interpreter * jint, string operands ){
+    jin_iterate_memory(jint, iter_print_code, jint);
+    return JIN_ERR_OK;
+}
+
+static cmd_handler cmd_print_break (){
+    iter_breakpoint( iter_print_break, NULL );
+    return JIN_ERR_OK;
+}
+
 //
 // MAIN HANDLER
 //
@@ -184,19 +241,23 @@ cmd_handler cmd_print( jin_interpreter * jint, string str) {
     if( print_routine == NULL )
         return JIN_ERR_CMD_INVALID;
     
+    ADD_CMD_HANDLER( CMD_P_BREAK_ARG , cmd_print_break)
     ADD_CMD_HANDLER( CMD_P_MEMORY_ARG , cmd_print_memory)
     ADD_CMD_HANDLER( CMD_P_REGS_ARG , cmd_print_registers)
     ADD_CMD_HANDLER( CMD_P_SYMS_ARG , cmd_print_symbols)
+    ADD_CMD_HANDLER( CMD_P_CODE_ARG , cmd_print_code )
     
     return JIN_ERR_CMD_INVALID;
 }
 
 
 void cmd_print_help() {
+    puts("  print "CMD_P_BREAK_ARG"\t\t\t\t" "prints the current breakpoints declared");
     puts("  print "CMD_P_MEMORY_ARG" `address` `bytes` \t" "prints `bytes` bytes from the memory starting from `address`," );
     puts("                                        " "the address must be in hex format ex: 0xaabbccddee");
     puts("  print "CMD_P_REGS_ARG" \t\t\t\t" "prints the current registers and their content");
     puts("  print "CMD_P_SYMS_ARG" \t\t\t\t" "prints the current symbols and the address they point to");
+    puts("  print "CMD_P_CODE_ARG" \t\t\t\t" "prints all the executable code written in memory");
 }
 
 
