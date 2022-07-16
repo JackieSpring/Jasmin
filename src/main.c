@@ -77,7 +77,7 @@ jin_err execute(jin_interpreter * jint) {
 cleanup:
     if ( ins != NULL )
         jin_free_instruction(ins);
-    puts("CLEANUP");
+    
     return jerr;
 }
 
