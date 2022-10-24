@@ -94,9 +94,17 @@ typedef enum jin_state {
 } jin_state;
 
 
+typedef enum jin_op_type {
+	JIN_OP_INVALID = 0,  ///< uninitialized/invalid operand.
+	JIN_OP_REG,          ///< Register operand.
+	JIN_OP_IMM,          ///< Immediate operand.
+	JIN_OP_MEM,          ///< Memory operand.
+	JIN_OP_FP,           ///< Floating-Point operand.
+} jin_op_type;
+
 // NEW OPERAND
 typedef struct jin_operand {
-    x86_op_type type;
+    jin_op_type type;
     union {
 		register_id reg;      // < register id value
 		int64_t imm;          // < immediate value

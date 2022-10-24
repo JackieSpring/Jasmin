@@ -3,6 +3,9 @@
 > Rendere sicuro il programma (non ci sono controlli sul numero massimo di elementi nelle
   varie tabelle)
 
+> Generalizzare op_type di jin_instruction poiché in questo momento dipends da capstone/x86, così
+  come tutte le funzioni che controllano quel campo!
+
 > Completare set di istruzioni x86
 
 > Implementare la funzionalità di scrivere blocchi codice asm senza che venga interpretato
@@ -14,11 +17,6 @@
 
 > Modificare la gestione della memoria virtuale in modo che:
    * supporti le operazioni di resize dei segmenti;
-   * si possano aggiunge nuovi segmenti
-   * l'accesso diretto ai segmenti sia eseguito attraverso degli id invece che
-     funzioni dedicate (no push_text ma push_segment(SEG_TEXT)), e sia quindi possibile
-     registrare id-segmento aggiuntivi entro un certo numero. Alcuni di questi id dovranno
-     essere statici e riservati ai segmenti tex, rodata, data, bss e stack.
 
 > Capacità di leggere un file asm e costruire interprete e mappa di memoria, avviare la console
   e restare in attesa
@@ -26,8 +24,6 @@
 > Aggiungere comandi di creazione dati (ex. create matrix 2 2 ) con il fine di permettere
   all'utente di simulare scenari realistici di esecuzione del codice. Questi comandi dovranno 
   essere progettati in modo che siano semplici e rapidi da usare.
-
-> Creare un file contenga la main routine e l'avviamento del programma
 
 > Implementare argomenti da command line, come la modalità e l'architettura dell'interprete
 

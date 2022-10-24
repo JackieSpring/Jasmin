@@ -168,6 +168,8 @@ jin_interpreter * jin_init_interpreter( jin_options * jops ) {
         goto cleanup;
     
     ks_option(ret->ks, KS_OPT_SYM_RESOLVER, symres);
+    ks_option(ret->ks, KS_OPT_SYNTAX, KS_OPT_SYNTAX_GAS);
+    printf( "GAS SYNTAX\n" );
         
 // init capstone
     cerr = cs_open(jin_to_cs_arch(arch) , jin_to_cs_mode(mode), &cs);
@@ -510,7 +512,7 @@ jin_err jin_assemble( jin_interpreter * jint, unsigned char * asm_code, uint64_t
     if( ks_asm(jint->ks, asm_code, ins_p, bytecode, bytecode_size, ins_count ) != KS_ERR_OK )
         jerr = ks_to_jin_err( ks_errno(jint->ks) );
     
-    if ( *bytecode_size == 0 || *ins_count == 0 )         // keystone false positive
+    if ( jerr == JIN_ERR_OK && (*bytecode_size == 0 || *ins_count == 0 ))         // keystone false positive
         jerr = JIN_ERR_ASM_MNEMONICFAIL ;
     
     return jerr;

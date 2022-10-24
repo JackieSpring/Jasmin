@@ -23,19 +23,23 @@ static int x86_operand_resolver (jin_interpreter * jint, cs_insn * raw_ins, jin_
     
     
     if ( ret == NULL )
-        goto cleanup;
+        { puts("GOTO 1"); goto cleanup; }
     
     for ( unsigned int i = 0; i < raw_op_count; i++ ) {
+    #define rop operands[i]
         jin_operand newop ;
-        newop.type = operands[i].type;
-        newop.size = operands[i].size;
+        newop.size = rop.size;
         
-        if ( newop.type == X86_OP_REG )
-            newop.reg = operands[i].reg;
-        else if ( newop.type == X86_OP_IMM )
-            newop.reg = operands[i].imm;
-        else if ( newop.type == X86_OP_MEM ) {
-            #define rop operands[i]
+        if ( rop.type == X86_OP_REG ){
+            newop.type = JIN_OP_REG;
+            newop.reg = rop.reg;
+        }
+        else if ( rop.type == X86_OP_IMM ) {
+            newop.type = JIN_OP_IMM;
+            newop.reg = rop.imm;
+        }
+        else if ( rop.type == X86_OP_MEM ) {
+            
             // segment + base + index*scale + disp
             memory_addr addr = 0;
             memory_addr buffer = 0;
@@ -63,15 +67,17 @@ static int x86_operand_resolver (jin_interpreter * jint, cs_insn * raw_ins, jin_
             } else if ( jin_get_mode(jint) == JIN_MODE_32 ) {
                 addr += (signed int) rop.mem.disp;
             } else
-                goto cleanup;
+            {  puts("GOTO 2");  goto cleanup;  }
             
+            newop.type = JIN_OP_MEM;
             newop.mem = addr;
-            #undef rop
+            
             
         }
         else
-            goto cleanup;
+            { puts("GOTO 3"); goto cleanup;}
         (* ret)[i] = newop;
+        #undef rop
     }
     
     *ret_op_count = raw_op_count;
