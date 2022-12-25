@@ -27,6 +27,7 @@ typedef enum jin_err {
     
     JIN_ERR_MEM_CANNOT_READ,
     JIN_ERR_MEM_CANNOT_WRITE,
+    JIN_ERR_MEM_CANNOT_EXEC,
     JIN_ERR_INVALID_MEMMAP,         // invalid memory map
     
     JIN_ERR_INSN_FETCH_FAIL,        // could not fetch new instruction

@@ -60,18 +60,25 @@ static unsigned char * contains_label( const unsigned char * str, unsigned char 
 
 jin_err execute(jin_interpreter * jint) {
     uint64_t ip = 0x0;                
-    size_t fake_size = sizeof(uint64_t) * 2 ;
+    size_t fake_size = sizeof(uint64_t) * 2 ;//
     jin_instruction * ins = NULL;
+    memory_addr wseg_end;
     jin_err jerr;
     
     read_instruction_pointer(jint, &ip);
+    wseg_end = push_segment( jint, jin_get_working_segment(jint), NULL, 0 );
+
+    if ( (wseg_end - ip) < fake_size )  // do not fetch data outside memory boundaries (no heap leak)
+        fake_size = (wseg_end - ip);
     
+    // get_effective_pointer() does not check form memory permissions or boundaries
     jerr = jin_disassemble(jint, ip, get_effective_pointer(jint, ip) , fake_size, &ins);
     if( jerr != JIN_ERR_OK )
         goto cleanup;
+        
     ip += ins->byte_size;
-    
     write_instruction_pointer(jint, &ip);
+    
     return jin_execute(jint, ins);
     
 cleanup:
@@ -137,13 +144,16 @@ void main_loop( jin_interpreter * jint ){
     memory_addr ip;
     memory_addr segment_top;
     segment_id working_segment;
-    bool breakpoint_hitted = false;
+    bool breakpoint_hit_flag = false;
+    bool noexec_flag = false;
+
 
     while ( jin_get_state(jint) != JIN_STATE_TERMINATED ) {
         code_ptr = get_user_input( jint, user_input );
 
         if ( is_command(code_ptr) == true ) {                               // if is command, execute
             jerr = execute_command(jint, code_ptr);
+            
             if( jerr != JIN_ERR_OK)
                 jin_perror(jerr);
                 
@@ -165,27 +175,42 @@ void main_loop( jin_interpreter * jint ){
         }
         
         working_segment = jin_get_working_segment(jint);
-        if ( jin_get_state(jint) != JIN_STATE_RUNNING )                     // if the interpreter is not esecuting code, repeat
+
+        if ( jin_get_state(jint) == JIN_STATE_INACTIVE )
+            noexec_flag = false;
+
+        if ( jin_get_state(jint) != JIN_STATE_RUNNING )                     // if the interpreter is not executing code, repeat
             continue;
         
-        read_instruction_pointer(jint, &ip);
-        if ( check_perm_memory( jint, ip, MEM_EXEC ) == false )             // if the segment is not erxecutable, repeat
+
+        // If the IP already points to non-executable memory, continue
+        if ( noexec_flag == true  )
             continue;
+
+        // If the IP now points to non-executable memory, notify, then set STATE_PAUSE
+        read_instruction_pointer(jint, &ip);
+        if ( check_perm_memory( jint, ip, MEM_EXEC ) == false ) {
+            jin_perror( JIN_ERR_MEM_CANNOT_EXEC );
+            puts("-----! Instruction Pointer points to non-executable memory! !-----");
+            noexec_flag = true;
+            jin_set_state(jint, JIN_STATE_PAUSE);
+            continue;
+        }
 
         while( jin_get_state(jint) == JIN_STATE_RUNNING && 
             (   ip >= offset_read_segment(jint, working_segment , 0, NULL, 0) && 
                 ip < push_segment(jint, working_segment, NULL, 0) 
             )
         ){
-            if ( is_breakpoint(ip) && breakpoint_hitted == false ){                                           // if a breakpoint is declared on the address, pause execution
-                breakpoint_hitted = true;
+            if ( is_breakpoint(ip) && breakpoint_hit_flag == false ){                                           // if a breakpoint is declared on the address, pause execution
+                breakpoint_hit_flag = true;
                 jin_set_state(jint, JIN_STATE_PAUSE );
                 puts("-----! Breakpoint hitted !-----");
                 printf("Address: %p\n", ip );
                 continue;
             }
             
-            breakpoint_hitted = false;
+            breakpoint_hit_flag = false;
             jerr = execute(jint);
             if( jerr != JIN_ERR_OK ){
                 jin_perror(jerr);
@@ -194,16 +219,47 @@ void main_loop( jin_interpreter * jint ){
             read_instruction_pointer(jint, &ip);
             
         }
+
+        // IP may points to non-executable memory, if so set STATE_PAUSE
+        read_instruction_pointer(jint, &ip);
+        if ( check_perm_memory( jint, ip, MEM_EXEC ) == false ){             // if the segment is not executable, repeat
+            if ( noexec_flag == false ) {
+                noexec_flag = true;
+                puts("-----! Instruction Pointer points to non-executable memory! !-----");
+                jin_set_state(jint, JIN_STATE_PAUSE);
+            }
+        }
     }
 }
 
 
 int main(int argc, char * argv[]){
 
+    // -m   32 bit
+    // -g   gas syntax
+
+#define ARGS_OPTIONS "mg"
+
+    int opt;
+    jin_mode arg_mode = JIN_MODE_64;
+    jin_syntax arg_syn = JIN_SYNTAX_INTEL;
+
+    while ((opt = getopt(argc, argv, ARGS_OPTIONS)) != -1) {
+        switch (opt) {
+            case 'm': arg_mode = JIN_MODE_32; break;
+            case 'g': arg_syn = JIN_SYNTAX_GAS; break;
+        default:
+            fprintf(stderr, "Usage: %s [-"ARGS_OPTIONS"] \n", argv[0]);
+            exit(EXIT_FAILURE);
+        }
+    }
+#undef ARGS_OPTIONS
+
     jin_interpreter * jint;
     jin_options jops = {
         .arch = JIN_ARCH_X86,
-        .mode = JIN_MODE_64,
+        .mode = arg_mode,
+        .syntax = arg_syn,
     };
 
     jint = jin_init_interpreter( &jops );
@@ -211,8 +267,6 @@ int main(int argc, char * argv[]){
     assert( init_commands() == JIN_ERR_OK );
     
     jin_set_state(jint, JIN_STATE_RUNNING );
-    jin_set_entrypoint( jint, MEM_TEXT_DEFAULT_ADDRESS_64 );
-    jin_set_stackbase( jint, MEM_STACK_DEFAULT_ADDRESS_64 );
 
     puts("Starting Jasmin v0.1");
     puts("use <help for help");

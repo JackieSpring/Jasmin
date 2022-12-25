@@ -21,7 +21,7 @@ static bool turn_off_flag(uint64_t _, uint64_t __, size_t ___, uint64_t * _____)
  * carry_fun takes a special place because is the function that will calculate
  * the final result of the instruction (and set/unset CF depending on the return
  * value).
- * Setting aux_fun or ocf_fun to NULL will keep the respective flag unchanged.
+ * Setting aux_fun or ovf_fun to NULL will keep the respective flag unchanged.
  * This function updates PF, SF and ZF automatically depending on the result of 
  * the operation.
 */
@@ -245,3 +245,8 @@ instruction_handler x86_ins_lea(jin_interpreter * jint, jin_operand * operands, 
     return JIN_ERR_OK;
 }
 
+
+instruction_handler x86_ins_shl(jin_interpreter * jint, jin_operand * operands, size_t nops ){};
+instruction_handler x86_ins_sal(jin_interpreter * jint, jin_operand * operands, size_t nops ){};
+instruction_handler x86_ins_shr(jin_interpreter * jint, jin_operand * operands, size_t nops ){};
+instruction_handler x86_ins_sar(jin_interpreter * jint, jin_operand * operands, size_t nops ){};

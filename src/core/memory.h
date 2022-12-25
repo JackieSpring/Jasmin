@@ -37,14 +37,15 @@ void destroy_memory_map(memory_map * mm);
 
 
 
-/*
+/**
  * @return      return the number of bytes written/readden 
  */
 size_t write_to_memory ( memory_map * mm, memory_addr address, void * buffer, size_t length );
 size_t read_from_memory( memory_map * mm, memory_addr address, void * buffer, size_t length );
 
 
-/* This controllers have higher privileges than write_to_memory/read_from_memory, in fact
+/**
+ * This controllers have higher privileges than write_to_memory/read_from_memory, in fact
  * no read/write check is done; they do not affectd the behaviour of psuh/pop and are designed 
  * for memory management tasks rather then instructions execution.
 */
@@ -52,14 +53,15 @@ size_t force_write_to_memory ( memory_map * mm, memory_addr address, void * buff
 size_t force_read_from_memory ( memory_map * mm, memory_addr address, void * buffer, size_t length );
 
 
-/* This controllers have higher privileges than write_to_memory/read_from_memory, in fact
+/**
+ * This controllers have higher privileges than write_to_memory/read_from_memory, in fact
  * no read/write check is done; they do not affectd the behaviour of psuh/pop and are designed 
  * for memory management tasks rather then instructions execution.
  * If buffer is set to NULL and length is set to 0, this funtion will return the start address
  * of the segment.
  *
- * !!!  In the *_stack functions the offset is calculated from the bottom of the stack, meanwhile
- * !!!  in all the others functions it's calculated from the start of the segment.
+ * !!!  If segment_id is a stack-type segment the offset is calculated from the bottom of the 
+ * !!!  stack, meanwhile in all the others functions it's calculated from the start of the segment.
  * !!!  For NULL buffer the result address will be the bottom of the stack.
  * 
  * @return  if success, return the virtual address where the data are written/readden,
@@ -68,7 +70,7 @@ size_t force_read_from_memory ( memory_map * mm, memory_addr address, void * buf
 memory_addr offset_read_from_segment   ( memory_map * mm, segment_id id, size_t offset, void * buffer, size_t length );
 memory_addr offset_write_to_segment  ( memory_map * mm, segment_id id, size_t offset, void * buffer, size_t length );
 
-/*
+/**
  * This functions mimcs a stack-like behaviour and are designed for 
  * fast memory insertions next to the last-used byte in the section
  * memory space, they are designed for easly execute instructions
@@ -86,11 +88,13 @@ memory_addr pop_from_segment  ( memory_map * mm, segment_id id, void * buffer, s
 // FUNZIONI SPERIMENTALI
 void * get_real_memory_pointer( memory_map * mm, memory_addr addr );
 
+// Add new memory segment
 int add_segment_to_map ( memory_map * mm, segment_id newid, memory_addr start, size_t size, memory_perm perm, bool is_stack );
 
+// Check memory address permissions
 bool check_address_perm(memory_map * mm, memory_addr addr, memory_perm perm );   // perm can be union
 
-
+// Iterate through memory segments
 int iter_memory_map ( memory_map * mm, bool (* iter) ( segment_id id, memory_addr start, size_t size, bool is_stack, void * extra ), void * extra );
 
 #endif

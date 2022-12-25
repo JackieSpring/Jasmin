@@ -174,3 +174,54 @@ instruction_handler x86_ins_jrcxz (jin_interpreter * jint, jin_operand * operand
     return JIN_ERR_OK;
 }
 
+
+instruction_handler x86_ins_call( jin_interpreter * jint, jin_operand * operands, size_t nops ){
+    if ( nops != 1 || jint == NULL )
+        return JIN_ERR_GENERIC;
+
+    jin_operand src_op = operands[0];
+    jin_mode mode = jin_get_mode(jint);
+    uint64_t new_ip;
+    uint64_t old_ip;
+    uint64_t sp;
+    jin_err jerr;
+
+    jerr = x86_read_operand(jint, src_op, &new_ip);
+    if ( jerr != JIN_ERR_OK )
+        return jerr;
+
+    if( read_register( jint, X86_REG_RIP, &old_ip ) != QWORD ) return JIN_ERR_REG_CANNOT_READ;
+    if( read_register( jint, X86_REG_RSP, &sp ) != QWORD ) return JIN_ERR_REG_CANNOT_READ;
+
+    if      ( mode == JIN_MODE_32 ) sp -= DWORD;
+    else if ( mode == JIN_MODE_64 ) sp -= QWORD;
+
+    if( write_memory(jint, sp, &old_ip, src_op.size) != src_op.size ) return JIN_ERR_MEM_CANNOT_WRITE;
+    if( write_register( jint, X86_REG_RIP, &new_ip ) != QWORD ) return JIN_ERR_REG_CANNOT_WRITE;
+    if( write_register(jint, X86_REG_RSP, &sp) != QWORD ) return JIN_ERR_REG_CANNOT_WRITE;
+
+    return JIN_ERR_OK;
+}
+
+instruction_handler x86_ins_ret ( jin_interpreter * jint, jin_operand * operands, size_t nops ){
+    if ( nops != 0 || jint == NULL )    // In x86 manual ret can have 1 argument, but keystone does not support it
+        return JIN_ERR_GENERIC;
+
+    jin_mode mode = jin_get_mode(jint);
+    uint64_t new_ip;
+    uint64_t sp;
+    uint64_t addr_size;
+
+    if      ( mode == JIN_MODE_32 ) addr_size = DWORD;
+    else    addr_size = QWORD;
+
+    if( read_register( jint, X86_REG_RSP, &sp ) != QWORD ) return JIN_ERR_REG_CANNOT_READ;
+    if( read_memory(jint, sp, &new_ip, addr_size) != addr_size ) return JIN_ERR_MEM_CANNOT_READ;
+
+    sp += addr_size;
+
+    if( write_register( jint, X86_REG_RIP, &new_ip ) != QWORD ) return JIN_ERR_REG_CANNOT_WRITE;
+    if( write_register(jint, X86_REG_RSP, &sp) != QWORD ) return JIN_ERR_REG_CANNOT_WRITE;
+
+    return JIN_ERR_OK;
+}

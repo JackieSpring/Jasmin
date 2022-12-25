@@ -4,6 +4,7 @@
 #include "commands_generic.h"
 #include "cmd_break.h"
 #include "cmd_print.h"
+#include "cmd_set.h"
 
 jin_err init_commands();
 void fini_commands();

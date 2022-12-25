@@ -33,4 +33,27 @@ Qusta è una lista di bug difficilmente risolvibili al momento, perlopiù causat
 		add rax, 0xffffffffffffffff
 		subq rbx, 0xffffffffe
 
+4) ### SOLVED ### Symbol + 1
+	Quando keystone risolve un simbolo sconosciuto, aggiunge +1 all'indirizzo risultato:
 
+		// tizio è un simbolo sconosciuto risolto con KS_OPT_SYM_RESOLVER, tizio = 0
+		jmp tizio	-> eb ff -> 	jmp 1
+
+	se però gli si passa il label DENTRO il codice da assemblare allora funziona regolarmente:
+
+		// tizio è un simbolo definito nella stringa stessa da assemblare
+		// viene interpretata correttamente
+		tizio: jmp tizio-> eb fe ->	jmp 0
+
+5) ### SOLVED ### Symbol + 4
+	Quando keystone risolve un simbolo sconosciuto per l'istruzione 'call`, aggiunge +4 
+	all'indirizzo risultato:
+
+		// tizio è un simbolo sconosciuto risolto con KS_OPT_SYM_RESOLVER, tizio = 0
+		call tizio	-> e8 ff ff ff ff -> 	call 4
+
+	se però gli si passa il label DENTRO il codice da assemblare allora funziona regolarmente:
+
+		// tizio è un simbolo definito nella stringa stessa da assemblare
+		// viene interpretata correttamente
+		tizio: call tizio-> e8 fb ff ff ff ->	call 0

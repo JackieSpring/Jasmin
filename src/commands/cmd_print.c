@@ -1,6 +1,6 @@
 #include "cmd_print.h"
 
-#define ADD_CMD_HANDLER(cmd_string, handler) if ( strcmp(print_routine, cmd_string) == 0 ) return handler(jint, arguments); \
+#define ADD_CMD_HANDLER(cmd_string, handler) if ( strcmp(print_routine, cmd_string) == 0 ) return handler(jint, arguments) \
 
 /*
  * COMMANDS:
@@ -15,6 +15,7 @@
 #define CMD_P_REGS_ARG "regs"
 #define CMD_P_SYMS_ARG "syms"
 #define CMD_P_CODE_ARG "code"
+#define CMD_P_INT_ARG "interpreter"
 
 
 //
@@ -231,6 +232,29 @@ static cmd_handler cmd_print_break (){
     return JIN_ERR_OK;
 }
 
+static cmd_handler cmd_print_interpreter(jin_interpreter * jint, string operands ){
+    uint64_t ip, sp;
+    jin_arch arch = jin_get_arch(jint);
+    jin_mode mode = jin_get_mode(jint);
+    jin_syntax syn = jin_get_syntax(jint);
+    jin_state state = jin_get_state(jint);
+
+    read_instruction_pointer(jint, &ip);
+    read_stack_pointer(jint, &sp);
+
+    printf( "Architecture:\t\t%s\n",    jin_arch_to_string(arch) );
+    printf( "Mode:\t\t\t%s\n",          jin_mode_to_string(arch, mode) );
+    printf( "Syntax:\t\t\t%s\n",          jin_syntax_to_string(arch, syn));
+    printf( "Entrypoint:\t\t%p\n",      jin_get_entrypoint(jint));
+    printf( "Stackbase:\t\t%p\n",       jin_get_stackbase(jint));
+    printf( "Workingsegment:\t\t%d\n",  jin_get_working_segment(jint));
+    printf( "State:\t\t\t%s\n",         jin_state_to_string(state) );
+    printf( "InstructionPointer:\t%p\n",ip );
+    printf( "StackPointer:\t\t%p\n",    sp );
+
+    return JIN_ERR_OK;
+}
+
 //
 // MAIN HANDLER
 //
@@ -241,11 +265,12 @@ cmd_handler cmd_print( jin_interpreter * jint, string str) {
     if( print_routine == NULL )
         return JIN_ERR_CMD_INVALID;
     
-    ADD_CMD_HANDLER( CMD_P_BREAK_ARG , cmd_print_break)
-    ADD_CMD_HANDLER( CMD_P_MEMORY_ARG , cmd_print_memory)
-    ADD_CMD_HANDLER( CMD_P_REGS_ARG , cmd_print_registers)
-    ADD_CMD_HANDLER( CMD_P_SYMS_ARG , cmd_print_symbols)
-    ADD_CMD_HANDLER( CMD_P_CODE_ARG , cmd_print_code )
+    ADD_CMD_HANDLER( CMD_P_BREAK_ARG , cmd_print_break);
+    ADD_CMD_HANDLER( CMD_P_MEMORY_ARG , cmd_print_memory);
+    ADD_CMD_HANDLER( CMD_P_REGS_ARG , cmd_print_registers);
+    ADD_CMD_HANDLER( CMD_P_SYMS_ARG , cmd_print_symbols);
+    ADD_CMD_HANDLER( CMD_P_CODE_ARG , cmd_print_code );
+    ADD_CMD_HANDLER( CMD_P_INT_ARG , cmd_print_interpreter );
     
     return JIN_ERR_CMD_INVALID;
 }
@@ -258,6 +283,7 @@ void cmd_print_help() {
     puts("  print "CMD_P_REGS_ARG" \t\t\t\t" "prints the current registers and their content");
     puts("  print "CMD_P_SYMS_ARG" \t\t\t\t" "prints the current symbols and the address they point to");
     puts("  print "CMD_P_CODE_ARG" \t\t\t\t" "prints all the executable code written in memory");
+    puts("  print "CMD_P_INT_ARG" \t\t\t" "prints interpreter infos");
 }
 
 

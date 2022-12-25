@@ -77,7 +77,26 @@ jasmin/
 	nella fase di fetch() dell'istruzione dalla riga di comando e/o dalla memoria; cs_disasm_iter, 
 	utilizzata in decode() per recuperare le sopraelencate informazioni.
 
-
+* Istruzioni implementate
+	ADD
+	AND
+	CALL
+	DEC
+	HLT
+	INC
+	Jcc
+	JMP (parziale)
+	LEA
+	MOV
+	MOVABS
+	NOP
+	NOT
+	OR
+	POP
+	PUSH
+	RET
+	SUB
+	XOR
 
 
 

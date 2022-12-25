@@ -2,6 +2,8 @@
 #include "numhashtable.h"
 
 #define HT_SIZE 0xff
+#define HT_MAX_ELEMS 0xffff
+
 
 typedef struct ht_entry_struct {
     nhtkey key;
@@ -122,6 +124,9 @@ void destroy_numhashtable(numhashtable * ht) {
 
 int add_to_numhashtable(numhashtable * ht, nhtkey key, nhtvalue val) {
     if ( ht == NULL || key == NULL )
+        return -1;
+
+    if ( ht->nelem == HT_MAX_ELEMS )
         return -1;
     
     size_t index = hash_index(key);

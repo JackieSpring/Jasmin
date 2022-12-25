@@ -1,0 +1,7 @@
+Name: keystone
+Description: Keystone assembler engine
+Version: 0.9
+libdir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_include/keystone/lib
+includedir=/Users/camola/Desktop/università/asm_interpreter/jasmin/src/shared/external_include/keystone/include
+Libs: -L${libdir} -lkeystone
+Cflags: -I${includedir}

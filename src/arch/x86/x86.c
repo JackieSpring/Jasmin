@@ -20,13 +20,15 @@ static int x86_operand_resolver (jin_interpreter * jint, cs_insn * raw_ins, jin_
     uint8_t raw_op_count = (raw_ins->detail->x86).op_count;
     
     *ret = calloc( raw_op_count, sizeof(jin_operand) );
-    
-    
+
     if ( ret == NULL )
-        { puts("GOTO 1"); goto cleanup; }
+        goto cleanup;
+        
     
     for ( unsigned int i = 0; i < raw_op_count; i++ ) {
-    #define rop operands[i]
+
+#define rop operands[i]
+
         jin_operand newop ;
         newop.size = rop.size;
         
@@ -67,7 +69,7 @@ static int x86_operand_resolver (jin_interpreter * jint, cs_insn * raw_ins, jin_
             } else if ( jin_get_mode(jint) == JIN_MODE_32 ) {
                 addr += (signed int) rop.mem.disp;
             } else
-            {  puts("GOTO 2");  goto cleanup;  }
+                goto cleanup;
             
             newop.type = JIN_OP_MEM;
             newop.mem = addr;
@@ -75,9 +77,20 @@ static int x86_operand_resolver (jin_interpreter * jint, cs_insn * raw_ins, jin_
             
         }
         else
-            { puts("GOTO 3"); goto cleanup;}
-        (* ret)[i] = newop;
-        #undef rop
+            goto cleanup;
+        
+        /**
+        * In GAS and ATT syntax for x86, operands are passed in reverse order
+        */
+        unsigned int op_index = i;
+        jin_syntax syn = jin_get_syntax( jint );
+
+        if ( syn == JIN_SYNTAX_GAS || syn == JIN_SYNTAX_ATT )
+            op_index = raw_op_count - i - 1;
+        
+
+        (* ret)[op_index] = newop;
+#undef rop
     }
     
     *ret_op_count = raw_op_count;
@@ -180,6 +193,7 @@ int init_x86( jin_interpreter * jint) {
 // init instructions  
     jin_add_instruction(jint, X86_INS_ADD, x86_ins_add);
     jin_add_instruction(jint, X86_INS_AND, x86_ins_and);
+    jin_add_instruction(jint, X86_INS_CALL, x86_ins_call);
     jin_add_instruction(jint, X86_INS_DEC, x86_ins_dec);
     jin_add_instruction(jint, X86_INS_HLT, x86_ins_hlt);
     jin_add_instruction(jint, X86_INS_INC, x86_ins_inc);
@@ -210,13 +224,14 @@ int init_x86( jin_interpreter * jint) {
     jin_add_instruction(jint, X86_INS_OR, x86_ins_or);    
     jin_add_instruction(jint, X86_INS_POP, x86_ins_pop);     
     jin_add_instruction(jint, X86_INS_PUSH, x86_ins_push);
+    jin_add_instruction(jint, X86_INS_RET, x86_ins_ret);
     jin_add_instruction(jint, X86_INS_SUB, x86_ins_sub);
     jin_add_instruction(jint, X86_INS_XOR, x86_ins_xor);
 
-    
+// DUMMY INSTRUCTIONS    
     jin_add_instruction(jint, X86_INS_JMP, x86_ins_fake_jump);
     
-
+// Interpreter - registers - operand middlewares
     if ( jin_set_operand_resolver( jint, x86_operand_resolver ) < 0)
         goto cleanup;
 

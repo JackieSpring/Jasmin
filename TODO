@@ -1,9 +1,16 @@
 
 ### ALTA PRIORITA ###
-> Rendere sicuro il programma (non ci sono controlli sul numero massimo di elementi nelle
-  varie tabelle)
+> Gestire le istruzioni non supportate e/o errate; in questo momento anche se una istruzione è
+  sintatticamente valida ma non implementata o causa una eccezione, viene comunque pushata nella
+  sezione di testo , questo avviene perché nel ciclo di esecuzione in main.c, execute() legge
+  l'istruzione da eseguire direttamente dal puntatore in memoria virtuale obbligando main_loop()
+  a pushare l'istruzione prima di eseguirla.
+  L'inserimento di quelle istruzioni potrebbe essere volontario, perciò escluderle non è la 
+  soluzione 
 
-> Generalizzare op_type di jin_instruction poiché in questo momento dipends da capstone/x86, così
+> Rendere sicuro il programma (cercare bug)
+
+> Generalizzare op_type di jin_instruction poiché in questo momento dipende da capstone/x86, così
   come tutte le funzioni che controllano quel campo!
 
 > Completare set di istruzioni x86
@@ -16,7 +23,11 @@
   dei simboli futuri").
 
 > Modificare la gestione della memoria virtuale in modo che:
-   * supporti le operazioni di resize dei segmenti;
+  * supporti le operazioni di resize dei segmenti;
+  <note>Potrebbe non essere una buona idea per il problema di cambio dei puntatori nelle 
+        istruzioni gia memorizzate, poiché i label vengono persi a momento di assemblamento
+        dell'istruzione, se i segmenti cambiano di dimensione possono sfalzare gli indirizzi
+        dei dati, quindi le istruzioni gia assemblate punteranno a locazioni errate.
 
 > Capacità di leggere un file asm e costruire interprete e mappa di memoria, avviare la console
   e restare in attesa
@@ -29,13 +40,15 @@
 
 > Riscrivere l'inizializzazione di jin_interpreter in modo che l'unico argomento accettato
   sia una struttura 'opzioni' contenente (la lista potrebbe non essere esaustiva):
-    * id modalità
-    * id architettura
-    * mappa segmenti
-    * opzioni memoria
-    * lista registri preinizializzata (opzionale)
-    * tabella simboli preinizializzata (opzionale)
-    * mappa memoria preinizializzata (opzionale)
+  * id modalità
+  * id architettura
+  * entrypoint
+  * stackbase
+  * mappa segmenti
+  * opzioni memoria
+  * lista registri preinizializzata (opzionale)
+  * tabella simboli preinizializzata (opzionale)
+  * mappa memoria preinizializzata (opzionale)
 
 > Risolvere (non ho idea del come) i problemi assurdi di quel cazzo di keystone riportati
   in "BUG ASSURDI"
@@ -47,4 +60,5 @@ ___ BASSA PRIORITA ___
 > aggiungere architettura ARM
 > aggiungere comando che permetta di disassemblare porzioni di codice memoria inidicate da
   label o indirizzo
+> Creare funzioni che convertano numero di stato/architettura/mode/segmento in stringhe
 

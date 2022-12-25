@@ -529,7 +529,7 @@ bool check_address_perm(memory_map * mm, memory_addr addr, memory_perm perm ) {
     if (sect == NULL)
         return false;
     
-    if ( perm & sect->perm == 0 )
+    if ( (perm & sect->perm) == 0 )
         return false;
     
     return true;

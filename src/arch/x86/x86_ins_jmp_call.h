@@ -30,4 +30,6 @@ instruction_handler x86_ins_jcxz (jin_interpreter * jint, jin_operand * operands
 instruction_handler x86_ins_jecxz (jin_interpreter * jint, jin_operand * operands, size_t nops );
 instruction_handler x86_ins_jrcxz (jin_interpreter * jint, jin_operand * operands, size_t nops );
 
+instruction_handler x86_ins_call( jin_interpreter * jint, jin_operand * operands, size_t nops );
+instruction_handler x86_ins_ret( jin_interpreter * jint, jin_operand * operands, size_t nops );
 #endif

@@ -21,18 +21,25 @@
 #define MEM_SEG_BSS     3
 #define MEM_SEG_STACK   4
 
-#define MEM_TEXT_DEFAULT_ADDRESS_32     0x00400000
-#define MEM_TEXT_DEFAULT_ADDRESS_64     0x08048000
-
-#define MEM_STACK_DEFAULT_ADDRESS_32    0xbfa82000
-#define MEM_STACK_DEFAULT_ADDRESS_64    0x7ffffffe9000
-
 #define MEM_STACK_DEFAULT_SIZE  MiB(8)
 #define MEM_TEXT_DEFAULT_SIZE   KiB(8)
 #define MEM_RODATA_DEFAULT_SIZE KiB(4)
 #define MEM_DATA_DEFAULT_SIZE   KiB(4)
 #define MEM_BSS_DEFAULT_SIZE    KiB(4) 
 
+#define MEM_SEG_SYM_TEXT    "__text"
+#define MEM_SEG_SYM_RODATA  "__rodata"
+#define MEM_SEG_SYM_DATA    "__data"
+#define MEM_SEG_SYM_BSS     "__bss"
+#define MEM_SEG_SYM_STACK   "__stack"
+
+#define MEM_TEXT_DEFAULT_ADDRESS_32     0x00400000
+#define MEM_TEXT_DEFAULT_ADDRESS_64     0x08048000
+
+#define MEM_STACK_DEFAULT_ADDRESS_32    0xbfa82000
+#define MEM_STACK_DEFAULT_ADDRESS_64    0x7ffffffe9000
+
+/** SEE memory.h */
 #define MEM_EXEC 0x1
 #define MEM_WRITE 0x2
 #define MEM_READ 0x4
@@ -79,10 +86,18 @@ typedef enum jin_mode {
     JIN_MODE_V9 = 1 << 4,          // SparcV9 mode
 } jin_mode;
 
+typedef enum jin_syntax {
+	JIN_SYNTAX_INTEL =   1 << 0, // X86 Intel syntax - default on X86 (KS_OPT_SYNTAX).
+	JIN_SYNTAX_ATT   =   1 << 1, // X86 ATT asm syntax (KS_OPT_SYNTAX).
+	JIN_SYNTAX_NASM  =   1 << 2, // X86 Nasm syntax (KS_OPT_SYNTAX).
+	JIN_SYNTAX_MASM  =   1 << 3, // X86 Masm syntax (KS_OPT_SYNTAX) - unsupported yet.
+	JIN_SYNTAX_GAS   =   1 << 4, // X86 GNU GAS syntax (KS_OPT_SYNTAX).
+} jin_syntax;
 
 typedef struct jin_options {
     jin_arch    arch;
     jin_mode    mode;
+    jin_syntax  syntax;
 } jin_options;
 
 
@@ -169,8 +184,8 @@ int jin_del_register (jin_interpreter * jint, register_id id );
  * Creates the register table necessary for adding registers to the interpreter, no registers operation
  * can be done without it.
  * The 'size` arguments corresponds to the amount of registers/partitions that are going to be added later.
- * @jint        interpreter where to create the table
- * @size        number of entries in the table
+ * @param param jint        interpreter where to create the table
+ * @param param size        number of entries in the table
  *
  * @return      0 if success, -1 if fail.
 */
@@ -180,9 +195,9 @@ int jin_del_register (jin_interpreter * jint, register_id id );
  * Add a register to the interpreter and assign to it the given id, this function can fail 
  * if the size is 0 or the id is already in use.
  *
- * @jint        interpreter where to add the register
- * @id          id of the new register
- * @size        size of the new register (in bytes)
+ * @param jint        interpreter where to add the register
+ * @param id          id of the new register
+ * @param size        size of the new register (in bytes)
  *
  * @return      0 if success, -1 if fail
 */
@@ -199,11 +214,11 @@ int jin_del_register (jin_interpreter * jint, register_id id );
  * This function can fail if the id is already in use, or if the id of the register
  * is not in use or is a partition itself, or if the partition doesn't fit the register.
  *
- * @jint        interpreter where to add the partition
- * @partid      id of the new partition
- * @parentid    id of the register
- * @offset      index of the first registr's byte of the partition
- * @size        size of the partition
+ * @param jint        interpreter where to add the partition
+ * @param partid      id of the new partition
+ * @param parentid    id of the register
+ * @param offset      index of the first registr's byte of the partition
+ * @param size        size of the partition
  * 
  * @return      0 if success, -1 if fail
 */
@@ -216,8 +231,8 @@ int jin_del_register (jin_interpreter * jint, register_id id );
  * that registers will be deleted too. This function can fail if no register/partition
  * is assigned to the given id.
  *
- * @jint        interpreter from where delete the partition
- * @id          id of the register/partition to delete
+ * @param jint        interpreter from where delete the partition
+ * @param id          id of the register/partition to delete
  *
  * @return      o if success, -1 if fail
 */
@@ -248,8 +263,8 @@ int jin_set_operand_resolver( jin_interpreter * jint, operand_resolver func );
  * respectively pointers to where to store the final operands array and the
  * final numbers of operands in that array.
  *
- * @jint        interpreter
- * @func        pointer to the operand_resolver function
+ * @param jint        interpreter
+ * @param func        pointer to the operand_resolver function
  *
  * @return      0 if the func was set succesfully, -1 if fail
 */
@@ -275,9 +290,9 @@ int jin_set_stack_pointer_rw ( jin_interpreter * jint, register_access_function 
  * into the registers or write the buffer the result, the return value of this handlers
  * must be the number of bytes readden/written from/to the buffer.
  *
- * @jint        interpreter
- * @rdf         read function used to read from the instruction/stack pointer
- * @wrf         write function used to write to the instruction pointer
+ * @param jint        interpreter
+ * @param rdf         read function used to read from the instruction/stack pointer
+ * @param wrf         write function used to write to the instruction pointer
  *
  * @return      0 if success, -1 if fail 
 */
@@ -306,9 +321,9 @@ register_size write_register ( jin_interpreter * jint, register_id regid, void *
  * readden/written depends on the size of the register, so buffer must be at least
  * the same size of the register.
  *
- * @jint        interpreter
- * @regid       id of the register where to read/write
- * @buffer      buffer where the register data will be stored / containing the data
+ * @param jint        interpreter
+ * @param regid       id of the register where to read/write
+ * @param buffer      buffer where the register data will be stored / containing the data
  *              that has to be written in the register
  *
  * @return      number of bytes readden/written, 0 if the register is not in use
@@ -336,13 +351,13 @@ size_t write_memory ( jin_interpreter * jint, memory_addr addr, void * buffer, s
  * The write operation can increase the pointer to the last written byte of the 
  * segment used internally by the memory for stack-like operations.
  *
- * @jint        interpreter
- * @addr        memory address where to read/write
- * @buffer      buffer where the data will be stored / containig the data that has
- *              to be written in memory.
- * @length      number of bytes to read/write
+ * @param jint          interpreter
+ * @param addr          memory address where to read/write
+ * @param buffer        buffer where the data will be stored / containig the data that has
+ *                      to be written in memory.
+ * @param length        number of bytes to read/write
  *
- * @return      number of bytes readden/written. 0 if fail.
+ * @return              number of bytes readden/written. 0 if fail.
 */
 
 
@@ -384,6 +399,7 @@ register_size write_stack_pointer ( jin_interpreter *  jint, void * buffer );
 */
 jin_arch jin_get_arch(jin_interpreter * jint);
 jin_mode jin_get_mode(jin_interpreter * jint);
+jin_syntax jin_get_syntax(jin_interpreter * jint);
 
 int jin_set_state (jin_interpreter * jint, jin_state state);
 jin_state jin_get_state(jin_interpreter * jint);
@@ -394,7 +410,7 @@ void jin_free_instruction( jin_instruction * ins );
  *
  * Frees an instruction. Eevry jin_instruction must be freed after it's use.
  *
- * @ins         The instruction to free.
+ * @param ins         The instruction to free.
 */
 
 
@@ -411,8 +427,8 @@ const char * jin_get_reg_name( jin_interpreter * jint, register_id id );
  * register is different from the capstone code fore that register, the traslation
  * may result wrong.
  *
- * @jint        interpreter
- * @id          id of the register
+ * @param jint        interpreter
+ * @param id          id of the register
  *
  * @return      a string representing the register mnemonic
 */
@@ -437,9 +453,9 @@ int jin_iterate_memory ( jin_interpreter * jint, memory_iterator miter, void * e
  * The `extra` pointer is used for passing arguments from outside the loop to
  * the *_iterator function.
  *
- * @jint        interpreter
- * @riter/siter The iterator function, this parameter can't be NULL
- * @extra       a pointer that is passed to the iterator function at every iteration.
+ * @param jint        interpreter
+ * @param riter/siter The iterator function, this parameter can't be NULL
+ * @param extra       a pointer that is passed to the iterator function at every iteration.
  *
  * @return      0 if success, -1 if fail
 */
@@ -452,26 +468,39 @@ jin_err jin_disassemble( jin_interpreter * jint, uint64_t ins_p, uint8_t * bytec
 
 jin_err jin_execute( jin_interpreter * jint, jin_instruction * ins );
 
-
+/** 
+ * privileged memory access
+ * IN offset_*, if buffer=NULL and length=0 @return start address of segment
+ * IN push/pop, if buffer=NULL and length=0 @return last segment's last address
+ */
 memory_addr offset_write_segment ( jin_interpreter * jint , segment_id id, size_t offset, void * buffer, size_t length );
 memory_addr offset_read_segment ( jin_interpreter * jint, segment_id id, size_t offset, void * buffer, size_t length );
 memory_addr push_segment ( jin_interpreter * jint, segment_id id, void * buffer, size_t length );
 memory_addr pop_segment ( jin_interpreter * jint, segment_id id, void * buffer, size_t length );
 
+// Check memory permissions of given address
 bool check_perm_memory( jin_interpreter * jint, memory_addr addr, memory_perm perm );
 
+// get real memory pointer from virtual memory pointer
 void * get_effective_pointer( jin_interpreter * jint, memory_addr address );
 
-
+// set segment where new instructions will be pushed (dafault .text)
 int jin_set_working_segment( jin_interpreter * jint , segment_id id );
 segment_id jin_get_working_segment( jin_interpreter * jint );
 
+// set code entrypoint address -> IP initial value
 int jin_set_entrypoint( jin_interpreter * jint, memory_addr addr );
 memory_addr jin_get_entrypoint( jin_interpreter * jint );
 
+// set stack start address -> SP initial value
 int jin_set_stackbase( jin_interpreter * jint, memory_addr addr );
 memory_addr jin_get_stackbase( jin_interpreter * jint ); 
 
+
+string jin_state_to_string( jin_state state );
+string jin_arch_to_string( jin_arch arch );
+string jin_mode_to_string(jin_arch arch, jin_mode mode );
+string jin_endianess_to_string(jin_mode mode);
 
 
 #endif

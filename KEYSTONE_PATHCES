@@ -1,0 +1,35 @@
+
+==========================================
+    added KS_OPT_SYNTAX_RADIX10 option
+==========================================
+keystone-master/llvm/keystone/kc.cpp
+
+525c525
+<     ks->MAI->setRadix(16);
+---
+>     ks->MAI->setRadix(10);      // MODIFIED 
+549a550,562
+>                 case KS_OPT_SYNTAX_RADIX10: // default syntax is Intel
+>                 case KS_OPT_SYNTAX_NASM | KS_OPT_SYNTAX_RADIX10:
+>                 case KS_OPT_SYNTAX_INTEL | KS_OPT_SYNTAX_RADIX10:
+>                     ks->MAI->setRadix(10);
+>                     ks->syntax = (ks_opt_value)value;
+>                     ks->MAI->setAssemblerDialect(1);
+>                     break;
+>                 case KS_OPT_SYNTAX_GAS | KS_OPT_SYNTAX_RADIX10:
+>                 case KS_OPT_SYNTAX_ATT | KS_OPT_SYNTAX_RADIX10:
+>                     ks->MAI->setRadix(10);
+>                     ks->syntax = (ks_opt_value)value;
+>                     ks->MAI->setAssemblerDialect(0);
+>                     break;
+
+==========================================
+    wrong symbol resolved bug solved
+==========================================
+keystone-master/llvm/lib/MC/MCAssembler.cpp
+
+211c211
+<                 Value = imm;
+---
+>                 Value += imm;
+

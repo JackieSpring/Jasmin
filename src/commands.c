@@ -5,6 +5,20 @@ hashtable * commands_table;
 
 
 
+// Used in cmd_run
+static register_iterator reset_registers ( register_id id, register_size size, bool is_partition, void * extra ) {
+    if ( is_partition )
+        return true;
+
+    jin_interpreter * jint = (jin_interpreter *) extra;
+    uint8_t zeros [size];
+    bzero(zeros, size);
+    
+    write_register(jint, id, &zeros);
+
+    return true;
+}
+
 
 
 bool is_command( string str ) {
@@ -33,12 +47,15 @@ jin_err execute_command(jin_interpreter * jint, string str ) {
     return (cmh)(jint, operands);
 }
 
+
 static cmd_handler cmd_exit( jin_interpreter * jint, string operands) {
     jin_set_state(jint, JIN_STATE_TERMINATED);
     return JIN_ERR_OK;
 }
 
 static cmd_handler cmd_run ( jin_interpreter * jint, string operands) {
+    jin_iterate_register( jint, reset_registers, jint );
+
     memory_addr entrypoint = jin_get_entrypoint(jint);
     memory_addr stackbase = jin_get_stackbase(jint);
     
@@ -86,15 +103,21 @@ static cmd_handler cmd_help() {
     puts("------------ Available commands ------------");
     puts("break\t`name` `address`\t\tCreates a breakpoint at the given address, the breakpoint is ");
                      puts("\t\t\t\t\tidentified by the given name.");
-    puts("continue");
+    puts("continue\t      \t\t\tContinue execution from current Instruction Pointer");
     puts("delbreak\t`name`\t\t\tDeletes a breakpoint");
     puts("exit");
     puts("help");
-    puts("pause");
+    puts("pause   \t      \t\t\tPause code execution, new instructions will be pushed in the");
+                puts("\t\t\t\t\tworking segment but not executed.");
     puts("print");
     cmd_print_help();
-    puts("run");
-    puts("term");
+    puts("run     \t      \t\t\tStart execution from code entry point until last instruction or");
+                puts("\t\t\t\t\tprogram end, new instructions will be pushed in the working segment");
+                puts("\t\t\t\t\tand executed realtime.");
+    puts("set ");
+    cmd_set_help();
+    puts("term    \t      \t\t\tTerminate code execution, new instructions will be pushed in");
+                puts("\t\t\t\t\tthe working segment but not executed");
     puts("--------------------------------------------");
     
     return JIN_ERR_OK;
@@ -114,6 +137,7 @@ jin_err init_commands() {
     add_to_hashtable(commands_table, "pause", cmd_pause);
     add_to_hashtable(commands_table, "print", cmd_print);
     add_to_hashtable(commands_table, "run", cmd_run);
+    add_to_hashtable(commands_table, "set", cmd_set);
     add_to_hashtable(commands_table, "term", cmd_term);
 
     return JIN_ERR_OK;

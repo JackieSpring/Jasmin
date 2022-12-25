@@ -1,5 +1,6 @@
 #include "queue.h"
 
+#define QUEUE_MAX_ENTRIES 0xffff
 
 typedef struct queue_entry_struct {
     quvalue * val;
@@ -67,6 +68,9 @@ static queue_entry * create_entry( quvalue val, queue_entry * next, queue_entry 
 
 int push_to_queue(queue * qu, quvalue val) {
     if ( qu == NULL )
+        return -1;
+
+    if ( qu->nentries == QUEUE_MAX_ENTRIES )
         return -1;
     
     queue_entry * old = qu->head;

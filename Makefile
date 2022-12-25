@@ -19,13 +19,13 @@ OUTPUT_PATH = dist/
 OUTPUT_NAME = jasmin
 OUTPUT = $(OUTPUT_PATH)$(OUTPUT_NAME)
 
-DEBUG_MODE = 0
-
-ifeq ($(DEBUG_MODE),1)
-	DEBUG_FLAG = -pg -v -D DEBUG_ON=1
-else
-	DEBUG_FLAG = -w
-endif
+#DEBUG_MODE = 0
+#
+#ifeq ($(DEBUG_MODE),1)
+#	DEBUG_FLAG = -pg -v -D DEBUG_ON=1
+#else
+#	DEBUG_FLAG = -w
+#endif
 
 
 EXT_LIB_PATH = src/shared/external_include/
@@ -42,12 +42,17 @@ INC_CAPSTONE += -L $(CAPSTONE_PATH)lib/
 INC_CAPSTONE += -l capstone
 
 CC = gcc
-CFLAGS = -lstdc++ -lm $(DEBUG_FLAG) $(foreach path, $(SRC_PATH), -I $(path)) $(INC_KEYSTONE) $(INC_CAPSTONE) -o $(OUTPUT)
+#CFLAGS = -lstdc++ -lm $(DEBUG_FLAG) $(foreach path, $(SRC_PATH), -I $(path)) $(INC_KEYSTONE) $(INC_CAPSTONE) -o $(OUTPUT)
+CFLAGS = -lstdc++ -lm $(foreach path, $(SRC_PATH), -I $(path)) $(INC_KEYSTONE) $(INC_CAPSTONE) -o $(OUTPUT)
 
 FOO = ok
 
 compile: SRC
-	@$(CC) $(SRC) $(CFLAGS)
+	@$(CC) $(SRC) -w $(CFLAGS)
 
 run: compile
+	@./$(OUTPUT)
+
+debug:
+	@$(CC) $(SRC) -w -pg -D DEBUG_ON=1 $(CFLAGS)
 	@./$(OUTPUT)

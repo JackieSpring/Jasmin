@@ -17,6 +17,7 @@ typedef bool (* htiterator) ( htkey key, htvalue val, void * extra );
 hashtable * create_hashtable();
 void destroy_hashtable(hashtable * ht);
 
+/** If entry exists, override */
 int add_to_hashtable(hashtable * ht, htkey key, htvalue entry);
 int del_from_hashtable(hashtable * ht, htkey key);
 
