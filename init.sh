@@ -49,6 +49,10 @@ if [[ ! $(./compile_keystone.sh) ]]; then
     exit
 fi
 
+if [[ -e keystone-master ]]; then  # Unknown bug, keystone-master directory is created in .
+    rm -rdf keystone-master
+fi
+
 ### Compile Jasmin
 
 echo "$INFO Compiling jasmin"
