@@ -115,17 +115,10 @@ jin_err push_code( jin_interpreter * jint, unsigned char * code_ptr ) {
 }
 
 unsigned char * get_user_input( jin_interpreter * jint, unsigned char * user_input ) {
-    char * prefix;
+    string prefix;
     jin_state state = jin_get_state(jint);
-    
-    if ( state == JIN_STATE_RUNNING )
-        prefix = "running ";
-    else if ( state == JIN_STATE_PAUSE )
-        prefix = "paused  ";
-    else if ( state == JIN_STATE_INACTIVE )
-        prefix = "inactive";
-    else if ( state == JIN_STATE_TERMINATED )
-        prefix = "terminated";
+
+    prefix = jin_state_to_string(state);
     
     printf("(%s)%s", prefix, CMD_CURSOR);
     fgets(user_input, USER_INPUT_SIZE, stdin);
@@ -250,6 +243,8 @@ int main(int argc, char * argv[]){
             case 'g': arg_syn = JIN_SYNTAX_GAS; break;
         default:
             fprintf(stderr, "Usage: %s [-"ARGS_OPTIONS"] \n", argv[0]);
+            fprintf(stderr, "\t-m\t\tUse x86 32bit mode \n");
+            fprintf(stderr, "\t-g\t\tUse x86 GAS syntax \n");
             exit(EXIT_FAILURE);
         }
     }

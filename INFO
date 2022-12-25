@@ -13,7 +13,7 @@ jasmin/
        +-- commands/			<-- implementazioni dei comandi 
        +-- core/				<-- file che simulano le risorse del computer, come memoria e registri
        +-- shared/			<-- risorse condivise dai file
-            +-- external_source/		<-- codice sorgente librerie esterne
+            +-- external_rsc/		<-- codice sorgente librerie esterne
                  +-- keystone-master/
                  +-- capstone-next/
                  +-- build/		<-- cartella di utility per buildare le librerie
@@ -23,14 +23,11 @@ jasmin/
 
 * Come compilare:
   SU SISTEMA *NIX
-	1)	navigare fino a external_source/ ed eseguire compilekeystone.sh e compilecapstone.sh
-	2)	tornare nella root directory
-	3)	da terminale eseguire il comando 'make`, il file eseguibile si chimerà 'jasmin`, e
-		potrà essere trovato all'interno della cartella dist/
-	3a)	per eseguire direttamente il codice 'make run`
+	1) Eseguire ./init.sh per compilare jasmin
+	2) Eseguire ./jasmin per avviare il programma
 
   SU SITEMA WINDOWS
-	non lo so, non ci ho provato
+	Ancora non supportato
 
 * Componenti del programma:
   I compenenti principali del programma sono:
