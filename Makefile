@@ -19,15 +19,6 @@ OUTPUT_PATH = dist/
 OUTPUT_NAME = jasmin
 OUTPUT = $(OUTPUT_PATH)$(OUTPUT_NAME)
 
-#DEBUG_MODE = 0
-#
-#ifeq ($(DEBUG_MODE),1)
-#	DEBUG_FLAG = -pg -v -D DEBUG_ON=1
-#else
-#	DEBUG_FLAG = -w
-#endif
-
-
 EXT_LIB_PATH = src/shared/external_include/
 
 KEYSTONE_PATH = $(EXT_LIB_PATH)keystone/
