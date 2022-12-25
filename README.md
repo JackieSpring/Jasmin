@@ -45,4 +45,4 @@ rsp      00007ffffffe9000
 # jasmin exited
 ```
 The syntax of the commands is "< *command*",  the __print__ command (used to print useful information such as the status of registers, memory or interpreter, but not only), and the __exit__ command, useful to terminate jasmin, were used in the example.
-The __help__ command can be used to have the list of commands and information on their use.
+The __help__ command will give you the list of commands and information on their use.
