@@ -30,8 +30,8 @@ echo "$INFO Decompressing libraries"
 if [[ -e $EXT_RES_DIR"capstone-next" && -e $EXT_RES_DIR"keystone-master" ]]; then
     echo "$INFO Libraries already decompressed"
 else
-    unzip $EXT_RES_DIR"jasmin-capstone-next.zip"# -d $EXT_RES_DIR
-    unzip $EXT_RES_DIR"jasmin-keystone-master.zip"# -d $EXT_RES_DIR
+    unzip $EXT_RES_DIR"jasmin-capstone-next.zip" # -d $EXT_RES_DIR
+    unzip $EXT_RES_DIR"jasmin-keystone-master.zip" # -d $EXT_RES_DIR
 fi
 
 ### Compile libraries
