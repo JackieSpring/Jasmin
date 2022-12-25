@@ -11,6 +11,7 @@ To compile Jasmin are needed __unzip__, __make__ and __cmake__ programs, so make
 3. Run ./init.sh
 
 ### Usage
+##### Basic usage
 To start Jasmin, simply use this command in the Jasmin directory
 ```sh
 ./jasmin
@@ -46,3 +47,63 @@ rsp      00007ffffffe9000
 ```
 The syntax of the commands is "< *command*",  the __print__ command (used to print useful information such as the status of registers, memory or interpreter, but not only), and the __exit__ command, useful to terminate jasmin, were used in the example.
 The __help__ command will give you the list of commands and information on their use.
+##### Labels and Symbols
+As in the Assembly programming, Jasmin also allows the use of labels, they are declared to the current instruction pointer and follow the syntax ___[a-zA-Z0-9] :___. An example of use of labels is the creation of loop:
+```
+(running) >>> xor rax, rax
+(running) >>> mov rcx, 3
+(running) >>> loop:
+(running) >>> add rax, 2
+(running) >>> dec rcx
+(running) >>> jnz loop
+(running) >>> <print regs
+rflags   0000000000000256
+rax      0000000000000006
+rbp      0000000000000000
+rbx      0000000000000000
+rcx      0000000000000000
+rdi      0000000000000000
+rdx      0000000000000000
+rip      0000000008048013
+rsi      0000000000000000
+rsp      00007ffffffe9000
+(running) >>> < print code
+0x8048000       	xor             rax, rax
+0x8048003       	mov             rcx, 3
+0x804800a       	add             rax, 2
+0x804800e       	dec             rcx
+0x8048011       	jne             0x804800a
+(running) >>> < print syms
+__stack           0x7ffffffe9000
+__bss             0x804c000
+__data            0x804b000
+__rodata          0x804a000
+__text            0x8048000
+loop              0x804800a
+(running) >>> 
+```
+##### Execution state and breakpoints
+The program performed by Jasmin can cross three states:
+##### Limitations
+At the moment only the following X86 instructions are supported:
+
+	ADD
+	AND
+	CALL
+	DEC
+	HLT
+	INC
+	Jcc
+	JMP (does not affect eflag)
+	LEA
+	MOV
+	MOVABS
+	NOP
+	NOT
+	OR
+	POP
+	PUSH
+	RET
+	SUB
+	XOR
+Jasmin is not able to execute system calls since it does not virtualize an operating system, despite using entrypoints and linux systems stackbase.
