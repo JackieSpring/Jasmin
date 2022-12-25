@@ -8,6 +8,9 @@ EXT_RES_DIR="src/shared/external_rsc/"
 INFO="[ INFO ]"
 ERR="[ ERR ]"
 
+if [[ ! -e dist/ ]]; then
+    mkdir dist
+fi
 
 ### Check commands
 
