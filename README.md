@@ -84,6 +84,29 @@ loop              0x804800a
 ```
 ##### Execution state and breakpoints
 The program performed by Jasmin can cross three states:
+- __running__
+	Executes every stored instruction, if they finish remains waiting; each new instruction inserted will be stored and executed immediately.
+- __paused__
+	The execution of the program remains on pause, it can be resumed at any time from the current instruction pointer on condition that points towards an executable memory area. The new instructions will be stored but not executed.
+- __inactive__
+	The program is not being executed, if started it will move on to the running state and its execution will begin from the program's entrypoint. The new instructions will be stored but not executed.
+
+In Jasmin it is possible to set breakpoints to pause the execution of the program when the Instruction Pointer reaches a certain memory address, at this point the execution state will go from __running__ to __paused__.
+```
+(running) >>> < print code
+0x8048000       	xor             rax, rax
+0x8048003       	mov             rcx, 3
+0x804800a       	add             rax, 2
+0x804800e       	dec             rcx
+0x8048011       	jne             0x804800a
+(running) >>> < term          
+(inactive) >>> < break loopjump 0x8048011
+(inactive) >>> < run
+-----! Breakpoint hitted !-----
+Address: 0x8048011
+(paused) >>> 
+```
+
 ##### Limitations
 At the moment only the following X86 instructions are supported:
 
