@@ -9,7 +9,7 @@ Qusta è una lista di bug difficilmente risolvibili al momento, perlopiù causat
 	non possono essere utilizzate in sintassi gas. Se cambio a sintassi intel, il sistemi di indirizzamento
 	[base + index*size] funziona senza problemi.
 
-2) Niente errori con sintassi sbagliata
+2) ### WORKAROUND ### Niente errori con sintassi sbagliata
 	GAS SYNTAX
 	Quando assemblo instruzioni gas che hanno un prefisso di ordine più piccolo rispetto alla dimensione
 	degli operandi, ks_asm non ritorna errori e alloca un buffer, ma size e nins sono azzerati; questo 
@@ -31,7 +31,7 @@ Qusta è una lista di bug difficilmente risolvibili al momento, perlopiù causat
 		add rdi, 0xffffffffffffff
 	ma invece per operandi superiori a 7 byte, o con sintassi gas si ottiene il risultato desiderarto:
 		add rax, 0xffffffffffffffff
-		subq rbx, 0xffffffffe
+		subq $0xffffffffe, %rbx
 
 4) ### SOLVED ### Symbol + 1
 	Quando keystone risolve un simbolo sconosciuto, aggiunge +1 all'indirizzo risultato:
