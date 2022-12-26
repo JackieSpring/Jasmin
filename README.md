@@ -4,9 +4,9 @@ This tool allows you to write assembly instructions and execute them in real tim
 At the moment it only supports a small number of instructions for the x86 64 or 32 -bit architecture architecture with Intel or Gas syntax.
 - [Installation](#Installation)
 - [Usage](#Usage)
-	 - [Basic usage](#Basic usage)
-	 - [Labels and symbols](#Labels and symbols)
-	 - [Execution state and breakpoints](#Execution state and breakpoints)
+	 - [Basic usage](#Basic-usage)
+	 - [Labels and symbols](#Labels-and-symbols)
+	 - [Execution state and breakpoints](#Execution-state-and-breakpoints)
      - [Functions](#functions)
 	 - [Limitations](#Limitations)
 
