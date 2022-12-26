@@ -228,24 +228,24 @@ add rax, 0xffffffffffffffff	#OK
 subq $0xffffffffe, %rbx		#OK
 ```
 3. At the moment only the following X86 instructions are supported:
-	ADD
-	AND
-	CALL
-	DEC
-	HLT
-	INC
-	Jcc
-	JMP (does not affect eflag)
-	LEA
-	MOV
-	MOVABS
-	NOP
-	NOT
-	OR
-	POP
-	PUSH
-	RET
-	SUB
-	XOR
+- ADD
+- AND
+- CALL
+- DEC
+- HLT
+- INC
+- Jcc
+- JMP (does not affect eflag)
+- LEA
+- MOV
+- MOVABS
+- NOP
+- NOT
+- OR
+- POP
+- PUSH
+- RET
+- SUB
+- XOR
 4. Jasmin is not able to execute system calls since it does not virtualize an operating system, despite using entrypoints and linux systems stackbase.
 
