@@ -263,7 +263,7 @@ int main(int argc, char * argv[]){
     
     jin_set_state(jint, JIN_STATE_RUNNING );
 
-    puts("Starting Jasmin v0.1");
+    puts("Starting Jasmin v1.0");
     puts("use <help for help");
     
     main_loop(jint);
