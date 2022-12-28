@@ -1,5 +1,12 @@
 
 ### ALTA PRIORITA ###
+> !! REWORK !!
+  Introdurre unicorn https://github.com/unicorn-engine/unicorn/blob/master/include/unicorn/unicorn.h
+  Utilizzando unicorn al posto di core/ e arch/ avremo implementato in un colpo solo isa, registri e 
+  gestione della memoria per tutte le architetture! Keystone sarà acnora necessario per assemblare
+  le istruzioni, e capstone potrebbe essere usato solo per il disassemblagio e la stampa (bisogna
+  valutare se rimuoverlo del tutto e memorizzare invece le istruzioni inserite con una linked list)
+
 > Gestire le istruzioni non supportate e/o errate; in questo momento anche se una istruzione è
   sintatticamente valida ma non implementata o causa una eccezione, viene comunque pushata nella
   sezione di testo , questo avviene perché nel ciclo di esecuzione in main.c, execute() legge

@@ -10,8 +10,16 @@ ERR="[ ERR ]"
 
 if [[ ! -e dist/ ]]; then
     mkdir dist
+else
+    echo "$ERR Cannot create dist/ directory!"
+    exit
 fi
-
+if [[ ! -e src/shared/external_include ]]; then
+    mkdir dist
+else
+    echo "$ERR Canno create src/shared/external_include directory!"
+    exit
+fi
 ### Check commands
 
 if [[ ! $(which unzip) ]]; then
