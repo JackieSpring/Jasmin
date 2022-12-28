@@ -15,7 +15,7 @@ else
     exit
 fi
 if [[ ! -e src/shared/external_include ]]; then
-    mkdir dist
+    mkdir src/shared/external_include/
 else
     echo "$ERR Canno create src/shared/external_include directory!"
     exit
