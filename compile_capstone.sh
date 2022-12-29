@@ -1,4 +1,3 @@
-#! /bin/sh
 
 WDIR=`pwd`/src/shared/external_rsc/
 
@@ -14,7 +13,7 @@ mkdir $OUTDIR
 
 cd $BUILDDIR
 
-cmake -DCMAKE_INSTALL_PREFIX=$OUTDIR $SRCDIR)
+cmake -DCMAKE_INSTALL_PREFIX=$OUTDIR $SRCDIR
 if [[ ! $? -eq 0 ]]; then
     exit 1
 fi

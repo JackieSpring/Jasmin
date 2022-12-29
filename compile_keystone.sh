@@ -1,4 +1,3 @@
-#! /bin/sh
 
 WDIR=`pwd`/src/shared/external_rsc/
 
