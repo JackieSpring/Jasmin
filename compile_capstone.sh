@@ -13,10 +13,13 @@ mkdir $BUILDDIR
 mkdir $OUTDIR
 
 cd $BUILDDIR
-if [[ ! $(cmake -DCMAKE_INSTALL_PREFIX=$OUTDIR $SRCDIR) -eq 0 ]]; then
+
+cmake -DCMAKE_INSTALL_PREFIX=$OUTDIR $SRCDIR)
+if [[ ! $? -eq 0 ]]; then
     exit 1
 fi
 
-if [[ ! $(cmake --build . --config Release  --target install) -eq 0 ]]; then
+cmake --build . --config Release  --target install
+if [[ ! $? -eq 0 ]]; then
     exit 1
 fi
