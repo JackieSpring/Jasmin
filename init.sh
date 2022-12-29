@@ -50,11 +50,11 @@ fi
 ### Compile libraries
 
 echo "$INFO Compiling libraries."
-if [[ ! $(./compile_capstone.sh) ]]; then
+if [[ ! $(./compile_capstone.sh) -eq 0 ]]; then
     echo "$ERR An error occurred while compiling Capstone library."
     exit
 fi
-if [[ ! $(./compile_keystone.sh) ]]; then
+if [[ ! $(./compile_keystone.sh) -eq 0 ]]; then
     echo "$ERR An error occurred while compiling Keystone library."
     exit
 fi
