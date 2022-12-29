@@ -16,24 +16,27 @@ if [[ ! -e src/shared/external_include/ ]]; then
 fi
 ### Check commands
 
-if [[ ! $(which unzip) ]]; then
+which unzip
+if [[ ! $? -eq 0 ]]; then
     echo "$ERR 'unzip' command not found! Install unzip then retry."
     exit
+fi
 
-elif [[ ! $(which make) ]]; then
+which make
+if [[ ! $? -eq 0 ]]; then
     echo "$ERR 'make' command not found! Install make then retry."
     exit
+fi
 
-elif [[ ! $(which cmake) ]]; then
+which cmake
+if [[ ! $? -eq 0 ]]; then
     echo "$ERR 'cmake' command not found! Install cmake then retry."
     exit
+fi
 
-elif [[ ! $(which python3) ]]; then
+which python3
+if [[ ! $? -eq 0 ]]; then
     echo "$ERR 'python3' command not found! Install python3 then retry."
-    exit
-
-elif [[ ! $(which time) ]]; then
-    echo "$ERR 'time' command not found! Install time then retry."
     exit
 fi
 
@@ -76,7 +79,9 @@ echo "$INFO Linking Executable"
 if [[ -e $LINK_FILE ]]; then
     rm $LINK_FILE
 fi
-if [[ ! $(ln -s $EXE_FILE $LINK_FILE) -eq 0 ]]; then
+
+ln -s $EXE_FILE $LINK_FILE
+if [[ ! $? -eq 0 ]]; then
     echo "$ERR An error occurred while linking executable."
     exit
 fi

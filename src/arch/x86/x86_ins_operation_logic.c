@@ -223,7 +223,7 @@ instruction_handler x86_ins_not (jin_interpreter * jint, jin_operand * operands,
     
     jerr = x86_read_operand(jint, dst, &ret);
     if ( jerr != JIN_ERR_OK )
-        return jerr;
+        return (instruction_handler) jerr;
 
     ret = ~ret;
     
