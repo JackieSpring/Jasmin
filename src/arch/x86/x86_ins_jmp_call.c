@@ -188,7 +188,7 @@ instruction_handler x86_ins_call( jin_interpreter * jint, jin_operand * operands
 
     jerr = x86_read_operand(jint, src_op, &new_ip);
     if ( jerr != JIN_ERR_OK )
-        return jerr;
+        return (instruction_handler) jerr;
 
     if( read_register( jint, X86_REG_RIP, &old_ip ) != QWORD ) return JIN_ERR_REG_CANNOT_READ;
     if( read_register( jint, X86_REG_RSP, &sp ) != QWORD ) return JIN_ERR_REG_CANNOT_READ;

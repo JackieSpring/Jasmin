@@ -85,7 +85,7 @@ static int x86_generic_operation
     write_register(jint, X86_REG_EFLAGS, &eflag);
 // eflag update end
 
-    return x86_write_operand(jint, dst, &ret);
+    return (instruction_handler) x86_write_operand(jint, dst, &ret);
 }
 
 
@@ -113,7 +113,7 @@ instruction_handler x86_ins_inc (jin_interpreter * jint, jin_operand * operands,
     
     jerr = x86_read_operand(jint, dst, &ret);
     if ( jerr != JIN_ERR_OK )
-        return jerr;
+        return (instruction_handler) jerr;
     
     ret = ret + 1;
     
@@ -140,7 +140,7 @@ instruction_handler x86_ins_inc (jin_interpreter * jint, jin_operand * operands,
 
     write_register(jint, X86_REG_EFLAGS, &eflag);
     
-    return x86_write_operand(jint, dst, &ret);
+    return (instruction_handler) x86_write_operand(jint, dst, &ret);
 }
 
 instruction_handler x86_ins_dec (jin_interpreter * jint, jin_operand * operands, size_t nops ) {
@@ -155,7 +155,7 @@ instruction_handler x86_ins_dec (jin_interpreter * jint, jin_operand * operands,
     
     jerr = x86_read_operand(jint, dst, &ret);
     if ( jerr != JIN_ERR_OK )
-        return jerr;
+        return (instruction_handler) jerr;
     
     ret = ret - 1; 
     
@@ -184,7 +184,7 @@ instruction_handler x86_ins_dec (jin_interpreter * jint, jin_operand * operands,
     write_register(jint, X86_REG_EFLAGS, &eflag);
 // end flag write
     
-    return x86_write_operand(jint, dst, &ret);
+    return (instruction_handler) x86_write_operand(jint, dst, &ret);
 
 }
 
@@ -227,7 +227,7 @@ instruction_handler x86_ins_not (jin_interpreter * jint, jin_operand * operands,
 
     ret = ~ret;
     
-    return x86_write_operand(jint, dst, &ret);
+    return (instruction_handler) x86_write_operand(jint, dst, &ret);
 }
 
 // LEA

@@ -10,15 +10,9 @@ ERR="[ ERR ]"
 
 if [[ ! -e dist/ ]]; then
     mkdir dist
-else
-    echo "$ERR Cannot create dist/ directory!"
-    exit
 fi
-if [[ ! -e src/shared/external_include ]]; then
+if [[ ! -e src/shared/external_include/ ]]; then
     mkdir src/shared/external_include/
-else
-    echo "$ERR Canno create src/shared/external_include directory!"
-    exit
 fi
 ### Check commands
 
@@ -32,6 +26,14 @@ elif [[ ! $(which make) ]]; then
 
 elif [[ ! $(which cmake) ]]; then
     echo "$ERR 'cmake' command not found! Install cmake then retry."
+    exit
+
+elif [[ ! $(which python3) ]]; then
+    echo "$ERR 'python3' command not found! Install python3 then retry."
+    exit
+
+elif [[ ! $(which time) ]]; then
+    echo "$ERR 'time' command not found! Install time then retry."
     exit
 fi
 

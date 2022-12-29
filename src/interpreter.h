@@ -142,6 +142,7 @@ typedef struct jin_instruction {
 
 
 typedef jin_err (* instruction_handler) (jin_interpreter * jint, jin_operand * operands, size_t nops ) ;
+//typedef jin_err instruction_handler;
 
 typedef int (* operand_resolver) (jin_interpreter * jint, cs_insn * raw_ins , jin_operand ** ret, size_t ** ret_op_count );
     

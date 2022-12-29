@@ -38,7 +38,7 @@ CFLAGS = -lstdc++ -lm $(foreach path, $(SRC_PATH), -I $(path)) $(INC_KEYSTONE) $
 
 FOO = ok
 
-compile: SRC
+compile:
 	@$(CC) $(SRC) -w $(CFLAGS)
 
 run: compile

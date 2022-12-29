@@ -14,7 +14,7 @@ static cmd_handler cmd_set_entrypoint( jin_interpreter * jint, string operands )
 
     jerr = cmd_parse_operands(operands, tok, 1);
     if( jerr != JIN_ERR_OK )
-        return jerr;
+        return (cmd_handler) jerr;
     
     address = strtol(tok[0], NULL, 16);
     if ( address == 0 )
@@ -41,7 +41,7 @@ static cmd_handler cmd_set_stackbase( jin_interpreter * jint, string operands ){
 
     jerr = cmd_parse_operands(operands, tok, 1);
     if( jerr != JIN_ERR_OK )
-        return jerr;
+        return (cmd_handler) jerr;
     
     address = strtol(tok[0], NULL, 16);
     if ( address == 0 )

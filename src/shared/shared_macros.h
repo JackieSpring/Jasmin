@@ -4,6 +4,7 @@
 #include <limits.h>
 #include <sys/types.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #if (SIZE_MAX < 0xffffffffffffffff)
     #undef size_t

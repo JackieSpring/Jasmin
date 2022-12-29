@@ -42,7 +42,7 @@ string cmd_parse_command( string str, string * operands_str ) {
 jin_err cmd_parse_operands(string operands, string * ret, size_t nops ) {
 
     if( operands == NULL )
-        return NULL;
+        return JIN_ERR_GENERIC;
 
     operands = str_trim(operands);
     

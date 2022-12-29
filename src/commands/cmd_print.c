@@ -183,7 +183,7 @@ static cmd_handler cmd_print_memory (jin_interpreter * jint, string operands) {
     
     jerr = cmd_parse_operands(operands, tok, 2);
     if( jerr != JIN_ERR_OK )
-        return jerr;
+        return (cmd_handler) jerr;
     
     address = strtol(tok[0], NULL, 16);
     if ( address == 0 )
