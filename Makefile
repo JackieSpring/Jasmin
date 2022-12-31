@@ -4,7 +4,6 @@ SRC_PATH := src/
 SRC_PATH += src/core/
 SRC_PATH += src/commands/
 SRC_PATH += src/shared/
-SRC_PATH += src/flowcontrol/
 SRC_PATH += src/arch/
 SRC_PATH += src/arch/x86/
 
@@ -34,9 +33,7 @@ INC_CAPSTONE += -l capstone
 
 CC = gcc
 #CFLAGS = -lstdc++ -lm $(DEBUG_FLAG) $(foreach path, $(SRC_PATH), -I $(path)) $(INC_KEYSTONE) $(INC_CAPSTONE) -o $(OUTPUT)
-CFLAGS = -lstdc++ -lm $(foreach path, $(SRC_PATH), -I $(path)) $(INC_KEYSTONE) $(INC_CAPSTONE) -o $(OUTPUT)
-
-FOO = ok
+CFLAGS =$(foreach path, $(SRC_PATH), -I $(path)) $(INC_KEYSTONE) $(INC_CAPSTONE) -lstdc++ -lm  -o $(OUTPUT)
 
 compile:
 	@$(CC) $(SRC) -w $(CFLAGS)

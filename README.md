@@ -12,7 +12,7 @@ At the moment it only supports a small number of instructions for the x86 64 or 
 
 ### Installation
 At the moment, jasmin can run only on \*nix systems, Windows support is not implemented yet.
-To compile Jasmin are needed __unzip__, __make__ and __cmake__ programs, so make sure you have installed them before continuing with the installation
+To compile Jasmin are needed __unzip__, __make__, __cmake__ and __python3__ programs, so make sure you have installed them before continuing with the installation
 1. Download source from github
 2. Navigate in the directory
 3. Run ./init.sh

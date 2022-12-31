@@ -74,6 +74,10 @@ fi
 
 echo "$INFO Compiling jasmin"
 make
+if [[ ! $? -eq 0 ]]; then
+    echo "$ERR An error occurred in during compilation."
+    exit
+fi
 
 echo "$INFO Linking Executable"
 if [[ -e $LINK_FILE ]]; then
